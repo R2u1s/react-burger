@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import styles from './BurgerIngredientsGroup.module.css';
 import BurgerIngredientsItem from '../BurgerIngredientsItem/BurgerIngredientsItem';
 
@@ -16,9 +15,5 @@ const BurgerIngredientsGroup = (props) => {
     </li>
   );
 }
-
-BurgerIngredientsGroup.propTypes = {
-  ingredient: PropTypes.object
-}; 
 
 export default BurgerIngredientsGroup;
