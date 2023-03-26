@@ -1,0 +1,40 @@
+.burger-ingredients {
+  margin:0;
+  width:600px;
+  height: 872px;
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+}
+
+.burger-ingredients__ingredients {
+  margin:0;
+  padding:0;
+  display: flex;
+  flex-flow: column;
+  list-style-type: none;
+  overflow:auto;
+}
+
+.burger-ingredients__ingredients::-webkit-scrollbar {
+  width: 8px;             /* ширина scrollbar */
+}
+
+.burger-ingredients__ingredients::-webkit-scrollbar-track {
+  background: transparent;        /* цвет дорожки */
+
+}
+.burger-ingredients__ingredients::-webkit-scrollbar-thumb {
+  background-color: #8585AD;    /* цвет плашки */
+}
+
+.burger-ingredients__ingredients::-webkit-scrollbar-track-piece:start{
+  background: #2F2F37;
+}
+
+.burger-ingredients__ingredients::-webkit-scrollbar-track-piece:end{
+  background: #2F2F37;
+  margin-bottom: 52px; 
+}
+
+
