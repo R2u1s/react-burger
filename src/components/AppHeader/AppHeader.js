@@ -13,19 +13,25 @@ function AppHeader(){
       <nav className={styles.header__nav}>
         <ul className={styles.header__list}>
           <div className={styles.header__flex}>
-            <li className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
-              <BurgerIcon type="primary" />
-              <p className="text text_type_main-default">Конструктор</p>
+            <li>
+              <a href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
+                <BurgerIcon type="primary" />
+                <p className="text text_type_main-default">Конструктор</p>
+              </a>
             </li>
-            <li className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
-              <ListIcon type="secondary" />
+            <li>
+              <a href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
+                <ListIcon type="secondary" />
               <p className="text text_type_main-default text_color_inactive">Лента заказов</p>
+              </a>
             </li>
           </div>
-          <li className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
+          <li>
+            <a href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
               <ProfileIcon type="secondary" />
               <p className="text text_type_main-default text_color_inactive">Личный кабинет</p>
-            </li>
+            </a>
+          </li>
         </ul>
       </nav>
       <Logo className={styles.header__logo} />

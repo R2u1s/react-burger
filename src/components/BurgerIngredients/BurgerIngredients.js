@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './BurgerIngredients.module.css';
 import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';

@@ -1,0 +1,55 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import styles from './ConstructorElementsList.module.css';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+const ConstructorElementsList = (props) => {
+  const buns = props.ingredients.list.filter(function(item) {
+    return item.type === 'bun'
+  });
+
+  const bunTop = buns[0];
+  const bunBottom = buns[1];
+
+  return (
+    <ul className={styles['constructor-elements-list__list']} >
+     {bunTop && <li className={styles['constructor-elements-list__item']} key={bunTop._id}>
+        <ConstructorElement
+          type= 'top'
+          isLocked = 'true'
+          text={`${bunTop.name} (верх)`}
+          price={bunTop.price}
+          thumbnail={bunTop.image}
+        />
+      </li> }
+     
+      {props.ingredients.list
+      .filter(function(item) {
+        return item.type !== 'bun'})
+        .map(function (item) {
+          return (
+            <li className={styles['constructor-elements-list__item']} key={item._id}>
+              <DragIcon />
+              <ConstructorElement
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image}
+              />
+            </li>
+          )
+        })}
+      {bunBottom && <li className={styles['constructor-elements-list__item']} key={bunBottom._id}>
+        <ConstructorElement
+          type= 'bottom'
+          isLocked = 'true'
+          text={`${bunBottom.name} (низ)`}
+          price={bunBottom.price}
+          thumbnail={bunBottom.image}
+        />
+      </li> }
+    </ul>
+  )
+}
+
+export default ConstructorElementsList;

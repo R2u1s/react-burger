@@ -1,0 +1,10 @@
+.main {
+  margin: 0 auto;
+  max-width: 1240px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  gap:40px;
+  justify-content: center;
+}
+

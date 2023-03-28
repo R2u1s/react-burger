@@ -1,4 +1,4 @@
-.components__item {
+.constructor-elements-list__item {
   margin:0;
   padding:0;
   display: flex;
@@ -8,36 +8,39 @@
   align-items: center;
 }
 
-.components__list {
+.constructor-elements-list__list {
   margin: 0;
   margin-bottom: 40px;
   padding: 0;
+  padding-left: 16px;
+  padding-right: 8px;
   max-height: 656px;
   height: fit-content;
   overflow-y: auto;
   display: flex;
   flex-flow: column;
   gap: 10px;
+  box-sizing: border-box;
 }
 
-.components__list::-webkit-scrollbar {
+.constructor-elements-list__list::-webkit-scrollbar {
   width: 8px;             /* ширина scrollbar */
 }
   
-.components__list::-webkit-scrollbar-track {
+.constructor-elements-list__list::-webkit-scrollbar-track {
   background: transparent;        /* цвет дорожки */
 }
 
-.components__list::-webkit-scrollbar-thumb {
+.constructor-elements-list__list::-webkit-scrollbar-thumb {
   background-color: #8585AD;    /* цвет плашки */
 }
 
-.components__list::-webkit-scrollbar-track-piece:end{
+.constructor-elements-list__list::-webkit-scrollbar-track-piece:end{
   background: #2F2F37;
   margin-bottom: 96px; 
 }
 
-.components__list::-webkit-scrollbar-track-piece:start{
+.constructor-elements-list__list::-webkit-scrollbar-track-piece:start{
     background: #2F2F37;
     margin-top: 96px; 
   }
