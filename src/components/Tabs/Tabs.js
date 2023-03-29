@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Tabs.module.css'
 
