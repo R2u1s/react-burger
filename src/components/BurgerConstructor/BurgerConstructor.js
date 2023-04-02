@@ -5,8 +5,11 @@ import ConstructorElementsList from '../ConstructorElementsList/ConstructorEleme
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { initialData } from '../../utils/data';
+import Modal from '../Modal/Modal'
+import OrderDetails from '../OrderDetails/OrderDetails'
 
 function BurgerConstructor(){
+  const [modalActive, setModalActive] = React.useState(false);
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
       <ConstructorElementsList ingredients={{list:initialData}} />
@@ -17,8 +20,16 @@ function BurgerConstructor(){
             <CurrencyIcon type="primary" />
           </div>
         </div>
-        <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="large" onClick={()=>{setModalActive(true)}}>Оформить заказ</Button>
       </div>
+      <Modal active={modalActive} setActive={setModalActive}>
+        <OrderDetails orderDetails={{
+          id: '034536',
+          status: 'Ваш заказ начали готовить',
+          todo: 'Дождитесь готовности на орбитальной станции'
+        }
+        } />
+      </Modal>
     </section>
   );
 }

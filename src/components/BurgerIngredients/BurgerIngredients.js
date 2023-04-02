@@ -3,6 +3,8 @@ import styles from './BurgerIngredients.module.css';
 import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
 import { initialData } from '../../utils/data';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 const data = {
   buns: initialData.filter(function(item) {
@@ -22,7 +24,7 @@ function BurgerIngredients(){
       <h1 className={`mb-5 text text_type_main-large`}>Соберите бургер</h1>
       <Tabs />
       <ul className={styles['burger-ingredients__ingredients']}>
-        <BurgerIngredientsGroup ingredient={{type:"Булки", list: data.buns}}/>
+        <BurgerIngredientsGroup ingredient={{type:"Булки", list: data.buns}} />
         <BurgerIngredientsGroup ingredient={{type:"Соусы", list: data.sauces}}/>
         <BurgerIngredientsGroup ingredient={{type:"Начинка", list: data.mains}}/>
       </ul>

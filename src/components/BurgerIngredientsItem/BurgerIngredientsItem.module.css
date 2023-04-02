@@ -9,6 +9,7 @@
   flex-flow: column;
   list-style-type: none;
   align-items: center;
+  cursor: pointer;
 }
 
 .burger-ingredients__price {
