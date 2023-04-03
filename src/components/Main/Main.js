@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Main.module.css';
-import { initialData } from '../../utils/data';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
-function Main(){
+function Main({data}){
 
   const [modalActive, setModalActive] = React.useState(false);
   const [modalValues, setIngredientValues] = React.useState({
@@ -22,7 +21,7 @@ function Main(){
   function openIngredientPreview(e) {
     const ingredientDOM = e.target.closest('[name="ingredient"]');
     if (ingredientDOM) {
-      setIngredientValues(initialData.find((item) => {
+      setIngredientValues(data.find((item) => {
         return item._id === ingredientDOM.id;
       }));
       setModalActive(true);
@@ -32,8 +31,8 @@ function Main(){
   return (
     <>
       <main className={`${styles.main}`} onClick={openIngredientPreview}>
-        <BurgerIngredients />
-        <BurgerConstructor />
+        <BurgerIngredients data={data}/>
+        <BurgerConstructor data={data}/>
         <Modal active={modalActive} setActive={setModalActive}>
           <IngredientDetails ingredientDetails={modalValues} />
         </Modal>
