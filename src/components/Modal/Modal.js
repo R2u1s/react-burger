@@ -11,7 +11,6 @@ const Modal = (props) => {
   
   const escFunction = React.useCallback((event) => {
     if (event.key === "Escape") {
-      console.log('esc');
       setActive(false);
     }
   }, []);
