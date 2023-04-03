@@ -11,17 +11,18 @@ const Modal = (props) => {
   
   const escFunction = React.useCallback((event) => {
     if (event.key === "Escape") {
+      console.log('esc');
       setActive(false);
     }
   }, []);
 
   React.useEffect(() => {
-    document.addEventListener("keydown", escFunction, false);
-
-    return () => {
-      document.removeEventListener("keydown", escFunction, false);
-    };
-  }, [escFunction]);
+    if (active) {
+      document.addEventListener("keydown", escFunction);
+    } else {
+      document.removeEventListener("keydown", escFunction);
+    }
+  }, [active]);
   
   return ReactDOM.createPortal(
     (

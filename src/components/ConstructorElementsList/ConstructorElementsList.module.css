@@ -6,6 +6,7 @@
   gap: 8px;
   justify-content: end;
   align-items: center;
+  cursor: pointer;
 }
 
 .constructor-elements-list__list {

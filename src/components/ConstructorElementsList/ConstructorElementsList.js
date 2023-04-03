@@ -14,7 +14,7 @@ const ConstructorElementsList = (props) => {
 
   return (
     <ul className={styles['constructor-elements-list__list']} >
-     {bunTop && <li className={styles['constructor-elements-list__item']} key={bunTop._id}>
+     {bunTop && <li className={styles['constructor-elements-list__item']} key={bunTop._id} id={bunTop._id} name='ingredient'>
         <ConstructorElement
           type= 'top'
           isLocked = 'true'
@@ -29,7 +29,7 @@ const ConstructorElementsList = (props) => {
         return item.type !== 'bun'})
         .map(function (item) {
           return (
-            <li className={styles['constructor-elements-list__item']} key={item._id}>
+            <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} name='ingredient'>
               <DragIcon />
               <ConstructorElement
                 text={item.name}
@@ -39,7 +39,7 @@ const ConstructorElementsList = (props) => {
             </li>
           )
         })}
-      {bunBottom && <li className={styles['constructor-elements-list__item']} key={bunBottom._id}>
+      {bunBottom && <li className={styles['constructor-elements-list__item']} key={bunBottom._id} id={bunBottom._id} name='ingredient'>
         <ConstructorElement
           type= 'bottom'
           isLocked = 'true'
