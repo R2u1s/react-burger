@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main'
 
+const API_DATA = `https://norma.nomoreparties.space/api/ingredients`;
+
 function App(){
 
   const [state, setState] = React.useState({ 
@@ -13,7 +15,7 @@ function App(){
   React.useEffect(() => {
     const getIngredientsData = async () => {
       setState({...state, loading: true});
-      const res = await fetch(`https://norma.nomoreparties.space/api/ingredients`);
+      const res = await fetch(API_DATA);
       const data = await res.json();
       setState({ ingredientsData: data, loading: false });
     }
