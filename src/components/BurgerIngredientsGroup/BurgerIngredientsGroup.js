@@ -12,7 +12,7 @@ const BurgerIngredientsGroup = (props) => {
       <p className="text text_type_main-medium">{props.ingredient.type}</p>
       <ul className={`${styles['burger-ingredients-group__group']} pl-4 pr-2 pt-6 pb-10`}>
         {props.ingredient.list.map(function (item) {
-          return <BurgerIngredientsItem item={item} key={item._id} />
+          return <BurgerIngredientsItem item={item} key={item._id} openModal={props.openModal}/>
         })}
       </ul>
     </li>
