@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const ConstructorElementsList = (props) => {
-  const buns = props.ingredients.list.filter(function(item) {
+  const buns = props.ingredients.filter(function(item) {
     return item.type === 'bun'
   });
 
@@ -24,7 +24,7 @@ const ConstructorElementsList = (props) => {
         />
       </li> }
      
-      {props.ingredients.list
+      {props.ingredients
       .filter(function(item) {
         return item.type !== 'bun'})
         .map(function (item) {
@@ -51,5 +51,9 @@ const ConstructorElementsList = (props) => {
     </ul>
   )
 }
+
+ConstructorElementsList.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.object)
+}; 
 
 export default ConstructorElementsList;

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import styles from './BurgerConstructor.module.css';
 import ConstructorElementsList from '../ConstructorElementsList/ConstructorElementsList'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,7 +11,7 @@ function BurgerConstructor({data}){
   const [modalActive, setModalActive] = React.useState(false);
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
-      <ConstructorElementsList ingredients={{list:data}} />
+      <ConstructorElementsList ingredients={data} />
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
           <p className="text text_type_digits-medium">300</p>
@@ -32,5 +32,9 @@ function BurgerConstructor({data}){
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}; 
 
 export default BurgerConstructor;

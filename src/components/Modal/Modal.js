@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import styles from './Modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -36,5 +37,11 @@ const Modal = (props) => {
     ), modalRoot
   );
 }
+
+Modal.propTypes = {
+  active: PropTypes.bool,
+  children: PropTypes.object,
+  setActive: PropTypes.func
+}; 
 
 export default Modal;

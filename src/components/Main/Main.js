@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import styles from './Main.module.css';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
@@ -40,5 +40,9 @@ function Main({data}){
     </>
   );
 }
+
+Main.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}; 
 
 export default Main;

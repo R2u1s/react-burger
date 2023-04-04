@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.css';
 import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
@@ -31,5 +32,9 @@ function BurgerIngredients({data}){
     </>
   );
 }
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}; 
 
 export default BurgerIngredients;
