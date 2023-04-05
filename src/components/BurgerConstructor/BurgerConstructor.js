@@ -4,8 +4,10 @@ import styles from './BurgerConstructor.module.css';
 import ConstructorElementsList from '../ConstructorElementsList/ConstructorElementsList'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../Modal/Modal'
-import OrderDetails from '../OrderDetails/OrderDetails'
+import Modal from '../Modal/Modal';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import { ingredientObjectType } from '../../utils/data';
+
 
 function BurgerConstructor({data}){
   const [modalActive, setModalActive] = React.useState(false);
@@ -34,7 +36,7 @@ function BurgerConstructor({data}){
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
 }; 
 
 export default BurgerConstructor;

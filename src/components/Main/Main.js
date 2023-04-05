@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './Main.module.css';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import { ingredientObjectType } from '../../utils/data';
 
 function Main({data}){
 
@@ -17,7 +18,7 @@ function Main({data}){
 }
 
 Main.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
 }; 
 
 export default Main;

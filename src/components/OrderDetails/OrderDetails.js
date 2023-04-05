@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import styles from './OrderDetails.module.css';
-import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function OrderDetails({orderDetails}){
   return (
@@ -17,7 +16,11 @@ function OrderDetails({orderDetails}){
 }
 
 OrderDetails.propTypes = {
-  orderDetails: (PropTypes.object)
+  orderDetails: (PropTypes.shape({
+    id: PropTypes.string,
+    status: PropTypes.string,
+    todo: PropTypes.string
+  }))
 }; 
 
 export default OrderDetails;

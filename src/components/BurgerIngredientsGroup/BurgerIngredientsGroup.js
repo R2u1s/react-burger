@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredientsGroup.module.css';
 import BurgerIngredientsItem from '../BurgerIngredientsItem/BurgerIngredientsItem';
+import { ingredientObjectType } from '../../utils/data';
 
 
 const BurgerIngredientsGroup = (props) => {
@@ -23,7 +24,7 @@ const BurgerIngredientsGroup = (props) => {
 BurgerIngredientsGroup.propTypes = {
   ingredient: PropTypes.shape({
     type: PropTypes.string,
-    list: PropTypes.arrayOf(PropTypes.object)
+    list: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
   })
 }; 
 

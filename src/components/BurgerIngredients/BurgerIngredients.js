@@ -5,18 +5,12 @@ import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { ingredientObjectType } from '../../utils/data';
 
 function BurgerIngredients({data}){
 
   const [modalActive, setModalActive] = React.useState(false);
-  const [modalValues, setIngredientValues] = React.useState({
-    image: '',
-    name: '',
-    calories: '',
-    proteins: '',
-    fat: '',
-    carbohydrates: ''
-  });
+  const [modalValues, setIngredientValues] = React.useState({});
 
   function openIngredientPreview(ingredient) {
       setIngredientValues(ingredient);
@@ -54,7 +48,7 @@ function BurgerIngredients({data}){
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
 }; 
 
 export default BurgerIngredients;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './BurgerIngredientsItem.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientObjectType } from '../../utils/data';
 
 const BurgerIngredientsItem = (props) => {
   return (
@@ -21,7 +22,7 @@ const BurgerIngredientsItem = (props) => {
 }
 
 BurgerIngredientsItem.propTypes = {
-  item: PropTypes.object,
+  item: (PropTypes.shape(ingredientObjectType)),
   openModal: PropTypes.func
 }; 
 

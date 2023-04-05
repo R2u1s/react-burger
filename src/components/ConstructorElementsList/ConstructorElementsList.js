@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientObjectType } from '../../utils/data';
 
 const ConstructorElementsList = (props) => {
   const buns = props.ingredients.filter(function(item) {
@@ -53,7 +54,7 @@ const ConstructorElementsList = (props) => {
 }
 
 ConstructorElementsList.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object)
+  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
 }; 
 
 export default ConstructorElementsList;

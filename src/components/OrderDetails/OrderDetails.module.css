@@ -7,7 +7,7 @@
     '.' 32px
     'id-text'
     '.' 60px
-    'iconf'
+    'icon'
     '.' 60px
     'status'
     '.' 8px
@@ -32,7 +32,7 @@
 
 .order-details__icon {
   margin:0 auto;
-  grid-area: iconf;
+  grid-area: icon;
   align-items: center;
   background-image: url('../../images/done.png');
   width:120px;

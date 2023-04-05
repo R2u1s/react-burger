@@ -30,9 +30,9 @@ function App(){
   return (
     <>
       <AppHeader />
-      {!state.loading && <Main data={state.ingredientsData.data}/>}
       {state.loading && 'Загрузка...'}
       {state.hasError && 'Произошла ошибка'}
+      {!state.loading && <Main data={state.ingredientsData.data}/>}
     </>
   );
 }
