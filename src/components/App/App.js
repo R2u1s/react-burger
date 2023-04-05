@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main'
 import request from '../../utils/utils';
@@ -17,10 +16,10 @@ function App(){
   React.useEffect(() => {
     const getIngredientsData = async () => {
       setState({...state, loading: true});
-      const res = await request(API_DATA)
+      await request(API_DATA)
       .then(data => setState({ ingredientsData: data, hasError: false, loading: false }))
-      .catch(e => {
-        setState({ ...state, hasError: true, isLoading: false });
+      .catch(error => {
+        setState({ ...state, hasError: true, loading: false });
       });
     }
 
@@ -32,6 +31,8 @@ function App(){
     <>
       <AppHeader />
       {!state.loading && <Main data={state.ingredientsData.data}/>}
+      {state.loading && 'Загрузка...'}
+      {state.hasError && 'Произошла ошибка'}
     </>
   );
 }
