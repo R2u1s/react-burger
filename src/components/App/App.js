@@ -9,15 +9,19 @@ function App(){
 
   const [state, setState] = React.useState({ 
     ingredientsData: null,
+    hasError: false,
     loading: true
   })
 
   React.useEffect(() => {
     const getIngredientsData = async () => {
       setState({...state, loading: true});
-      const res = await fetch(API_DATA);
-      const data = await res.json();
-      setState({ ingredientsData: data, loading: false });
+      const res = await fetch(API_DATA)
+      .then(res => res.json())
+      .then(data => setState({ ingredientsData: data, hasError: false, loading: false }))
+      .catch(e => {
+        setState({ ...state, hasError: true, isLoading: false });
+      });
     }
 
     getIngredientsData();
