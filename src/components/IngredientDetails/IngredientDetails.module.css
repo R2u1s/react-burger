@@ -1,14 +1,14 @@
 .ingredient-details {
   margin: 0;
-  padding: ;
+  padding: 0;
   display: grid;
   grid-template:
     'title'
     '.' 0px
     'picture'
-    '.' 16px
+    '.' calc(var(--offset-base-size)  * 4)
     'name'
-    '.' 32px
+    '.' calc(var(--offset-base-size)  * 8)
     'values'
     / 100%;
   align-items: center;
@@ -47,7 +47,7 @@
   grid-area: values;
   display: flex;
   flex-flow: row;
-  gap: 20px;
+  gap: calc(var(--offset-base-size)  * 5);
   justify-content: space-between;
 }
 

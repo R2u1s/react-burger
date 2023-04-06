@@ -24,7 +24,7 @@ const ConstructorElementsList = (props) => {
   const bunBottom = buns[1];
 
   return (
-    <ul className={styles['constructor-elements-list__list']} >
+    <ul className={`${styles['constructor-elements-list__list']}`}>
      {bunTop && <li className={styles['constructor-elements-list__item']} key={bunTop._id} id={bunTop._id} name='ingredient'>
         <ConstructorElement
           type= 'top'

@@ -1,5 +1,5 @@
 .header {
-  margin: 40px auto;
+  margin: 0 auto;
   max-width: 1920px;
   position: relative;
   display:flex;
@@ -24,7 +24,7 @@
   padding: 0;
   display: flex;
   flex-flow: row;
-  gap:8px;
+  gap:calc(var(--offset-base-size)  * 2);
   align-items: center;
   justify-content: space-between;
 }
@@ -34,7 +34,7 @@
   box-sizing: border-box;
   display: flex;
   flex-flow: row;
-  gap:9px;
+  gap:calc(var(--offset-base-size)  * 2.25);
   align-items: center;
   justify-content: space-between;
   text-decoration: none;

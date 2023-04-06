@@ -1,9 +1,9 @@
 .burger-ingredients-group__group {
   margin:0;
-  width: 592;
+  width: 592px;
   box-sizing: border-box;
   list-style-type: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, 272px);
-  gap: 32px 24px;
+  gap: calc(var(--offset-base-size)  * 8) calc(var(--offset-base-size)  * 6);
 }

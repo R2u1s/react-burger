@@ -9,7 +9,7 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 function AppHeader(){
   return (
     <>
-      <header className={`${styles.header} pt-4 pb-4`}>
+      <header className={`${styles.header} mt-10 mb-10 pt-4 pb-4`}>
       <nav className={styles.header__nav}>
         <ul className={styles.header__list}>
           <div className={styles.header__flex}>

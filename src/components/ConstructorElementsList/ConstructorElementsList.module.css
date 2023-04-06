@@ -3,7 +3,7 @@
   padding:0;
   display: flex;
   flex-flow: row;
-  gap: 8px;
+  gap: calc(var(--offset-base-size)  * 2);
   justify-content: end;
   align-items: center;
   cursor: pointer;
@@ -11,16 +11,15 @@
 
 .constructor-elements-list__list {
   margin: 0;
-  margin-bottom: 40px;
+  margin-bottom: calc(var(--offset-base-size)  * 10);
   padding: 0;
-  padding-left: 16px;
-  padding-right: 8px;
+  padding-left: calc(var(--offset-base-size)  * 4);
+  padding-right: calc(var(--offset-base-size)  * 2);
   max-height: 656px;
-  height: fit-content;
   overflow-y: auto;
   display: flex;
   flex-flow: column;
-  gap: 10px;
+  gap: calc(var(--offset-base-size)  * 2.5);
   box-sizing: border-box;
 }
 
@@ -38,10 +37,10 @@
 
 .constructor-elements-list__list::-webkit-scrollbar-track-piece:end{
   background: #2F2F37;
-  margin-bottom: 96px; 
+  margin-bottom: calc(var(--offset-base-size)  * 24); 
 }
 
 .constructor-elements-list__list::-webkit-scrollbar-track-piece:start{
     background: #2F2F37;
-    margin-top: 96px; 
+    margin-top: calc(var(--offset-base-size)  * 24); 
   }

@@ -4,7 +4,7 @@ import styles from './OrderDetails.module.css';
 
 function OrderDetails({orderDetails}){
   return (
-    <div className={styles['order-details']}>
+    <div className={`${styles['order-details']} pt-20 pb-15`}>
       <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>
       <p className={`${styles['order-details__id-text']} text text_type_main-medium`}>идентификатор заказа</p>
       <div className={styles['order-details__icon']}>

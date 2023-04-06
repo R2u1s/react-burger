@@ -10,7 +10,7 @@
   margin:0;
   display: flex;
   flex-flow: row;
-  gap: 40px;
+  gap: calc(var(--offset-base-size)  * 10);
   justify-content: end;
   justify-self: end;
   align-items: center;
@@ -20,7 +20,7 @@
   margin:0;
   display: flex;
   flex-flow: row;
-  gap: 8px;
+  gap: calc(var(--offset-base-size)  * 2);
   height: 36px;
   align-items: center;
   align-self: center;

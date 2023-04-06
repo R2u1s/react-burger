@@ -19,8 +19,8 @@
   margin:0;
   padding: 0;
   position:absolute;
-  top:60px;
-  right:40px;
+  top:calc(var(--offset-base-size)  * 15);
+  right:calc(var(--offset-base-size)  * 10);
   background-color: #1C1C21;
   border: none;
   cursor: pointer;

@@ -4,13 +4,13 @@
   display: grid;
   grid-template:
     'id'
-    '.' 32px
+    '.' calc(var(--offset-base-size)  * 8)
     'id-text'
-    '.' 60px
+    '.' calc(var(--offset-base-size)  * 15)
     'icon'
-    '.' 60px
+    '.' calc(var(--offset-base-size)  * 15)
     'status'
-    '.' 8px
+    '.' calc(var(--offset-base-size)  * 2)
     'todo-text'
     / 100%;
   align-items: center;

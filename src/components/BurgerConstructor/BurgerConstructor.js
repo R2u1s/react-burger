@@ -13,7 +13,7 @@ function BurgerConstructor({data}){
   const [modalActive, setModalActive] = React.useState(false);
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
-      <ConstructorElementsList ingredients={data} />
+      <ConstructorElementsList ingredients={data} className={'mb-10'}/>
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
           <p className="text text_type_digits-medium">300</p>

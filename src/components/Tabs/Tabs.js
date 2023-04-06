@@ -3,7 +3,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Tabs.module.css'
 
 function Tabs() {
-    const [current, setCurrent] = React.useState('one')
+    const [current, setCurrent] = React.useState('one');
     return (
       <div className={`${styles['tabs']} mb-10`}>
         <Tab value="one" active={current === 'one'} onClick={setCurrent}>
