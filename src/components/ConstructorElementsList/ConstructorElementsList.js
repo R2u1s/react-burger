@@ -6,9 +6,19 @@ import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientObjectType } from '../../utils/data';
 
 const ConstructorElementsList = (props) => {
-  const buns = props.ingredients.filter(function(item) {
-    return item.type === 'bun'
-  });
+  const buns = React.useMemo(
+    () =>
+    props.ingredients.filter(function(item) {
+      return item.type === 'bun'  }), 
+  [props]);
+
+  const filterNoBuns = React.useMemo(
+    () =>
+    props.ingredients
+      .filter(function(item) {
+        return item.type !== 'bun'}),
+  [props]
+  );
 
   const bunTop = buns[0];
   const bunBottom = buns[1];
@@ -25,9 +35,7 @@ const ConstructorElementsList = (props) => {
         />
       </li> }
      
-      {props.ingredients
-      .filter(function(item) {
-        return item.type !== 'bun'})
+      {filterNoBuns
         .map(function (item) {
           return (
             <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} name='ingredient'>
