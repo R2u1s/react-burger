@@ -10,24 +10,29 @@ import { ingredientObjectType } from '../../utils/data';
 function BurgerIngredients({data}){
 
   const [modalActive, setModalActive] = React.useState(false);
-  const [modalValues, setIngredientValues] = React.useState({});
+  const [modalValues, setIngredientValues] = React.useState({
+});
 
   function openIngredientPreview(ingredient) {
       setIngredientValues(ingredient);
       setModalActive(true);
   }
 
-  const sortedData = {
-    buns: data.filter(function(item) {
-      return item.type === 'bun'
-    }),
-    sauces: data.filter(function(item) {
-      return item.type === 'sauce'
-    }),
-    mains: data.filter(function(item) {
-      return item.type === 'main'
-    })
-  }
+  const filteredData = React.useMemo(
+    () => {
+      const buns = data.filter(function(item) {
+        return item.type === 'bun'
+      });
+      const sauces = data.filter(function(item) {
+        return item.type === 'sauce'
+      });
+      const mains = data.filter(function(item) {
+        return item.type === 'main'
+      });
+      return {buns,sauces,mains}
+    },
+    [modalValues]
+  );
    
   return (
     <>
@@ -35,9 +40,9 @@ function BurgerIngredients({data}){
         <h1 className={`mb-5 text text_type_main-large`}>Соберите бургер</h1>
         <Tabs />
         <ul className={styles['burger-ingredients__ingredients']} >
-          <BurgerIngredientsGroup ingredient={{type:"Булки", list: sortedData.buns}} openModal={openIngredientPreview}/>
-          <BurgerIngredientsGroup ingredient={{type:"Соусы", list: sortedData.sauces}} openModal={openIngredientPreview}/>
-          <BurgerIngredientsGroup ingredient={{type:"Начинка", list: sortedData.mains}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup ingredient={{type:"Булки", list: filteredData.buns}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup ingredient={{type:"Соусы", list: filteredData.sauces}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup ingredient={{type:"Начинка", list: filteredData.mains}} openModal={openIngredientPreview}/>
         </ul>
       </section>
       <Modal active={modalActive} setActive={setModalActive}>
