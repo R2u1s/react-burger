@@ -34,7 +34,9 @@ function AppHeader(){
           </li>
         </ul>
       </nav>
-      <Logo className={styles.header__logo} />
+      <div className={styles.header__logo}>
+        <Logo />
+      </div>
       </header>
     </>
   );

@@ -42,21 +42,16 @@
 }
 
 .header__logo {
+  position: absolute;
+  --header-logo-width: 289.15px;
   margin: 0;
-  left: calc(50% - 144.575px);
-  width: 289.15px;
+  left: calc(50% - var(--header-logo-width)/2);
+  width: var(--header-logo-width);
 }/*# sourceMappingURL=AppHeader.module.css.map */
-
-.header__space {
-  margin: 0;
-  content:'';
-  width: calc(100% - 178px - 197px - 207px - 24px);
-}
 
 .header__nav {
   margin: 0 auto;
   max-width: 1280px;
   padding: 0;
-  position:absolute;
   width:100%;
 }
