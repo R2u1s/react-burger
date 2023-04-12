@@ -1,6 +1,5 @@
 .constructor-elements-list__item {
   margin:0;
-  padding:0;
   display: flex;
   flex-flow: row;
   gap: calc(var(--offset-base-size)  * 2);
@@ -13,34 +12,33 @@
   margin: 0;
   margin-bottom: calc(var(--offset-base-size)  * 10);
   padding: 0;
-  padding-left: calc(var(--offset-base-size)  * 4);
-  padding-right: calc(var(--offset-base-size)  * 2);
-  max-height: 656px;
-  overflow-y: auto;
   display: flex;
   flex-flow: column;
-  gap: calc(var(--offset-base-size)  * 2.5);
+  gap: calc(var(--offset-base-size)  * 4);
   box-sizing: border-box;
 }
 
-.constructor-elements-list__list::-webkit-scrollbar {
-  width: 8px;             /* ширина scrollbar */
+.constructor-elements-list__list-ingredients {
+  margin: 0;
+  padding: 0;
+  padding-left: calc(var(--offset-base-size)  * 4);
+  padding-right: calc(var(--offset-base-size)  * 2);
+  max-height: 464px;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column;
+  gap: calc(var(--offset-base-size)  * 4);
+  box-sizing: border-box;
+}
+
+.constructor-elements-list__list-ingredients::-webkit-scrollbar {
+  width: calc(var(--offset-base-size)  * 2);           /* ширина scrollbar */
 }
   
-.constructor-elements-list__list::-webkit-scrollbar-track {
+.constructor-elements-list__list-ingredients::-webkit-scrollbar-track {
   background: transparent;        /* цвет дорожки */
 }
 
-.constructor-elements-list__list::-webkit-scrollbar-thumb {
+.constructor-elements-list__list-ingredients::-webkit-scrollbar-thumb {
   background-color: #8585AD;    /* цвет плашки */
 }
-
-.constructor-elements-list__list::-webkit-scrollbar-track-piece:end{
-  background: #2F2F37;
-  margin-bottom: calc(var(--offset-base-size)  * 24); 
-}
-
-.constructor-elements-list__list::-webkit-scrollbar-track-piece:start{
-    background: #2F2F37;
-    margin-top: calc(var(--offset-base-size)  * 24); 
-  }

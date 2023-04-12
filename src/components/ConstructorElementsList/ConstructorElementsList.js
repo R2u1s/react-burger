@@ -24,8 +24,9 @@ const ConstructorElementsList = (props) => {
   const bunBottom = buns[1];
 
   return (
+
     <ul className={`${styles['constructor-elements-list__list']}`}>
-     {bunTop && <li className={styles['constructor-elements-list__item']} key={bunTop._id} id={bunTop._id} name='ingredient'>
+     {bunTop && <li className={`${styles['constructor-elements-list__item']}  pr-4`} key={bunTop._id} id={bunTop._id} name='ingredient'>
         <ConstructorElement
           type= 'top'
           isLocked = 'true'
@@ -35,6 +36,7 @@ const ConstructorElementsList = (props) => {
         />
       </li> }
      
+      { <ul className={styles['constructor-elements-list__list-ingredients']}>
       {filterNoBuns
         .map(function (item) {
           return (
@@ -48,7 +50,8 @@ const ConstructorElementsList = (props) => {
             </li>
           )
         })}
-      {bunBottom && <li className={styles['constructor-elements-list__item']} key={bunBottom._id} id={bunBottom._id} name='ingredient'>
+        </ul>}
+      {bunBottom && <li className={`${styles['constructor-elements-list__item']} pr-4`} key={bunBottom._id} id={bunBottom._id} name='ingredient'>
         <ConstructorElement
           type= 'bottom'
           isLocked = 'true'
