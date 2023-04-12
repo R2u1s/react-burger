@@ -25,9 +25,9 @@ function App(){
     const getIngredientsData = async () => {
       setIngredients({...burger.ingredients, loading: true});
       await request(API_DATA)
-      .then(data => {
-        if (data.success) {
-          setIngredients({ ingredients: data.data, hasError: false, loading: false });
+      .then(res => {
+        if (res.success) {
+          setIngredients({ ingredients: res.data, hasError: false, loading: false });
         }
       })
       .catch(error => {
