@@ -10,7 +10,7 @@ import { DataContext } from '../../services/dataContext';
 
 function BurgerIngredients() {
  
-  const {Data, setIngredients} = React.useContext(DataContext);
+  const { burger } = React.useContext(DataContext);
 
   const [modalActive, setModalActive] = React.useState(false);
   const [modalValues, setIngredientValues] = React.useState({
@@ -23,13 +23,13 @@ function BurgerIngredients() {
 
   const filteredData = React.useMemo(
     () => {
-      const buns = Data.ingredients.filter(function(item) {
+      const buns = burger.ingredients.filter(function(item) {
         return item.type === 'bun'
       });
-      const sauces = Data.ingredients.filter(function(item) {
+      const sauces = burger.ingredients.filter(function(item) {
         return item.type === 'sauce'
       });
-      const mains = Data.ingredients.filter(function(item) {
+      const mains = burger.ingredients.filter(function(item) {
         return item.type === 'main'
       });
       return {buns,sauces,mains}

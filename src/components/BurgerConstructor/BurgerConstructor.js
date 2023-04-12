@@ -6,14 +6,16 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { ingredientObjectType } from '../../utils/data';
+import { DataContext } from '../../services/dataContext';
 
+function BurgerConstructor(){
 
-function BurgerConstructor({data}){
+  const { burger } = React.useContext(DataContext);
+
   const [modalActive, setModalActive] = React.useState(false);
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
-      <ConstructorElementsList ingredients={data} className={'mb-10'}/>
+      <ConstructorElementsList ingredients={burger.ingredients} className={'mb-10'}/>
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
           <p className="text text_type_digits-medium">300</p>
@@ -34,9 +36,5 @@ function BurgerConstructor({data}){
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
-}; 
 
 export default BurgerConstructor;

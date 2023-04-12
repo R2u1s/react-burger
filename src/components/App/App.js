@@ -27,8 +27,7 @@ function App(){
       await request(API_DATA)
       .then(data => {
         if (data.success) {
-          setIngredients({ burger: data.data, hasError: false, loading: false });
-          console.log(burger.ingredients);
+          setIngredients({ ingredients: data.data, hasError: false, loading: false });
         }
       })
       .catch(error => {

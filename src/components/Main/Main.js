@@ -8,8 +8,8 @@ function Main() {
   return (
     <>
       <main className={`${styles.main}`}>
-{/*         <BurgerIngredients /> */}
-{/*         <BurgerConstructor /> */}
+        <BurgerIngredients />
+        <BurgerConstructor />
       </main>
     </>
   );
