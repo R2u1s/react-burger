@@ -6,9 +6,9 @@ import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientObjectType } from '../../utils/data';
 
 const ConstructorElementsList = (props) => {
-  const buns = React.useMemo(
+  const findBun = React.useMemo(
     () =>
-    props.ingredients.filter(function(item) {
+    props.ingredients.find(function(item) {
       return item.type === 'bun'  }), 
   [props]);
 
@@ -20,20 +20,24 @@ const ConstructorElementsList = (props) => {
   [props]
   );
 
-  const bunTop = buns[0];
-  const bunBottom = buns[1];
+  const bun = (text, price, image, topOrBottom) => {
+
+    return (
+      <ConstructorElement
+          type = {topOrBottom}
+          isLocked = 'true'
+          text={`${text} (верх)`}
+          price={price}
+          thumbnail={image}
+        />
+    )
+  }
 
   return (
 
     <ul className={`${styles['constructor-elements-list__list']}`}>
-     {bunTop && <li className={`${styles['constructor-elements-list__item']}  pr-4`} key={bunTop._id} id={bunTop._id} name='ingredient'>
-        <ConstructorElement
-          type= 'top'
-          isLocked = 'true'
-          text={`${bunTop.name} (верх)`}
-          price={bunTop.price}
-          thumbnail={bunTop.image}
-        />
+     {bun && <li className={`${styles['constructor-elements-list__item']}  pr-4`} key={bun} id={bun._id} name='ingredient'>
+        {bun(findBun.name,findBun.price, findBun.image, findBun.image,'top')}
       </li> }
      
       { <ul className={styles['constructor-elements-list__list-ingredients']}>
@@ -51,14 +55,8 @@ const ConstructorElementsList = (props) => {
           )
         })}
         </ul>}
-      {bunBottom && <li className={`${styles['constructor-elements-list__item']} pr-4`} key={bunBottom._id} id={bunBottom._id} name='ingredient'>
-        <ConstructorElement
-          type= 'bottom'
-          isLocked = 'true'
-          text={`${bunBottom.name} (низ)`}
-          price={bunBottom.price}
-          thumbnail={bunBottom.image}
-        />
+      {bun && <li className={`${styles['constructor-elements-list__item']} pr-4`} key={bun} id={bun._id} name='ingredient'>
+        {bun(findBun.name,findBun.price, findBun.image, findBun.image,'bottom')}
       </li> }
     </ul>
   )
