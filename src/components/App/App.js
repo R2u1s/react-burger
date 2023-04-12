@@ -2,24 +2,38 @@ import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main'
 import request from '../../utils/utils';
+import { DataContext } from '../../services/dataContext';
 
 const API_DATA = `https://norma.nomoreparties.space/api/ingredients`;
 
 function App(){
 
-  const [state, setState] = React.useState({ 
+/*   const [state, setState] = React.useState({ 
     ingredientsData: null,
     hasError: false,
     loading: true
-  })
+  }) */
+
+  const [burger, setIngredients] = React.useState({ 
+    ingredients: null,
+    hasError: false,
+    loading: true
+  });
+/*   const [itemsRequest, setItemsRequest] = React.useState(false); */
 
   React.useEffect(() => {
     const getIngredientsData = async () => {
-      setState({...state, loading: true});
+      setIngredients({...burger.ingredients, loading: true});
       await request(API_DATA)
-      .then(data => setState({ ingredientsData: data, hasError: false, loading: false }))
+      .then(data => {
+        if (data.success) {
+          setIngredients({ burger: data.data, hasError: false, loading: false });
+          console.log(burger.ingredients);
+        }
+      })
       .catch(error => {
-        setState({ ...state, hasError: true, loading: false });
+        setIngredients({ ...burger.ingredients, hasError: true, loading: false });
+        console.log(error);
       });
     }
 
@@ -28,12 +42,12 @@ function App(){
    
 
   return (
-    <>
+    <DataContext.Provider value={{burger, setIngredients}}>
       <AppHeader />
-      {state.loading && 'Загрузка...'}
-      {state.hasError && 'Произошла ошибка'}
-      {!state.loading && <Main data={state.ingredientsData.data}/>}
-    </>
+      {burger.loading && 'Загрузка...'}
+      {burger.hasError && 'Произошла ошибка'}
+      {!burger.loading && <Main />}
+    </DataContext.Provider>
   );
 }
 

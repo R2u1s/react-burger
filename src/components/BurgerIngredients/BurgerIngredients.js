@@ -6,12 +6,15 @@ import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsG
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { ingredientObjectType } from '../../utils/data';
+import { DataContext } from '../../services/dataContext';
 
-function BurgerIngredients({data}){
+function BurgerIngredients() {
+ 
+  const {Data, setIngredients} = React.useContext(DataContext);
 
   const [modalActive, setModalActive] = React.useState(false);
   const [modalValues, setIngredientValues] = React.useState({
-});
+  });
 
   function openIngredientPreview(ingredient) {
       setIngredientValues(ingredient);
@@ -20,13 +23,13 @@ function BurgerIngredients({data}){
 
   const filteredData = React.useMemo(
     () => {
-      const buns = data.filter(function(item) {
+      const buns = Data.ingredients.filter(function(item) {
         return item.type === 'bun'
       });
-      const sauces = data.filter(function(item) {
+      const sauces = Data.ingredients.filter(function(item) {
         return item.type === 'sauce'
       });
-      const mains = data.filter(function(item) {
+      const mains = Data.ingredients.filter(function(item) {
         return item.type === 'main'
       });
       return {buns,sauces,mains}
@@ -51,9 +54,5 @@ function BurgerIngredients({data}){
     </>
   );
 }
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
-}; 
 
 export default BurgerIngredients;

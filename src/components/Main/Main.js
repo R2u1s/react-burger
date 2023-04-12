@@ -3,22 +3,16 @@ import PropTypes from 'prop-types';
 import styles from './Main.module.css';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import { ingredientObjectType } from '../../utils/data';
 
-function Main({data}){
-
+function Main() {
   return (
     <>
       <main className={`${styles.main}`}>
-        <BurgerIngredients data={data}/>
-        <BurgerConstructor data={data}/>
+{/*         <BurgerIngredients /> */}
+{/*         <BurgerConstructor /> */}
       </main>
     </>
   );
 }
-
-Main.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
-}; 
 
 export default Main;
