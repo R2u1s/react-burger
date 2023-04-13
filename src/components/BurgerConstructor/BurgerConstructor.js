@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './BurgerConstructor.module.css';
 import ConstructorElementsList from '../ConstructorElementsList/ConstructorElementsList'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';

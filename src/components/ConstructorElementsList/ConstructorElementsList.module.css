@@ -6,6 +6,7 @@
   gap: calc(var(--offset-base-size)  * 2);
   justify-content: end;
   align-items: center;
+  cursor: pointer;
 }
 
 .constructor-elements-list__list {
