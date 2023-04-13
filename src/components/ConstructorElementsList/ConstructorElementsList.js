@@ -1,34 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientObjectType } from '../../utils/data';
+import { DataContext } from '../../services/dataContext';
 
-const ConstructorElementsList = (props) => {
+const ConstructorElementsList = () => {
+
+  const { burger,setIngredients } = React.useContext(DataContext);
+
+  function deleteIngredient(id) {
+    setIngredients({ ingredients: burger.ingredients.filter(item => item._id !== id)});
+  }
+
   const findBun = React.useMemo(
     () =>
-    props.ingredients.find(function(item) {
-      return item.type === 'bun'  }), 
-  [props]);
+      burger.ingredients.find(function(item) {
+        return item.type === 'bun'}),
+  [burger]);
 
   const filterNoBuns = React.useMemo(
     () =>
-    props.ingredients
-      .filter(function(item) {
+      burger.ingredients.filter(function(item) {
         return item.type !== 'bun'}),
-  [props]
+  [burger]
   );
 
-  const bun = (text, price, image, topOrBottom) => {
-
+  function bun (name, priceBun, imageBun, topOrBottom) {
+    let pos ='';
+    topOrBottom === 'top' ? pos = 'верх' : pos = 'низ';
     return (
       <ConstructorElement
           type = {topOrBottom}
           isLocked = 'true'
-          text={`${text} (верх)`}
-          price={price}
-          thumbnail={image}
+          text={`${name} (${pos})`}
+          price={priceBun}
+          thumbnail={imageBun}
         />
     )
   }
@@ -36,15 +42,15 @@ const ConstructorElementsList = (props) => {
   return (
 
     <ul className={`${styles['constructor-elements-list__list']}`}>
-     {bun && <li className={`${styles['constructor-elements-list__item']}  pr-4`} key={bun} id={bun._id} name='ingredient'>
-        {bun(findBun.name,findBun.price, findBun.image, findBun.image,'top')}
+     {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id} >
+        {bun(findBun.name,findBun.price, findBun.image,'top')}
       </li> }
      
       { <ul className={styles['constructor-elements-list__list-ingredients']}>
       {filterNoBuns
         .map(function (item) {
           return (
-            <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} name='ingredient'>
+            <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} onClick={()=>deleteIngredient(item._id)}>
               <DragIcon />
               <ConstructorElement
                 text={item.name}
@@ -55,15 +61,11 @@ const ConstructorElementsList = (props) => {
           )
         })}
         </ul>}
-      {bun && <li className={`${styles['constructor-elements-list__item']} pr-4`} key={bun} id={bun._id} name='ingredient'>
-        {bun(findBun.name,findBun.price, findBun.image, findBun.image,'bottom')}
+      {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id}>
+        {bun(findBun.name,findBun.price, findBun.image,'bottom')}
       </li> }
     </ul>
   )
 }
-
-ConstructorElementsList.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
-}; 
 
 export default ConstructorElementsList;
