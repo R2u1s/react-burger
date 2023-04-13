@@ -7,27 +7,44 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { DataContext } from '../../services/dataContext';
-import { PriceContext } from '../../services/priceContext';
 
 function BurgerConstructor(){
 
+  //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
+  const { burger } = React.useContext(DataContext); 
+  
+  // формируем список ингредиентов бургера: булка отдельно, соусы начинки отдельно. Его забрасываем в компонент отрисовки
+  const [ orderList, setOrderList] = React.useState(
+    {
+      bun: burger.ingredients.find(function(item) {
+          return item.type === 'bun'}),
+      ingredients: burger.ingredients.filter(function(item) {
+          return item.type !== 'bun'})
+    }
+  );
+  
+  // функция удаления ингредиента из списка в заказе (её пробрасываем в компонент отрисовывающий ингредиенты)
+  function deleteIngredient(id) {
+    setOrderList({ ...orderList, ingredients: orderList.ingredients.filter(item => item._id !== id)});
+  }
+
   const [ totalPrice, setTotalPrice ] = React.useState(null);
   const [ modalActive, setModalActive ] = React.useState(false);
-  const { burger } = React.useContext(DataContext);
-
+  
+  //подсчет общей суммы заказа
   React.useEffect(
     () => {
       let total = 0;
-      burger.ingredients.map(item => (total += item.price));
+      orderList.ingredients.map(item => (total += item.price));
+      total = total + 2*orderList.bun.price;
       setTotalPrice(total);
     },
-    [burger, setTotalPrice]
+    [orderList, setTotalPrice]
   );
 
   return (
-    <PriceContext.Provider value={{totalPrice, setTotalPrice}}>
     <section className={`${styles['burger-constructor']} pt-15`}>
-      <ConstructorElementsList className={'mb-10'}/>
+      <ConstructorElementsList orderList={orderList} deleteIngredient={deleteIngredient} className={'mb-10'}/>
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
           <p className="text text_type_digits-medium">{totalPrice}</p>
@@ -46,7 +63,6 @@ function BurgerConstructor(){
         } />
       </Modal>
     </section>
-    </PriceContext.Provider>
   );
 }
 
