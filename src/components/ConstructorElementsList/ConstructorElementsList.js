@@ -3,7 +3,7 @@ import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const ConstructorElementsList = ({orderList, deleteIngredient}) => {
+const ConstructorElementsList = ({orderList, deleteIngredient, priceChange}) => {
 
   //отрисовка булки снизу сверху одной константой
   const bun = (name, priceBun, imageBun, topOrBottom) => {
@@ -31,7 +31,10 @@ const ConstructorElementsList = ({orderList, deleteIngredient}) => {
       {orderList.ingredients
         .map(function (item) {
           return (
-            <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} onClick={()=>deleteIngredient(item._id)}>
+            <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} onClick={()=>{
+              deleteIngredient(item._id);
+              priceChange({type: "remove", priceOfItem: item.price})
+            }}>
               <DragIcon />
               <ConstructorElement
                 text={item.name}
