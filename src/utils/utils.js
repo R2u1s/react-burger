@@ -5,8 +5,9 @@ const checkResponse = (res) => {
     return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-function request(url) {
-    return fetch(url).then(res => checkResponse(res));
-}
+  // универсальная функция запроса с проверкой ответа
+  function request(url, options) {
+    return fetch(url, options).then(checkResponse)
+  }
 
 export default request;
