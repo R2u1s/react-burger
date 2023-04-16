@@ -7,57 +7,20 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { DataContext } from '../../services/dataContext';
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "add":
-      return { totalPrice: state.totalPrice + action.priceOfItem};
-    case "remove":
-      return { totalPrice: state.totalPrice - action.priceOfItem };
-    default:
-      throw new Error(`Wrong value`);
-  }
-}
-
 function BurgerConstructor(){
 
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { burger } = React.useContext(DataContext); 
   
-  // формируем список ингредиентов бургера: булка отдельно, соусы начинки отдельно. Его забрасываем в компонент отрисовки
-  const [ orderList, setOrderList] = React.useState(
-    {
-      bun: burger.ingredients.find(function(item) {
-          return item.type === 'bun'}),
-      ingredients: burger.ingredients.filter(function(item) {
-          return item.type !== 'bun'})
-    }
-  );
-  
-  // функция удаления ингредиента из списка в заказе (её пробрасываем в компонент отрисовывающий ингредиенты)
-  function deleteIngredient(id) {
-    setOrderList({ ...orderList, ingredients: orderList.ingredients.filter(item => item._id !== id)});
-  }
+  const { orderInfo } = React.useContext(DataContext); 
 
   const [ modalActive, setModalActive ] = React.useState(false);
 
-  function initTotalPrice() {
-    let total = 0;
-    orderList.ingredients.map(item => (total += item.price));
-    total = total + 2*orderList.bun.price;
-    return total;
-  }
-  
-  //подсчет общей суммы заказа
-  const priceInitialValue = { totalPrice: initTotalPrice()};
-
-  const [totalPrice, priceDispatcher] = React.useReducer(reducer, priceInitialValue, undefined);
-  {console.log(totalPrice)}
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
-      <ConstructorElementsList orderList={orderList} deleteIngredient={deleteIngredient} priceChange={priceDispatcher} className={'mb-10'}/>
+      <ConstructorElementsList className={'mb-10'}/>
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
-          <p className="text text_type_digits-medium">{totalPrice.totalPrice}</p>
+          <p className="text text_type_digits-medium">{orderInfo.totalPrice}</p>
           <div className={`${styles['burger-constructor__currency-icon']}`}> 
             <CurrencyIcon type="primary" />
           </div>

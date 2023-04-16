@@ -3,50 +3,91 @@ import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main'
 import request from '../../utils/utils';
 import { DataContext } from '../../services/dataContext';
+import { IngredientsContext } from '../../services/IngredientsContext';
 
 const API_DATA = `https://norma.nomoreparties.space/api/ingredients`;
 
+function reducer(state, action) {
+
+  switch (action.type) {
+    case "add":
+      return { totalPrice: state.totalPrice + action.currentIngredient.price,
+               ingredients: {
+               ...state.ingredients,
+               otherIngredients: [...state.ingredients.otherIngredients,action.currentIngredient]
+             } };
+    case "remove":
+      return { totalPrice: state.totalPrice - action.currentIngredient.price,
+               ingredients: {...state.ingredients,
+               otherIngredients: state.ingredients.otherIngredients.filter(item => item._id !== action.currentIngredient._id)
+             } };
+    case "init":
+      return { totalPrice: action.currentIngredient.totalPrice,
+               ingredients: action.currentIngredient.ingredients
+      }
+    default:
+      throw new Error(`Wrong value`);
+  }
+}
+
 function App(){
 
-/*   const [state, setState] = React.useState({ 
-    ingredientsData: null,
-    hasError: false,
-    loading: true
-  }) */
-
-  const [burger, setIngredients] = React.useState({ 
-    ingredients: null,
+  const [ingredients, setIngredients] = React.useState({ 
+    ingredients: [],
     hasError: false,
     loading: true
   });
-/*   const [itemsRequest, setItemsRequest] = React.useState(false); */
 
-  React.useEffect(() => {
-    const getIngredientsData = async () => {
-      setIngredients({...burger.ingredients, loading: true});
-      await request(API_DATA)
+  const getIngredientsData = async () => {
+      setIngredients({...ingredients, loading: true});
+      return await request(API_DATA)
       .then(res => {
         if (res.success) {
           setIngredients({ ingredients: res.data, hasError: false, loading: false });
+          return res;
         }
       })
       .catch(error => {
-        setIngredients({ ...burger.ingredients, hasError: true, loading: false });
+        setIngredients({ ...ingredients, hasError: true, loading: false });
         console.log(error);
       });
     }
 
-    getIngredientsData();
-  }, [])
-   
+React.useEffect(()=>{
+  let total = 0;
+  let bun = {};
+  let otherIngredients = [];
+ 
+  getIngredientsData().then(res => {
+    
+    if (res.success) {
+      const ingredientsData = res.data;
+      bun = ingredientsData.find(function(item) {
+        return item.type === 'bun'});
+      otherIngredients = ingredientsData.filter(function(item) {
+          return item.type !== 'bun'});
+      otherIngredients.map(item => (total += item.price));
+      total = total + 2*bun.price;
+      const initIngredients = {
+        bun: bun,
+        otherIngredients: otherIngredients
+      }
+      orderDispatcher({type: "init", currentIngredient:{totalPrice: total, ingredients: initIngredients} });
+    };
+  })
+},[]);
 
+  const [orderInfo, orderDispatcher] = React.useReducer(reducer,{ totalPrice: null, ingredients: {bun:{},otherIngredients:[]}},undefined);
+  
   return (
-    <DataContext.Provider value={{burger, setIngredients}}>
-      <AppHeader />
-      {burger.loading && 'Загрузка...'}
-      {burger.hasError && 'Произошла ошибка'}
-      {!burger.loading && <Main />}
-    </DataContext.Provider>
+    <IngredientsContext.Provider value={{ingredients, setIngredients}}>
+      <DataContext.Provider value={{orderInfo, orderDispatcher}}>
+        <AppHeader />
+        {ingredients.loading && 'Загрузка...'}
+        {ingredients.hasError && 'Произошла ошибка'}
+        {!ingredients.loading && <Main />}
+      </DataContext.Provider>
+    </IngredientsContext.Provider>
   );
 }
 

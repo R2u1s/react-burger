@@ -1,16 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.css';
 import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { ingredientObjectType } from '../../utils/data';
-import { DataContext } from '../../services/dataContext';
+import { IngredientsContext } from '../../services/IngredientsContext';
 
 function BurgerIngredients() {
  
-  const { burger } = React.useContext(DataContext);
+  const { ingredients } = React.useContext(IngredientsContext);
 
   const [modalActive, setModalActive] = React.useState(false);
   const [modalValues, setIngredientValues] = React.useState({
@@ -23,13 +21,13 @@ function BurgerIngredients() {
 
   const filteredData = React.useMemo(
     () => {
-      const buns = burger.ingredients.filter(function(item) {
+      const buns = ingredients.ingredients.filter(function(item) {
         return item.type === 'bun'
       });
-      const sauces = burger.ingredients.filter(function(item) {
+      const sauces = ingredients.ingredients.filter(function(item) {
         return item.type === 'sauce'
       });
-      const mains = burger.ingredients.filter(function(item) {
+      const mains = ingredients.ingredients.filter(function(item) {
         return item.type === 'main'
       });
       return {buns,sauces,mains}
