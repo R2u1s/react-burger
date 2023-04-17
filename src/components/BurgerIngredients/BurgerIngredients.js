@@ -3,6 +3,7 @@ import styles from './BurgerIngredients.module.css';
 import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
 import Modal from '../Modal/Modal';
+import { useModal } from '../../hooks/useModal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { IngredientsContext } from '../../services/IngredientsContext';
 
@@ -10,13 +11,13 @@ function BurgerIngredients() {
  
   const { ingredients } = React.useContext(IngredientsContext);
 
-  const [modalActive, setModalActive] = React.useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [modalValues, setIngredientValues] = React.useState({
   });
 
   function openIngredientPreview(ingredient) {
       setIngredientValues(ingredient);
-      setModalActive(true);
+      openModal();
   }
 
   const filteredData = React.useMemo(
@@ -46,7 +47,7 @@ function BurgerIngredients() {
           <BurgerIngredientsGroup ingredient={{type:"Начинка", list: filteredData.mains}} openModal={openIngredientPreview}/>
         </ul>
       </section>
-      <Modal active={modalActive} setActive={setModalActive}>
+      <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>
         <IngredientDetails ingredientDetails={modalValues} />
       </Modal>
     </>

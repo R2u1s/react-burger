@@ -6,12 +6,10 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
 function Main() {
   return (
-    <>
       <main className={`${styles.main}`}>
         <BurgerIngredients />
         <BurgerConstructor />
       </main>
-    </>
   );
 }
 

@@ -1,11 +1,9 @@
 import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main'
-import request from '../../utils/utils';
+import { request } from '../../utils/utils';
 import { DataContext } from '../../services/dataContext';
 import { IngredientsContext } from '../../services/IngredientsContext';
-
-const API_DATA = `https://norma.nomoreparties.space/api/ingredients`;
 
 function reducer(state, action) {
 
@@ -40,7 +38,7 @@ function App(){
 
   const getIngredientsData = async () => {
       setIngredients({...ingredients, loading: true});
-      return await request(API_DATA)
+      return await request("ingredients")
       .then(res => {
         if (res.success) {
           setIngredients({ ingredients: res.data, hasError: false, loading: false });

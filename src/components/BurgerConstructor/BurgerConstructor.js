@@ -4,19 +4,17 @@ import ConstructorElementsList from '../ConstructorElementsList/ConstructorEleme
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
+import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { DataContext } from '../../services/dataContext';
-import request from '../../utils/utils';
-
-const API_POST = `https://norma.nomoreparties.space/api/orders`;
+import { request } from '../../utils/utils';
 
 function BurgerConstructor(){
 
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
   
   const { orderInfo } = React.useContext(DataContext); 
-
-  const [ modalActive, setModalActive ] = React.useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const [ orderSubmit, setOrderSubmit ] = React.useState({
     id: "---",
@@ -33,10 +31,10 @@ function BurgerConstructor(){
   }
 
   async function submitHandler(){
-    setModalActive(true);
+    openModal();
     let orderStatus = 'Заказ отправляется';
 
-    return await request(API_POST, {
+    return await request("orders", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -70,7 +68,7 @@ function BurgerConstructor(){
         </div>
         <Button htmlType="button" type="primary" size="large" onClick={submitHandler}>Оформить заказ</Button>
       </div>
-      <Modal active={modalActive} setActive={setModalActive}>
+      <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>
         <OrderDetails orderDetails={orderSubmit} />
       </Modal>
     </section>

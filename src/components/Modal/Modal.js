@@ -9,27 +9,28 @@ const modalRoot = document.getElementById("modal");
 
 const Modal = (props) => {
 
-  const {active, setActive, children} = props;
+  const {active, setActive, setClose, children} = props;
   
   const escFunction = React.useCallback((event) => {
     if (event.key === "Escape") {
-      setActive(false);
+      setClose();
     }
   }, []);
 
   React.useEffect(() => {
     if (active) {
-      document.addEventListener("keydown", escFunction);
-    } else {
-      document.removeEventListener("keydown", escFunction);
-    }
+      document.addEventListener("keydown", escFunction)
+    } 
+    return () => {
+      document.removeEventListener("keydown", escFunction)
+    };
   }, [active]);
   
   return ReactDOM.createPortal(
     (
-    <ModalOverlay active={active} setActive={setActive} children={children} onClick={() => setActive(false)}>
+    <ModalOverlay active={active} setActive={setActive} setClose={setClose} children={children} onClick={() => setClose()}>
       <div className={active ? `${styles.modal__container} ${styles.modal__contVisibility_active}` : `${styles.modal__container}`} onClick={(e) => e.stopPropagation()}>
-        <button className={styles['modal__close-button']} onClick={() => setActive(false)}>
+        <button className={styles['modal__close-button']} onClick={() => setClose()}>
           <CloseIcon type="primary" />  
         </button>
         {children}
@@ -42,7 +43,8 @@ const Modal = (props) => {
 Modal.propTypes = {
   active: PropTypes.bool,
   children: PropTypes.object,
-  setActive: PropTypes.func
+  setActive: PropTypes.func,
+  setClose: PropTypes.func
 }; 
 
 export default Modal;
