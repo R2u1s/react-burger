@@ -1,0 +1,60 @@
+.ingredient-details {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template:
+    'title'
+    '.' 0px
+    'picture'
+    '.' calc(var(--offset-base-size)  * 4)
+    'name'
+    '.' calc(var(--offset-base-size)  * 8)
+    'values'
+    / 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ingredient-details__title {
+  margin:0;
+  grid-area: title;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+
+.ingredient-details__image {
+  margin:0 auto;
+  grid-area: picture;
+  display: flex;
+  width: 480px;
+  height: 240px;
+}
+
+.ingredient-details__name {
+  margin:0;
+  grid-area: name;
+  text-align: center;
+}
+
+.ingredient-details__values {
+  margin:0;
+  padding:0;
+  list-style-type: none;
+  height: 56px;
+  grid-area: values;
+  display: flex;
+  flex-flow: row;
+  gap: calc(var(--offset-base-size)  * 5);
+  justify-content: space-between;
+}
+
+.ingredient-details__value {
+  margin:0;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+}

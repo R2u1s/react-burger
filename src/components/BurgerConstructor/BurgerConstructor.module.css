@@ -1,0 +1,33 @@
+.burger-constructor {
+  margin: 0;
+  width: 600px;
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+}
+
+.burger-constructor__overall-flex {
+  margin:0;
+  display: flex;
+  flex-flow: row;
+  gap: calc(var(--offset-base-size)  * 10);
+  justify-content: end;
+  justify-self: end;
+  align-items: center;
+}
+
+.burger-constructor__price {
+  margin:0;
+  display: flex;
+  flex-flow: row;
+  gap: calc(var(--offset-base-size)  * 2);
+  height: 36px;
+  align-items: center;
+  align-self: center;
+}
+
+.burger-constructor__currency-icon {
+  transform: scale(1.375);
+  display: flex;
+  align-items: center;
+}

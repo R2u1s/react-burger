@@ -1,0 +1,46 @@
+.constructor-elements-list__item {
+  margin:0;
+  width: 568px;
+  display: flex;
+  flex-flow: row;
+  gap: calc(var(--offset-base-size)  * 2);
+  justify-content: end;
+  align-items: center;
+  cursor: pointer;
+}
+
+.constructor-elements-list__list {
+  margin: 0;
+  margin-bottom: calc(var(--offset-base-size)  * 10);
+  padding: 0;
+  display: flex;
+  flex-flow: column;
+  gap: calc(var(--offset-base-size)  * 4);
+  box-sizing: border-box;
+}
+
+.constructor-elements-list__list-ingredients {
+  margin: 0;
+  padding: 0;
+  width: min-content;
+  padding-left: calc(var(--offset-base-size)  * 4);
+  padding-right: calc(var(--offset-base-size)  * 2);
+  max-height: 464px;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column;
+  gap: calc(var(--offset-base-size)  * 4);
+  box-sizing: border-box;
+}
+
+.constructor-elements-list__list-ingredients::-webkit-scrollbar {
+  width: calc(var(--offset-base-size)  * 2);           /* ширина scrollbar */
+}
+  
+.constructor-elements-list__list-ingredients::-webkit-scrollbar-track {
+  background: transparent;        /* цвет дорожки */
+}
+
+.constructor-elements-list__list-ingredients::-webkit-scrollbar-thumb {
+  background-color: #8585AD;    /* цвет плашки */
+}

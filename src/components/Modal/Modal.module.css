@@ -1,0 +1,31 @@
+.modal__container {
+  box-sizing: border-box;
+  margin:0;
+  position: relative;
+  padding: 40px 40px 60px 40px;
+  width: 720px;
+  background-color: #1C1C21;
+  border-radius: 40px;
+  z-index: 1;
+  visibility: hidden;
+  opacity:0;
+  transition: var(--common-transition);
+}
+
+.modal__contVisibility_active {
+  opacity:1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.modal__close-button {
+  margin:0;
+  padding: 0;
+  position:absolute;
+  top:calc(var(--offset-base-size)  * 15);
+  right:calc(var(--offset-base-size)  * 10);
+  background-color: #1C1C21;
+  border: none;
+  cursor: pointer;
+  transform: scale(1.5);
+}
