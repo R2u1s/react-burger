@@ -4,10 +4,10 @@ import styles from './ModalOverlay.module.css';
 
 const ModalOverlay = (props) => {
   
-  const {active, setActive, setClose, children} = props;
+  const {active, setClose, children} = props;
 
   return (
-    <div className={active ? `${styles.modalOverlay} ${styles.modalOverlay__visibility_active}` : `${styles.modalOverlay}`} onClick={() => setClose()}>
+    <div className={active ? `${styles.modalOverlay} ${styles.modalOverlay__visibility_active}` : `${styles.modalOverlay}`} onClick={setClose}>
         {children}
     </div>
   );
@@ -16,7 +16,6 @@ const ModalOverlay = (props) => {
 ModalOverlay.propTypes = {
   active: PropTypes.bool,
   children: PropTypes.object,
-  setActive: PropTypes.func,
   setClose: PropTypes.func
 }; 
 

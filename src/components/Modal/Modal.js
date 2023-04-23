@@ -9,7 +9,7 @@ const modalRoot = document.getElementById("modal");
 
 const Modal = (props) => {
 
-  const {active, setActive, setClose, children} = props;
+  const {active, setClose, children} = props;
   
   const escFunction = React.useCallback((event) => {
     if (event.key === "Escape") {
@@ -28,9 +28,9 @@ const Modal = (props) => {
   
   return ReactDOM.createPortal(
     (
-    <ModalOverlay active={active} setActive={setActive} setClose={setClose} children={children} onClick={() => setClose()}>
+    <ModalOverlay active={active} setClose={setClose} children={children} onClick={setClose}>
       <div className={active ? `${styles.modal__container} ${styles.modal__contVisibility_active}` : `${styles.modal__container}`} onClick={(e) => e.stopPropagation()}>
-        <button className={styles['modal__close-button']} onClick={() => setClose()}>
+        <button className={styles['modal__close-button']} onClick={setClose}>
           <CloseIcon type="primary" />  
         </button>
         {children}
