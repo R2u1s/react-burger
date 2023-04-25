@@ -3,28 +3,30 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Tabs.module.css';
 import { ingredientTypes } from '../BurgerIngredients/BurgerIngredients';
 
-function Tabs({scrollTab}) {
+function Tabs({scrollTab,onClickTab}) {
     const [current, setCurrent] = React.useState(ingredientTypes.bun);
     
     //Активируем нужный таб(при скролле) - первый видимый в списке
     React.useEffect(()=>{
-       setCurrent(Object.keys(scrollTab).find(item => scrollTab[item] === true))
+      //Проверяем есть ли Tab со значением 'true', если нет, то возвращаем текущий
+      const moveToTab = Object.keys(scrollTab).find(item => scrollTab[item] === true);
+      moveToTab ? setCurrent(moveToTab) : setCurrent(current);
     },[scrollTab]);
     ////
-
-    const onClickAction = (tab) => {
-      console.log(tab);
+    
+    function handleClick(tab){
+      onClickTab(tab);
     }
 
     return (
       <div className={`${styles['tabs']} mb-10`}>
-        <Tab value={ingredientTypes.bun} active={current === ingredientTypes.bun} onClick={onClickAction}>
+        <Tab value={ingredientTypes.bun} active={current === ingredientTypes.bun} onClick={handleClick}>
           {ingredientTypes.bun}
         </Tab>
-        <Tab value={ingredientTypes.sauce} active={current === ingredientTypes.sauce} onClick={onClickAction}>
+        <Tab value={ingredientTypes.sauce} active={current === ingredientTypes.sauce} onClick={handleClick}>
           {ingredientTypes.sauce}
         </Tab>
-        <Tab value={ingredientTypes.main} active={current === ingredientTypes.main} onClick={onClickAction}>
+        <Tab value={ingredientTypes.main} active={current === ingredientTypes.main} onClick={handleClick}>
           {ingredientTypes.main}
         </Tab>
       </div>

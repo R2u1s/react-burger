@@ -49,15 +49,31 @@ function BurgerIngredients() {
   });
   /////
 
+  //Функция клика по табу. Переход к группе ингредиентов и подсвечивание нужного таба
+  const [ refState, setRefState] = React.useState({});
+
+  const onClickTab = (tab) => {
+    const element = refState[tab];
+    if (element) {
+      element.scrollIntoView({behavior: "smooth",block: "start"});
+      setScrollTab((scrollTab)=>{
+        Object.keys(scrollTab).forEach(item => {
+          if (item === tab) {scrollTab[item]=true;} else {scrollTab[item]=false;}
+        })
+        return scrollTab
+      });
+    }
+  }
+
   return (
     <>
       <section className={styles['burger-ingredients']}>
         <h1 className={`mb-5 text text_type_main-large`}>Соберите бургер</h1>
-        <Tabs scrollTab={scrollTab}/>
+        <Tabs scrollTab={scrollTab} setScrollTab={setScrollTab} onClickTab={onClickTab} />
         <ul className={styles['burger-ingredients__ingredients']} >
-          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} ingredient={{type:ingredientTypes.bun, list: filteredData.buns}} openModal={openIngredientPreview}/>
-          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} ingredient={{type:ingredientTypes.sauce, list: filteredData.sauces}} openModal={openIngredientPreview}/>
-          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} ingredient={{type:ingredientTypes.main, list: filteredData.mains}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} refState={refState} setRefState={setRefState} ingredient={{type:ingredientTypes.bun, list: filteredData.buns}} openModal={openIngredientPreview} />
+          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} refState={refState} setRefState={setRefState} ingredient={{type:ingredientTypes.sauce, list: filteredData.sauces}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} refState={refState} setRefState={setRefState} ingredient={{type:ingredientTypes.main, list: filteredData.mains}} openModal={openIngredientPreview}/>
         </ul>
       </section>
       <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>

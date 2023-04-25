@@ -6,27 +6,42 @@ import BurgerIngredientsItem from '../BurgerIngredientsItem/BurgerIngredientsIte
 import { ingredientObjectType } from '../../utils/data';
 import { useInView } from "react-intersection-observer";
 
-const BurgerIngredientsGroup = (props) => {
-
-  //Отслеживание какие группы ингредиентов видны
-  const { ref, inView } = useInView({
-    threshold: 0.15
-  });
+const BurgerIngredientsGroup = ({scrollTab,setScrollTab,refState,setRefState,ingredient,openModal}) => {
   
+  //Отслеживание какие группы ингредиентов видны
+  const ref = React.useRef();
+  const { ref: inViewRef, inView } = useInView({
+    threshold: 0.25
+  });
+
   React.useEffect(()=>{
-    props.setScrollTab({
-      ...props.scrollTab,
-      [props.ingredient.type]: inView
+    setScrollTab({
+      ...scrollTab,
+      [ingredient.type]: inView
     });
+    setRefState({
+      ...refState,
+      [ingredient.type]:ref.current
+    })
   },[inView]);
   ////
 
+  const setRefs = React.useCallback(
+    (node) => {
+      // Ref's from useRef needs to have the node assigned to `current`
+      ref.current = node;
+      // Callback refs, like the one from `useInView`, is a function that takes the node as an argument
+      inViewRef(node);
+    },
+    []
+  );
+
   return (
-    <li>
-      <p className="text text_type_main-medium">{props.ingredient.type}</p>
-      <ul ref={ref} className={`${styles['burger-ingredients-group__group']} pl-4 pr-2 pt-6 pb-10`}>
-        {props.ingredient.list.map(function (item) {
-          return <BurgerIngredientsItem item={item} key={item._id} openModal={props.openModal}/>
+    <li id={ingredient.type} ref={setRefs}>
+      <p className="text text_type_main-medium">{ingredient.type}</p>
+      <ul className={`${styles['burger-ingredients-group__group']} pl-4 pr-2 pt-6 pb-10`}>
+        {ingredient.list.map(function (item) {
+          return <BurgerIngredientsItem item={item} key={item._id} openModal={openModal}/>
         })}
       </ul>
     </li>
