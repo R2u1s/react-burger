@@ -1,19 +1,27 @@
 import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './Tabs.module.css'
+import styles from './Tabs.module.css';
+import { ingredientTypes } from '../BurgerIngredients/BurgerIngredients';
 
-function Tabs() {
-    const [current, setCurrent] = React.useState('one');
+function Tabs({handleTab}) {
+    const [current, setCurrent] = React.useState(ingredientTypes.bun);
+    
+    //Активируем нужный таб(при скролле) - первый видимый в списке
+    React.useEffect(()=>{
+       setCurrent(Object.keys(handleTab).find(item => handleTab[item] === true))
+    },[handleTab]);
+    ////
+
     return (
       <div className={`${styles['tabs']} mb-10`}>
-        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-          Булки
+        <Tab value={ingredientTypes.bun} active={current === ingredientTypes.bun} onClick={setCurrent}>
+          {ingredientTypes.bun}
         </Tab>
-        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-          Соусы
+        <Tab value={ingredientTypes.sauce} active={current === ingredientTypes.sauce} onClick={setCurrent}>
+          {ingredientTypes.sauce}
         </Tab>
-        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-          Начинки
+        <Tab value={ingredientTypes.main} active={current === ingredientTypes.main} onClick={setCurrent}>
+          {ingredientTypes.main}
         </Tab>
       </div>
     )

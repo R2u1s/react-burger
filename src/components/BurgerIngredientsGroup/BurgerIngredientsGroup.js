@@ -4,20 +4,32 @@ import PropTypes from 'prop-types';
 import styles from './BurgerIngredientsGroup.module.css';
 import BurgerIngredientsItem from '../BurgerIngredientsItem/BurgerIngredientsItem';
 import { ingredientObjectType } from '../../utils/data';
-
+import { useInView } from "react-intersection-observer";
 
 const BurgerIngredientsGroup = (props) => {
+
+  //Отслеживание какие группы ингредиентов видны
+  const { ref, inView } = useInView({
+    threshold: 0.15
+  });
+  
+  React.useEffect(()=>{
+    props.setHandleTab({
+      ...props.handleTab,
+      [props.ingredient.type]: inView
+    });
+  },[inView]);
+  ////
+
   return (
-    <>
     <li>
       <p className="text text_type_main-medium">{props.ingredient.type}</p>
-      <ul className={`${styles['burger-ingredients-group__group']} pl-4 pr-2 pt-6 pb-10`}>
+      <ul ref={ref} className={`${styles['burger-ingredients-group__group']} pl-4 pr-2 pt-6 pb-10`}>
         {props.ingredient.list.map(function (item) {
           return <BurgerIngredientsItem item={item} key={item._id} openModal={props.openModal}/>
         })}
       </ul>
     </li>
-    </>
   );
 }
 
