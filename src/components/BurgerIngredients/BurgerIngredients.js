@@ -50,6 +50,7 @@ function BurgerIngredients() {
   /////
 
   //Функция клика по табу. Переход к группе ингредиентов и подсвечивание нужного таба
+  //Стэйт реф - ссылка на группу ингредиентов в DOM 
   const [ refState, setRefState] = React.useState({});
 
   const onClickTab = (tab) => {
