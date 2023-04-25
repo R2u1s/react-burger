@@ -11,14 +11,16 @@ const BurgerIngredientsGroup = ({scrollTab,setScrollTab,refState,setRefState,ing
   //Отслеживание какие группы ингредиентов видны
   const ref = React.useRef();
   const { ref: inViewRef, inView } = useInView({
-    threshold: 0
+    threshold: 0.2
   });
 
   React.useEffect(()=>{
+    //изменение стэйта видимости групп
     setScrollTab({
       ...scrollTab,
       [ingredient.type]: inView
     });
+    //получение рефов - это надо по-другому как-то сделать
     setRefState({
       ...refState,
       [ingredient.type]:ref.current
@@ -37,8 +39,8 @@ const BurgerIngredientsGroup = ({scrollTab,setScrollTab,refState,setRefState,ing
   );
 
   return (
-    <li ref={setRefs}>
-      <p className="text text_type_main-medium">{ingredient.type}</p>
+    <li>
+      <p ref={setRefs} className="text text_type_main-medium">{ingredient.type}</p>
       <ul className={`${styles['burger-ingredients-group__group']} pl-4 pr-2 pt-6 pb-10`}>
         {ingredient.list.map(function (item) {
           return <BurgerIngredientsItem item={item} key={item._id} openModal={openModal}/>
