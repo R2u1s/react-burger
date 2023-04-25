@@ -42,7 +42,7 @@ function BurgerIngredients() {
   );
 
   //Состояние отображаемой группы ингредиентов для активации нужного таба по скроллу
-  const [handleTab, setHandleTab] = React.useState({
+  const [scrollTab, setScrollTab] = React.useState({
     [ingredientTypes.bun]: true,
     [ingredientTypes.sauce]: false,
     [ingredientTypes.main]: false,
@@ -53,11 +53,11 @@ function BurgerIngredients() {
     <>
       <section className={styles['burger-ingredients']}>
         <h1 className={`mb-5 text text_type_main-large`}>Соберите бургер</h1>
-        <Tabs handleTab={handleTab}/>
+        <Tabs scrollTab={scrollTab}/>
         <ul className={styles['burger-ingredients__ingredients']} >
-          <BurgerIngredientsGroup handleTab={handleTab} setHandleTab={setHandleTab} ingredient={{type:ingredientTypes.bun, list: filteredData.buns}} openModal={openIngredientPreview}/>
-          <BurgerIngredientsGroup handleTab={handleTab} setHandleTab={setHandleTab} ingredient={{type:ingredientTypes.sauce, list: filteredData.sauces}} openModal={openIngredientPreview}/>
-          <BurgerIngredientsGroup handleTab={handleTab} setHandleTab={setHandleTab} ingredient={{type:ingredientTypes.main, list: filteredData.mains}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} ingredient={{type:ingredientTypes.bun, list: filteredData.buns}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} ingredient={{type:ingredientTypes.sauce, list: filteredData.sauces}} openModal={openIngredientPreview}/>
+          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} ingredient={{type:ingredientTypes.main, list: filteredData.mains}} openModal={openIngredientPreview}/>
         </ul>
       </section>
       <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>

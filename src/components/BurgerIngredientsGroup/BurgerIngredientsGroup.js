@@ -14,8 +14,8 @@ const BurgerIngredientsGroup = (props) => {
   });
   
   React.useEffect(()=>{
-    props.setHandleTab({
-      ...props.handleTab,
+    props.setScrollTab({
+      ...props.scrollTab,
       [props.ingredient.type]: inView
     });
   },[inView]);
