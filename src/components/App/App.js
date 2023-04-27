@@ -3,7 +3,6 @@ import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main'
 import { request } from '../../utils/utils';
 import { DataContext } from '../../services/dataContext';
-import { IngredientsContext } from '../../services/IngredientsContext';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/app';
@@ -40,7 +39,7 @@ function reducer(state, action) {
 function App() {
   const dispatch = useDispatch();
 
-  const {ingredientsList, selectedIngredients, currentIngredient, orderInfoNew, ingredientsRequest, ingredientsFailed } = useSelector(store => ({
+  const { ingredientsList, selectedIngredients, currentIngredient, orderInfoNew, ingredientsRequest, ingredientsFailed } = useSelector(store => ({
     ingredientsList: store.burger.ingredientsList,
     selectedIngredients: store.burger.selectedIngredients,
     currentIngredient: store.burger.currentIngredient,
@@ -48,60 +47,17 @@ function App() {
     ingredientsRequest: store.burger.ingredientsRequest,
     ingredientsFailed: store.burger.ingredientsFailed
   }));
-  
+
   React.useEffect(
     () => {
       dispatch(getIngredients());
     },
     [dispatch]
   );
-  
-  const [ingredients, setIngredients] = React.useState({
-    ingredients: [],
-    hasError: false,
-    loading: true
-  });
-
-  const getIngredientsData = async () => {
-    setIngredients({ ...ingredients, loading: true });
-    return await request("ingredients")
-      .then(res => {
-        setIngredients({ ingredients: res.data, hasError: false, loading: false });
-        return res;
-      })
-      .catch(error => {
-        setIngredients({ ...ingredients, hasError: true, loading: false });
-        console.log(error);
-      });
-  }
-
-  React.useEffect(() => {
-    let total = 0;
-    let bun = {};
-    let otherIngredients = [];
-
-    getIngredientsData().then(res => {
-
-      const ingredientsData = res.data;
-      bun = ingredientsData.find(function (item) {
-        return item.type === 'bun'
-      });
-      otherIngredients = ingredientsData.filter(function (item) {
-        return item.type !== 'bun'
-      });
-      otherIngredients.map(item => (total += item.price));
-      total = total + 2 * bun.price;
-      const initIngredients = {
-        bun: bun,
-        otherIngredients: otherIngredients
-      }
-      orderDispatcher({ type: "init", currentIngredient: { totalPrice: total, ingredients: initIngredients } });
-    })
-  }, []);
 
   const [orderInfo, orderDispatcher] = React.useReducer(reducer, { totalPrice: null, ingredients: { bun: {}, otherIngredients: [] } }, undefined);
 
-/*   const content = React.useMemo(
+  const content = React.useMemo(
     () => {
       return ingredientsRequest ? (
         "Загрузка"
@@ -110,26 +66,13 @@ function App() {
       );
     },
     [ingredientsRequest, ingredientsList]
-  ); */
-
-  const content = React.useMemo(
-    () => {
-      return ingredients.loading ? (
-        "Загрузка"
-      ) : (
-        <Main />
-      );
-    },
-    [ingredientsRequest, ingredientsList,ingredients.loading]
   );
 
   return (
-    <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
-      <DataContext.Provider value={{ orderInfo, orderDispatcher }}>
-        <AppHeader />
-        {content}
-      </DataContext.Provider>
-    </IngredientsContext.Provider>
+    <DataContext.Provider value={{ orderInfo, orderDispatcher }}>
+      <AppHeader />
+      {content}
+    </DataContext.Provider>
   );
 }
 

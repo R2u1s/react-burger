@@ -5,7 +5,6 @@ import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsG
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { IngredientsContext } from '../../services/IngredientsContext';
 import { useSelector } from 'react-redux';
 
 export const ingredientTypes = {
