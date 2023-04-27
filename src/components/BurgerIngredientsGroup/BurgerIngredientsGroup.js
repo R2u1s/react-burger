@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredientsGroup.module.css';
 import BurgerIngredientsItem from '../BurgerIngredientsItem/BurgerIngredientsItem';
@@ -7,12 +6,12 @@ import { ingredientObjectType } from '../../utils/data';
 import { useInView } from "react-intersection-observer";
 
 const BurgerIngredientsGroup = ({scrollTab,setScrollTab,refState,setRefState,ingredient,openModal}) => {
-  
+
   //Отслеживание какие группы ингредиентов видны
   const ref = React.useRef();
   const { ref: inViewRef, inView } = useInView({
     threshold: 0.2
-  });
+  }); 
 
   React.useEffect(()=>{
     //изменение стэйта видимости групп

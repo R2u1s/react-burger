@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { IngredientsContext } from '../../services/IngredientsContext';
+import { useSelector } from 'react-redux';
 
 export const ingredientTypes = {
   bun: "Булки",
@@ -14,8 +15,11 @@ export const ingredientTypes = {
 }
 
 function BurgerIngredients() {
- 
-  const { ingredients } = React.useContext(IngredientsContext);
+
+  const {ingredientsList} = useSelector(store => ({
+    ingredientsList: store.burger.ingredientsList,
+  }));
+  
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const [modalValues, setIngredientValues] = React.useState({});
@@ -27,13 +31,13 @@ function BurgerIngredients() {
 
   const filteredData = React.useMemo(
     () => {
-      const buns = ingredients.ingredients.filter(function(item) {
+      const buns = ingredientsList.filter(function(item) {
         return item.type === 'bun'
       });
-      const sauces = ingredients.ingredients.filter(function(item) {
+      const sauces = ingredientsList.filter(function(item) {
         return item.type === 'sauce'
       });
-      const mains = ingredients.ingredients.filter(function(item) {
+      const mains = ingredientsList.filter(function(item) {
         return item.type === 'main'
       });
       return {buns,sauces,mains}
