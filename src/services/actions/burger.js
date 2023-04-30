@@ -6,6 +6,9 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const WRITE_INGREDIENT_PREVIEW = 'WRITE_INGREDIENT_PREVIEW';
 export const CLEAR_INGREDIENT_PREVIEW = 'CLEAR_INGREDIENT_PREVIEW';
 export const SET_ORDERDETAILS = 'SET_ORDERDETAILS';
+export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
+export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
+export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
 
 export const getIngredients = () => {
   return function (dispatch) {
@@ -53,3 +56,38 @@ export const setOrderDetails = ({details}) => {
     });
   }
 }
+
+export const postOrder = (ingredientsList) => {
+  return function (dispatch) {
+    dispatch({
+      type: POST_ORDER_REQUEST
+      /* orderStatus = 'Заказ отправляется'; */
+    });
+    request("orders", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "ingredients": ingredientsList
+      })
+    })
+      .then(res => {
+        if (res && res.success) {
+          dispatch({
+            type: POST_ORDER_SUCCESS,
+            orderId: res.order.number.toString()
+          });
+        } else {
+          dispatch({
+            type: POST_ORDER_FAILED
+            /* orderStatus = "Заказ не отправлен" */
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+}
+

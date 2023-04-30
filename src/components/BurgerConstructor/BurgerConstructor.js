@@ -9,6 +9,7 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import { request } from '../../utils/utils';
 import { useSelector,useDispatch } from 'react-redux';
 import { setOrderDetails } from '../../services/actions/burger';
+import { postOrder } from '../../services/actions/burger';
 
 function BurgerConstructor() {
 
@@ -28,9 +29,10 @@ function BurgerConstructor() {
     return arrayOfId;
   }
 
-  async function submitHandler() {
+  const submitHandler = () => {
     openModal();
-    let orderStatus = 'Заказ отправляется';
+    dispatch(postOrder(collectId()));
+/*     let orderStatus = 'Заказ отправляется';
 
     return await request("orders", {
       method: 'POST',
@@ -51,7 +53,7 @@ function BurgerConstructor() {
       })
       .catch(error => {
         console.log(error);
-      });
+      }); */
   }
 
   return (
