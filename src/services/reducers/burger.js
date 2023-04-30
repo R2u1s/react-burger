@@ -100,14 +100,14 @@ import { GET_INGREDIENTS_REQUEST,
           };
         } else {
           //если хотим добавить ингредиент, то проверяем есть ли он. Если есть - увеличиваем количество и добавляем в список id
-          if (action.currentIngredient._id in state.selectedIngredients.otherIngredients) {
+          if (action.currentIngredient._id in state.selectedIngredients.otherIngredientsQty) {
             return {
               ...state,
               selectedIngredients: {
                 ...state.selectedIngredients,
                 totalPrice: state.selectedIngredients.totalPrice + action.currentIngredient.price,
                 otherIngredientsQty: {
-                  ...state.selectedIngredients.otherIngredients,
+                  ...state.selectedIngredients.otherIngredientsQty,
                   [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] + 1,
                 },
                 otherIngredients: [...state.selectedIngredients.otherIngredients, action.currentIngredient]
@@ -120,8 +120,8 @@ import { GET_INGREDIENTS_REQUEST,
               selectedIngredients: {
                 ...state.selectedIngredients,
                 totalPrice: state.selectedIngredients.totalPrice + action.currentIngredient.price,
-                otherIngredients: {
-                  ...state.selectedIngredients.otherIngredients,
+                otherIngredientsQty: {
+                  ...state.selectedIngredients.otherIngredientsQty,
                   [action.currentIngredient._id]: 1
                 },
                 otherIngredients: [...state.selectedIngredients.otherIngredients, action.currentIngredient]
