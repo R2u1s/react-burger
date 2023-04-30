@@ -13,20 +13,22 @@ import { GET_INGREDIENTS_REQUEST,
  const initialState = {
     ingredientsList: [],
     currentIngredient: {},
-    selectedIngredients: {},
+
+    selectedIngredients: {
+      bun: {
+        name: "Булка не выбрана",
+        price: 0,
+        image: "https://code.s3.yandex.net/react/code/bun-02.png"
+      },
+      otherIngredients: {},
+      totalPrice: 0
+    },
 
     orderDetails: {
       id: "---",
       status: "Ожидаем подтверждение заказа",
       todo: "Подождите...",
-      ingredients: {
-        bun: {
-          name: "Булка не выбрана",
-          price: 0,
-          image: "https://code.s3.yandex.net/react/code/bun-02.png"
-        },
-        otherIngredients: []
-      },
+      ingredients: [],
       totalPrice: 0
     },
 
@@ -83,30 +85,45 @@ import { GET_INGREDIENTS_REQUEST,
         postOrderRequest: false };
       }
       case ADD_INGREDIENT: {
+        //если хотим добавить булку, то меняем выбранную булку сверху и снизу
         if (action.currentIngredient.type === 'bun') {
           return {
             ...state,
-            orderDetails: {
-              ...state.orderDetails,
-              totalPrice: state.orderDetails.totalPrice - (state.orderDetails.ingredients.bun.price*2) + (action.currentIngredient.price*2),
-              ingredients: {
-                ...state.orderDetails.ingredients,
-                bun: action.currentIngredient
-              }
+            selectedIngredients: {
+              ...state.selectedIngredients,
+              totalPrice: state.selectedIngredients.totalPrice - (state.selectedIngredients.bun.price*2) + (action.currentIngredient.price*2),
+              bun: action.currentIngredient
             }
           };
         } else {
-          return {
-            ...state,
-            orderDetails: {
-              ...state.orderDetails,
-              totalPrice: state.orderDetails.totalPrice + action.currentIngredient.price,
-              ingredients: {
-                ...state.orderDetails.ingredients,
-                otherIngredients: [...state.orderDetails.ingredients.otherIngredients, action.currentIngredient]
+          //если хотим добавить ингредиент, то проверяем есть ли он. Если есть - увеличиваем количество
+          if (action.currentIngredient._id in state.selectedIngredients.otherIngredients) {
+            return {
+              ...state,
+              selectedIngredients: {
+                ...state.selectedIngredients,
+                totalPrice: state.selectedIngredients.totalPrice + action.currentIngredient.price,
+                otherIngredients: {
+                  ...state.selectedIngredients.otherIngredients,
+                  [action.currentIngredient._id]: state.selectedIngredients.otherIngredients[action.currentIngredient._id] + 1
+                }
               }
-            }
-          };
+            };
+            //если ингредиента в списке нет - добавляем его и ставим количество 0
+          } else {
+            return {
+              ...state,
+              selectedIngredients: {
+                ...state.selectedIngredients,
+                totalPrice: state.selectedIngredients.totalPrice + action.currentIngredient.price,
+                otherIngredients: {
+                  ...state.selectedIngredients.otherIngredients,
+                  [action.currentIngredient._id]: 1
+                }
+              }
+            };
+          }
+          
         }
       }
       case REMOVE_INGREDIENT: {

@@ -10,8 +10,8 @@ const ConstructorElementsList = () => {
   const dispatch = useDispatch();
 
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { orderDetails } = useSelector(store => ({
-    orderDetails: store.burger.orderDetails,
+  const { selectedIngredients } = useSelector(store => ({
+    selectedIngredients: store.burger.selectedIngredients,
   }));
 
   //отрисовка булки снизу сверху одной константой
@@ -32,12 +32,12 @@ const ConstructorElementsList = () => {
   return (
     <ul className={`${styles['constructor-elements-list__list']}`}>
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id} >
-        {bun(orderDetails.ingredients.bun.name, orderDetails.ingredients.bun.price, orderDetails.ingredients.bun.image, 'top')}
+        {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'top')}
       </li>}
 
-      {(orderDetails.ingredients.otherIngredients.length > 0) ? 
+      {(selectedIngredients.otherIngredients.length > 0) ? 
       <ul className={styles['constructor-elements-list__list-ingredients']}>
-        {orderDetails.ingredients.otherIngredients
+        {Object.keys(selectedIngredients.otherIngredients)
           .map(function (item) {
             return (
               <li className={styles['constructor-elements-list__item']} key={Math.random()} id={item._id}>
@@ -56,7 +56,7 @@ const ConstructorElementsList = () => {
       }
 
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id}>
-        {bun(orderDetails.ingredients.bun.name, orderDetails.ingredients.bun.price, orderDetails.ingredients.bun.image, 'bottom')}
+        {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'bottom')}
       </li>}
     </ul>
   )
