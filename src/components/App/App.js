@@ -1,11 +1,9 @@
 import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main'
-import { request } from '../../utils/utils';
-import { DataContext } from '../../services/dataContext';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/app';
+import { getIngredients } from '../../services/actions/burger';
 
 function reducer(state, action) {
 
@@ -69,10 +67,10 @@ function App() {
   );
 
   return (
-    <DataContext.Provider value={{ orderInfo, orderDispatcher }}>
+    <>
       <AppHeader />
       {content}
-    </DataContext.Provider>
+    </>
   );
 }
 

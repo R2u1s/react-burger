@@ -6,17 +6,18 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { DataContext } from '../../services/dataContext';
 import { request } from '../../utils/utils';
+import { useSelector } from 'react-redux';
 
-function BurgerConstructor(){
+function BurgerConstructor() {
 
-  //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  
-  const { orderInfo } = React.useContext(DataContext); 
+  const { orderInfo } = useSelector(store => ({
+    orderInfo: store.burger.orderInfo,
+  }));
+
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const [ orderSubmit, setOrderSubmit ] = React.useState({
+  const [orderSubmit, setOrderSubmit] = React.useState({
     id: "---",
     status: "Ожидаем подтверждение заказа",
     todo: 'Дождитесь готовности на орбитальной станции'
@@ -30,7 +31,7 @@ function BurgerConstructor(){
     return arrayOfId;
   }
 
-  async function submitHandler(){
+  async function submitHandler() {
     openModal();
     let orderStatus = 'Заказ отправляется';
 
@@ -39,30 +40,30 @@ function BurgerConstructor(){
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         "ingredients": collectId()
       })
     })
-    .then(res => {
-      res.success ? (orderStatus = "Ваш заказ начали готовить") : (orderStatus = "Заказ не отправлен");
-      setOrderSubmit({
-        id: res.order.number.toString(),
-        status: orderStatus,
-        todo: 'Дождитесь готовности на орбитальной станции'
+      .then(res => {
+        res.success ? (orderStatus = "Ваш заказ начали готовить") : (orderStatus = "Заказ не отправлен");
+        setOrderSubmit({
+          id: res.order.number.toString(),
+          status: orderStatus,
+          todo: 'Дождитесь готовности на орбитальной станции'
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
   }
 
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
-      <ConstructorElementsList className={'mb-10'}/>
+      <ConstructorElementsList className={'mb-10'} />
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
           <p className="text text_type_digits-medium">{orderInfo.totalPrice}</p>
-          <div className={`${styles['burger-constructor__currency-icon']}`}> 
+          <div className={`${styles['burger-constructor__currency-icon']}`}>
             <CurrencyIcon type="primary" />
           </div>
         </div>

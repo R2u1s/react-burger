@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './ModalOverlay.module.css';
 
 const ModalOverlay = (props) => {
-  
+
   const {active, setClose, children} = props;
 
   return (

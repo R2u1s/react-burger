@@ -4,11 +4,16 @@ import styles from './BurgerIngredientsItem.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientObjectType } from '../../utils/data';
+import { useDispatch } from 'react-redux';
+import { writeIngredientPreview } from '../../services/actions/burger';
 
 const BurgerIngredientsItem = (props) => {
+  const dispatch = useDispatch();
+
   return (
       <li className={styles['burger-ingredients__item']} name='ingredient' id={props.item._id} onClick={() => {
-        props.openModal(props.item);
+        props.openModal();
+        dispatch(writeIngredientPreview(props.item));
       }}>
         <img src={props.item.image}></img>
         <div className={styles['burger-ingredients__price']}>

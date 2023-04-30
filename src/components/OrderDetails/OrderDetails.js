@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import styles from './OrderDetails.module.css';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function OrderDetails({orderDetails}){
+
+/*   const { currentIngredient } = useSelector(store => ({
+    currentIngredient: store.burger.currentIngredient
+  })); */
+
   return (
     <div className={`${styles['order-details']} pt-20 pb-15`}>
       <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>
