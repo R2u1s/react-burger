@@ -94,7 +94,7 @@ export const addIngredient = (ingredient) => {
   return function (dispatch) {
     dispatch({
       type: ADD_INGREDIENT,
-      currentIngredient: ingredient
+      currentIngredient: ingredient,
     });
   }
 }
@@ -103,7 +103,7 @@ export const removeIngredient = (ingredient) => {
   return function (dispatch) {
     dispatch({
       type: REMOVE_INGREDIENT,
-      currentIngredient: ingredient
+      currentIngredient: ingredient,
     });
   }
 }

@@ -27,3 +27,13 @@ export const request = (endpoint, options) => {
     .then(checkResponse)
     .then(checkSuccess);
 };
+
+export function arrayToObject(array) {
+  let object={};
+  array.forEach((item) => {
+/*     const id = item._id;
+    delete item[id]; */
+    object[item._id] = item;
+  });
+  return object;
+}

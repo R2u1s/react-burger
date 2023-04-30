@@ -13,17 +13,17 @@ function BurgerConstructor() {
 
   const dispatch = useDispatch();
 
-  const { orderDetails } = useSelector(store => ({
-    orderDetails: store.burger.orderDetails,
+  const { selectedIngredients } = useSelector(store => ({
+    selectedIngredients: store.burger.selectedIngredients,
   }));
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
   function collectId() {
     let arrayOfId = [];
-    arrayOfId.push(orderDetails.ingredients.bun._id);
-    arrayOfId.push(orderDetails.ingredients.bun._id);
-    orderDetails.ingredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
+    arrayOfId.push(selectedIngredients.bun._id);
+    arrayOfId.push(selectedIngredients.bun._id);
+    Object.keys(selectedIngredients.otherIngredients).forEach(item => arrayOfId.push(item._id));
     return arrayOfId;
   }
 
@@ -37,7 +37,7 @@ function BurgerConstructor() {
       <ConstructorElementsList className={'mb-10'} />
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
-          <p className="text text_type_digits-medium">{orderDetails.totalPrice}</p>
+          <p className="text text_type_digits-medium">{selectedIngredients.totalPrice}</p>
           <div className={`${styles['burger-constructor__currency-icon']}`}>
             <CurrencyIcon type="primary" />
           </div>

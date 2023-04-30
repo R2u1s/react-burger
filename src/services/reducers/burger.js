@@ -10,8 +10,10 @@ import { GET_INGREDIENTS_REQUEST,
          REMOVE_INGREDIENT
  } from "../actions/burger";
 
+ import { arrayToObject } from "../../utils/utils";
+
  const initialState = {
-    ingredientsList: [],
+    ingredientsList: {},
     currentIngredient: {},
 
     selectedIngredients: {
@@ -20,7 +22,8 @@ import { GET_INGREDIENTS_REQUEST,
         price: 0,
         image: "https://code.s3.yandex.net/react/code/bun-02.png"
       },
-      otherIngredients: {},
+      otherIngredients: [],
+      otherIngredientsQty: {},
       totalPrice: 0
     },
 
@@ -47,7 +50,7 @@ import { GET_INGREDIENTS_REQUEST,
         };
       }
       case GET_INGREDIENTS_SUCCESS: {
-        return { ...state, ingredientsFailed: false, ingredientsList: action.ingredientsList, ingredientsRequest: false };
+        return { ...state, ingredientsFailed: false, ingredientsList: arrayToObject(action.ingredientsList), ingredientsRequest: false };
       }
       case GET_INGREDIENTS_FAILED: {
         return { ...state, ingredientsFailed: true, ingredientsRequest: false };
@@ -96,20 +99,21 @@ import { GET_INGREDIENTS_REQUEST,
             }
           };
         } else {
-          //если хотим добавить ингредиент, то проверяем есть ли он. Если есть - увеличиваем количество
+          //если хотим добавить ингредиент, то проверяем есть ли он. Если есть - увеличиваем количество и добавляем в список id
           if (action.currentIngredient._id in state.selectedIngredients.otherIngredients) {
             return {
               ...state,
               selectedIngredients: {
                 ...state.selectedIngredients,
                 totalPrice: state.selectedIngredients.totalPrice + action.currentIngredient.price,
-                otherIngredients: {
+                otherIngredientsQty: {
                   ...state.selectedIngredients.otherIngredients,
-                  [action.currentIngredient._id]: state.selectedIngredients.otherIngredients[action.currentIngredient._id] + 1
-                }
+                  [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] + 1,
+                },
+                otherIngredients: [...state.selectedIngredients.otherIngredients, action.currentIngredient]
               }
             };
-            //если ингредиента в списке нет - добавляем его и ставим количество 0
+            //если ингредиента в списке нет - добавляем его в оба списка
           } else {
             return {
               ...state,
@@ -119,7 +123,8 @@ import { GET_INGREDIENTS_REQUEST,
                 otherIngredients: {
                   ...state.selectedIngredients.otherIngredients,
                   [action.currentIngredient._id]: 1
-                }
+                },
+                otherIngredients: [...state.selectedIngredients.otherIngredients, action.currentIngredient]
               }
             };
           }
@@ -129,16 +134,18 @@ import { GET_INGREDIENTS_REQUEST,
       case REMOVE_INGREDIENT: {
         return {
           ...state,
-          orderDetails: {
-            ...state.orderDetails,
-            totalPrice: state.orderDetails.totalPrice - action.currentIngredient.price,
-            ingredients: {
-              ...state.orderDetails.ingredients,
-              otherIngredients: state.orderDetails.ingredients.otherIngredients.filter(item => item._id !== action.currentIngredient._id)
-            }
+          selectedIngredients: {
+            ...state.selectedIngredients,
+            totalPrice: state.selectedIngredients.totalPrice - action.currentIngredient.price,
+            otherIngredientsQty: {
+              ...state.selectedIngredients.otherIngredients,
+              [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] - 1,
+            },
+            otherIngredients: state.selectedIngredients.otherIngredients.filter(item => item._id !== action.currentIngredient._id)
           }
         };
       }
+      
       default: {
         return state;
       }

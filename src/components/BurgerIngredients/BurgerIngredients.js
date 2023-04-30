@@ -23,13 +23,13 @@ function BurgerIngredients() {
 
   const filteredData = React.useMemo(
     () => {
-      const buns = ingredientsList.filter(function (item) {
+      const buns = Object.values(ingredientsList).filter(function (item) {
         return item.type === 'bun'
       });
-      const sauces = ingredientsList.filter(function (item) {
+      const sauces = Object.values(ingredientsList).filter(function (item) {
         return item.type === 'sauce'
       });
-      const mains = ingredientsList.filter(function (item) {
+      const mains = Object.values(ingredientsList).filter(function (item) {
         return item.type === 'main'
       });
       return { buns, sauces, mains }

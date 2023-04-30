@@ -10,7 +10,8 @@ const ConstructorElementsList = () => {
   const dispatch = useDispatch();
 
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { selectedIngredients } = useSelector(store => ({
+  const { ingredientsList, selectedIngredients } = useSelector(store => ({
+    ingredientsList: store.burger.ingredientsList,
     selectedIngredients: store.burger.selectedIngredients,
   }));
 
@@ -35,9 +36,9 @@ const ConstructorElementsList = () => {
         {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'top')}
       </li>}
 
-      {(selectedIngredients.otherIngredients.length > 0) ? 
+      {selectedIngredients.otherIngredients.length > 0 ? 
       <ul className={styles['constructor-elements-list__list-ingredients']}>
-        {Object.keys(selectedIngredients.otherIngredients)
+        {selectedIngredients.otherIngredients
           .map(function (item) {
             return (
               <li className={styles['constructor-elements-list__item']} key={Math.random()} id={item._id}>
