@@ -81,11 +81,13 @@ export const postOrder = (ingredientsList) => {
         } else {
           dispatch({
             type: POST_ORDER_FAILED
-            /* orderStatus = "Заказ не отправлен" */
           });
         }
       })
       .catch(error => {
+        dispatch({
+          type: POST_ORDER_FAILED
+        });
         console.log(error);
       });
   };

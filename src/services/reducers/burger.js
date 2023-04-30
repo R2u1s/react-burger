@@ -74,9 +74,11 @@ import { GET_INGREDIENTS_REQUEST,
       case POST_ORDER_FAILED: {
         return { ...state, orderDetails:{
         ...state.orderDetails,
-        status: 'Заказ не удалось отправить'
+        status: 'Заказ не удалось отправить',
+        todo: 'Попробуйте снова'
         },
-        postOrderFailed: true, postOrderRequest: false };
+        postOrderFailed: true, 
+        postOrderRequest: false };
       }
       case SET_ORDERDETAILS: {
         return { ...state, orderDetails: {
