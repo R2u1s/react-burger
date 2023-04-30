@@ -4,8 +4,7 @@ import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
-import { useSelector,useDispatch } from 'react-redux';
-import { writeIngredientPreview } from '../../services/actions/burger';
+import { useSelector } from 'react-redux';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 export const ingredientTypes = {

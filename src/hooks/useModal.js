@@ -15,8 +15,7 @@ export const useModal = () => {
 
   const closeModal = React.useCallback(() => {
     setIsModalOpen(false);
-    setTimeout(()=>{dispatch(clearIngredientPreview());
-    console.log("time")},"200");
+    setTimeout(()=>{dispatch(clearIngredientPreview())},"200");
   }, []);
 
   return {

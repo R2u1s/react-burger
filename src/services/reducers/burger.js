@@ -2,7 +2,8 @@ import { GET_INGREDIENTS_REQUEST,
          GET_INGREDIENTS_SUCCESS,
          GET_INGREDIENTS_FAILED,
          WRITE_INGREDIENT_PREVIEW,
-         CLEAR_INGREDIENT_PREVIEW
+         CLEAR_INGREDIENT_PREVIEW,
+         SET_ORDERDETAILS
  } from "../actions/burger";
 
  const initialState = {
@@ -10,7 +11,10 @@ import { GET_INGREDIENTS_REQUEST,
     selectedIngredients: {},
     currentIngredient: {},
 
-    orderInfo: {
+    orderDetails: {
+      id: "---",
+      status: "Ожидаем подтверждение заказа",
+      todo: 'Дождитесь готовности на орбитальной станции',
       ingredients: {
         bun: {
           name: "Булка не выбрана",
@@ -45,6 +49,14 @@ import { GET_INGREDIENTS_REQUEST,
       }
       case CLEAR_INGREDIENT_PREVIEW: {
         return { ...state, currentIngredient: {} };
+      }
+      case SET_ORDERDETAILS: {
+        return { ...state, orderDetails: {
+          ...state.orderDetails,
+          id: action.orderDetails.id,
+          status: action.orderDetails.status,
+          todo: action.orderDetails.todo
+        } };
       }
       default: {
         return state;

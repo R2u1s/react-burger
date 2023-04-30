@@ -4,11 +4,11 @@ import styles from './OrderDetails.module.css';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function OrderDetails({orderDetails}){
+function OrderDetails(){
 
-/*   const { currentIngredient } = useSelector(store => ({
-    currentIngredient: store.burger.currentIngredient
-  })); */
+  const { orderDetails } = useSelector(store => ({
+    orderDetails: store.burger.orderDetails
+  }));
 
   return (
     <div className={`${styles['order-details']} pt-20 pb-15`}>

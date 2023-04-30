@@ -7,27 +7,24 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { request } from '../../utils/utils';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { setOrderDetails } from '../../services/actions/burger';
 
 function BurgerConstructor() {
 
-  const { orderInfo } = useSelector(store => ({
-    orderInfo: store.burger.orderInfo,
+  const dispatch = useDispatch();
+
+  const { orderDetails } = useSelector(store => ({
+    orderDetails: store.burger.orderDetails,
   }));
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const [orderSubmit, setOrderSubmit] = React.useState({
-    id: "---",
-    status: "Ожидаем подтверждение заказа",
-    todo: 'Дождитесь готовности на орбитальной станции'
-  });
-
   function collectId() {
     let arrayOfId = [];
-    arrayOfId.push(orderInfo.ingredients.bun._id);
-    arrayOfId.push(orderInfo.ingredients.bun._id);
-    orderInfo.ingredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
+    arrayOfId.push(orderDetails.ingredients.bun._id);
+    arrayOfId.push(orderDetails.ingredients.bun._id);
+    orderDetails.ingredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
     return arrayOfId;
   }
 
@@ -46,11 +43,11 @@ function BurgerConstructor() {
     })
       .then(res => {
         res.success ? (orderStatus = "Ваш заказ начали готовить") : (orderStatus = "Заказ не отправлен");
-        setOrderSubmit({
+        dispatch(setOrderDetails({
           id: res.order.number.toString(),
           status: orderStatus,
           todo: 'Дождитесь готовности на орбитальной станции'
-        });
+        }))
       })
       .catch(error => {
         console.log(error);
@@ -62,7 +59,7 @@ function BurgerConstructor() {
       <ConstructorElementsList className={'mb-10'} />
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
-          <p className="text text_type_digits-medium">{orderInfo.totalPrice}</p>
+          <p className="text text_type_digits-medium">{orderDetails.totalPrice}</p>
           <div className={`${styles['burger-constructor__currency-icon']}`}>
             <CurrencyIcon type="primary" />
           </div>
@@ -70,7 +67,7 @@ function BurgerConstructor() {
         <Button htmlType="button" type="primary" size="large" onClick={submitHandler}>Оформить заказ</Button>
       </div>
       <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>
-        <OrderDetails orderDetails={orderSubmit} />
+        <OrderDetails />
       </Modal>
     </section>
   );

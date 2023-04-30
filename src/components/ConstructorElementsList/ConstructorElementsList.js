@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 const ConstructorElementsList = () => {
 
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { orderInfo, ingredientsRequest } = useSelector(store => ({
-    orderInfo: store.burger.orderInfo,
+  const { orderDetails, ingredientsRequest } = useSelector(store => ({
+    orderDetails: store.burger.orderDetails,
     ingredientsRequest: store.burger.ingredientsRequest
   }));
 
@@ -35,12 +35,12 @@ const ConstructorElementsList = () => {
   return (
     <ul className={`${styles['constructor-elements-list__list']}`}>
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id} >
-        {bun(orderInfo.ingredients.bun.name, orderInfo.ingredients.bun.price, orderInfo.ingredients.bun.image, 'top')}
+        {bun(orderDetails.ingredients.bun.name, orderDetails.ingredients.bun.price, orderDetails.ingredients.bun.image, 'top')}
       </li>}
 
-      {(orderInfo.ingredients.otherIngredients.length > 0) ? 
+      {(orderDetails.ingredients.otherIngredients.length > 0) ? 
       <ul className={styles['constructor-elements-list__list-ingredients']}>
-        {orderInfo.ingredients.otherIngredients
+        {orderDetails.ingredients.otherIngredients
           .map(function (item) {
             return (
               <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} onClick={(e) => {
@@ -60,7 +60,7 @@ const ConstructorElementsList = () => {
       }
 
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id}>
-        {bun(orderInfo.ingredients.bun.name, orderInfo.ingredients.bun.price, orderInfo.ingredients.bun.image, 'bottom')}
+        {bun(orderDetails.ingredients.bun.name, orderDetails.ingredients.bun.price, orderDetails.ingredients.bun.image, 'bottom')}
       </li>}
     </ul>
   )

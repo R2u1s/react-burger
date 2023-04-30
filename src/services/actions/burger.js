@@ -5,6 +5,7 @@ export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const WRITE_INGREDIENT_PREVIEW = 'WRITE_INGREDIENT_PREVIEW';
 export const CLEAR_INGREDIENT_PREVIEW = 'CLEAR_INGREDIENT_PREVIEW';
+export const SET_ORDERDETAILS = 'SET_ORDERDETAILS';
 
 export const getIngredients = () => {
   return function (dispatch) {
@@ -37,10 +38,18 @@ export const writeIngredientPreview = (ingredient) => {
 }
 
 export const clearIngredientPreview = () => {
-  console.log('clear');
   return function (dispatch) {
     dispatch({
       type: CLEAR_INGREDIENT_PREVIEW,
+    });
+  }
+}
+
+export const setOrderDetails = ({details}) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_ORDERDETAILS,
+      orderDetails: details
     });
   }
 }
