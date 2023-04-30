@@ -6,13 +6,14 @@ import { GET_INGREDIENTS_REQUEST,
          POST_ORDER_REQUEST,
          POST_ORDER_SUCCESS,
          POST_ORDER_FAILED,
-         SET_ORDERDETAILS
+         ADD_INGREDIENT,
+         REMOVE_INGREDIENT
  } from "../actions/burger";
 
  const initialState = {
     ingredientsList: [],
-    selectedIngredients: {},
     currentIngredient: {},
+    selectedIngredients: {},
 
     orderDetails: {
       id: "---",
@@ -74,19 +75,52 @@ import { GET_INGREDIENTS_REQUEST,
       case POST_ORDER_FAILED: {
         return { ...state, orderDetails:{
         ...state.orderDetails,
+        id:'---',
         status: 'Заказ не удалось отправить',
-        todo: 'Попробуйте снова'
+        todo: 'Попробуйте снова.Возможно стоит добавить ингредиенты'
         },
         postOrderFailed: true, 
         postOrderRequest: false };
       }
-      case SET_ORDERDETAILS: {
-        return { ...state, orderDetails: {
-          ...state.orderDetails,
-          id: action.orderDetails.id,
-          status: action.orderDetails.status,
-          todo: action.orderDetails.todo
-        } };
+      case ADD_INGREDIENT: {
+        if (action.currentIngredient.type === 'bun') {
+          return {
+            ...state,
+            orderDetails: {
+              ...state.orderDetails,
+              totalPrice: state.orderDetails.totalPrice - (state.orderDetails.ingredients.bun.price*2) + (action.currentIngredient.price*2),
+              ingredients: {
+                ...state.orderDetails.ingredients,
+                bun: action.currentIngredient
+              }
+            }
+          };
+        } else {
+          return {
+            ...state,
+            orderDetails: {
+              ...state.orderDetails,
+              totalPrice: state.orderDetails.totalPrice + action.currentIngredient.price,
+              ingredients: {
+                ...state.orderDetails.ingredients,
+                otherIngredients: [...state.orderDetails.ingredients.otherIngredients, action.currentIngredient]
+              }
+            }
+          };
+        }
+      }
+      case REMOVE_INGREDIENT: {
+        return {
+          ...state,
+          orderDetails: {
+            ...state.orderDetails,
+            totalPrice: state.orderDetails.totalPrice - action.currentIngredient.price,
+            ingredients: {
+              ...state.orderDetails.ingredients,
+              otherIngredients: state.orderDetails.ingredients.otherIngredients.filter(item => item._id !== action.currentIngredient._id)
+            }
+          }
+        };
       }
       default: {
         return state;

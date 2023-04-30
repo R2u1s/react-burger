@@ -6,9 +6,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { request } from '../../utils/utils';
 import { useSelector,useDispatch } from 'react-redux';
-import { setOrderDetails } from '../../services/actions/burger';
 import { postOrder } from '../../services/actions/burger';
 
 function BurgerConstructor() {
@@ -32,28 +30,6 @@ function BurgerConstructor() {
   const submitHandler = () => {
     openModal();
     dispatch(postOrder(collectId()));
-/*     let orderStatus = 'Заказ отправляется';
-
-    return await request("orders", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "ingredients": collectId()
-      })
-    })
-      .then(res => {
-        res.success ? (orderStatus = "Ваш заказ начали готовить") : (orderStatus = "Заказ не отправлен");
-        dispatch(setOrderDetails({
-          id: res.order.number.toString(),
-          status: orderStatus,
-          todo: 'Дождитесь готовности на орбитальной станции'
-        }))
-      })
-      .catch(error => {
-        console.log(error);
-      }); */
   }
 
   return (

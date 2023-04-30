@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import styles from './OrderDetails.module.css';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 function OrderDetails(){

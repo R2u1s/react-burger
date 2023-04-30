@@ -5,10 +5,11 @@ export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const WRITE_INGREDIENT_PREVIEW = 'WRITE_INGREDIENT_PREVIEW';
 export const CLEAR_INGREDIENT_PREVIEW = 'CLEAR_INGREDIENT_PREVIEW';
-export const SET_ORDERDETAILS = 'SET_ORDERDETAILS';
 export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
+export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 
 export const getIngredients = () => {
   return function (dispatch) {
@@ -27,6 +28,12 @@ export const getIngredients = () => {
             type: GET_INGREDIENTS_FAILED
           });
         }
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_INGREDIENTS_FAILED
+        });
+        console.log(error);
       });
   };
 }
@@ -48,20 +55,10 @@ export const clearIngredientPreview = () => {
   }
 }
 
-export const setOrderDetails = ({details}) => {
-  return function (dispatch) {
-    dispatch({
-      type: SET_ORDERDETAILS,
-      orderDetails: details
-    });
-  }
-}
-
 export const postOrder = (ingredientsList) => {
   return function (dispatch) {
     dispatch({
       type: POST_ORDER_REQUEST
-      /* orderStatus = 'Заказ отправляется'; */
     });
     request("orders", {
       method: 'POST',
@@ -93,3 +90,20 @@ export const postOrder = (ingredientsList) => {
   };
 }
 
+export const addIngredient = (ingredient) => {
+  return function (dispatch) {
+    dispatch({
+      type: ADD_INGREDIENT,
+      currentIngredient: ingredient
+    });
+  }
+}
+
+export const removeIngredient = (ingredient) => {
+  return function (dispatch) {
+    dispatch({
+      type: REMOVE_INGREDIENT,
+      currentIngredient: ingredient
+    });
+  }
+}
