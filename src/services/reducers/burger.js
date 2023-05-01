@@ -108,9 +108,10 @@ import { GET_INGREDIENTS_REQUEST,
                 totalPrice: state.selectedIngredients.totalPrice + action.currentIngredient.price,
                 otherIngredientsQty: {
                   ...state.selectedIngredients.otherIngredientsQty,
+                  
                   [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] + 1,
                 },
-                otherIngredients: [...state.selectedIngredients.otherIngredients, action.currentIngredient]
+                otherIngredients: [...state.selectedIngredients.otherIngredients,action.currentIngredient]
               }
             };
             //если ингредиента в списке нет - добавляем его в оба списка
@@ -124,7 +125,7 @@ import { GET_INGREDIENTS_REQUEST,
                   ...state.selectedIngredients.otherIngredientsQty,
                   [action.currentIngredient._id]: 1
                 },
-                otherIngredients: [...state.selectedIngredients.otherIngredients, action.currentIngredient]
+                otherIngredients: [...state.selectedIngredients.otherIngredients,action.currentIngredient]
               }
             };
           }
@@ -138,10 +139,10 @@ import { GET_INGREDIENTS_REQUEST,
             ...state.selectedIngredients,
             totalPrice: state.selectedIngredients.totalPrice - action.currentIngredient.price,
             otherIngredientsQty: {
-              ...state.selectedIngredients.otherIngredients,
+              ...state.selectedIngredients.otherIngredientsQty,
               [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] - 1,
             },
-            otherIngredients: state.selectedIngredients.otherIngredients.filter(item => item._id !== action.currentIngredient._id)
+            otherIngredients: state.selectedIngredients.otherIngredients.filter(item => item.listId !== action.currentIngredient.listId)
           }
         };
       }

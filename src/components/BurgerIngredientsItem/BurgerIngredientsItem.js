@@ -18,9 +18,9 @@ const BurgerIngredientsItem = (props) => {
   const qty = selectedIngredients.otherIngredientsQty[props.item._id];
   return (
       <li className={styles['burger-ingredients__item']} name='ingredient' id={props.item._id} onClick={() => {
-/*         props.openModal();
-        dispatch(writeIngredientPreview(props.item)); */
-        dispatch(addIngredient(props.item));
+        props.openModal();
+        dispatch(writeIngredientPreview(props.item));
+/*         dispatch(addIngredient(props.item)); */
       }}>
         <img src={props.item.image}></img>
         <div className={styles['burger-ingredients__price']}>

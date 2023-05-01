@@ -91,10 +91,13 @@ export const postOrder = (ingredientsList) => {
 }
 
 export const addIngredient = (ingredient) => {
+  const listId = Math.random();
+  const newIngredient = Object.assign({}, ingredient);
+  newIngredient.listId = listId;
   return function (dispatch) {
     dispatch({
       type: ADD_INGREDIENT,
-      currentIngredient: ingredient,
+      currentIngredient: newIngredient,
     });
   }
 }
