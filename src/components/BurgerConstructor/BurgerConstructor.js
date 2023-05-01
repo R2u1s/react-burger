@@ -7,7 +7,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { useSelector,useDispatch } from 'react-redux';
-import { postOrder } from '../../services/actions/burger';
+import { postOrder,writeListIdToOrder } from '../../services/actions/burger';
 
 function BurgerConstructor() {
 
@@ -23,7 +23,7 @@ function BurgerConstructor() {
     let arrayOfId = [];
     arrayOfId.push(selectedIngredients.bun._id);
     arrayOfId.push(selectedIngredients.bun._id);
-    Object.keys(selectedIngredients.otherIngredients).forEach(item => arrayOfId.push(item._id));
+    selectedIngredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
     return arrayOfId;
   }
 
