@@ -14,8 +14,12 @@ const BurgerIngredientsItem = (props) => {
   const { selectedIngredients } = useSelector(store => ({
     selectedIngredients: store.burger.selectedIngredients
   }));
- 
-  const qty = selectedIngredients.otherIngredientsQty[props.item._id];
+  
+
+  const qty = props.item.type === "bun" ? 
+    selectedIngredients.bun._id === props.item._id ? 2 : 0
+    :
+    selectedIngredients.otherIngredientsQty[props.item._id] 
   return (
       <li className={styles['burger-ingredients__item']} name='ingredient' id={props.item._id} onClick={() => {
 /*         props.openModal();
