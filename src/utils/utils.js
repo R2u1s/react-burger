@@ -29,11 +29,16 @@ export const request = (endpoint, options) => {
 };
 
 export function arrayToObject(array) {
-  let object={};
+  let object = {};
   array.forEach((item) => {
-/*     const id = item._id;
-    delete item[id]; */
     object[item._id] = item;
   });
   return object;
+}
+
+export function moveIngredient(array, dragIndex, hoverIndex) {
+  const dragCard = array[dragIndex];
+  array.splice(dragIndex, 1);
+  array.splice(hoverIndex, 0, dragCard)
+  return array;
 }

@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeIngredient } from '../../services/actions/burger';
-import { useDrop } from 'react-dnd/dist/hooks';
+import { useDrop, useDrag } from 'react-dnd/dist/hooks';
 import { addIngredient } from '../../services/actions/burger';
+import ConstructorElementsListItem from '../ConstructorElementsListItem/ConstructorElementsListItem';
 
 const ConstructorElementsList = () => {
 
@@ -32,6 +31,7 @@ const ConstructorElementsList = () => {
     )
   }
 
+  
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredients",
     collect: monitor => ({
@@ -42,6 +42,10 @@ const ConstructorElementsList = () => {
     },
   });
 
+  const [, drop] = useDrop({
+    accept: "sort",
+  });
+
   return (
     <ul className={`${styles['constructor-elements-list__list']}`} ref={dropTarget}>
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id} >
@@ -49,19 +53,11 @@ const ConstructorElementsList = () => {
       </li>}
 
       {selectedIngredients.otherIngredients.length > 0 ?
-        <ul className={styles['constructor-elements-list__list-ingredients']}>
+        <ul className={styles['constructor-elements-list__list-ingredients']} ref={drop}>
           {selectedIngredients.otherIngredients
-            .map(function (item) {
+            .map(function (item, index) {
               return (
-                <li className={styles['constructor-elements-list__item']} key={Math.random()} id={item._id}>
-                  <DragIcon />
-                  <ConstructorElement
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image}
-                    handleClose={() => { dispatch(removeIngredient(item)) }}
-                  />
-                </li>
+                <ConstructorElementsListItem ingredient={item} index={index} key={index} />
               )
             })}
         </ul>

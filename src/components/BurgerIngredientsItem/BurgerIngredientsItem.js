@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { writeIngredientPreview } from '../../services/actions/burger';
 import { useDrag } from 'react-dnd';
 
-const BurgerIngredientsItem = ({item,openModal}) => {
+const BurgerIngredientsItem = ({ item, openModal }) => {
   const dispatch = useDispatch();
 
   const { selectedIngredients } = useSelector(store => ({
@@ -23,7 +23,7 @@ const BurgerIngredientsItem = ({item,openModal}) => {
 
   const [{ opacity }, ref] = useDrag({
     type: 'ingredients',
-    item:  item ,
+    item: item,
     collect: monitor => ({
       opacity: monitor.isDragging() ? 0.5 : 1
     })

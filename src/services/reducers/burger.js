@@ -8,10 +8,11 @@ import {
   POST_ORDER_SUCCESS,
   POST_ORDER_FAILED,
   ADD_INGREDIENT,
-  REMOVE_INGREDIENT
+  REMOVE_INGREDIENT,
+  SORT_INGREDIENTLIST
 } from "../actions/burger";
 
-import { arrayToObject } from "../../utils/utils";
+import { arrayToObject,moveIngredient } from "../../utils/utils";
 
 const initialState = {
   ingredientsList: {},
@@ -150,6 +151,29 @@ export const burgerReducer = (state = initialState, action) => {
             [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] - 1,
           },
           otherIngredients: state.selectedIngredients.otherIngredients.filter(item => item.listId !== action.currentIngredient.listId)
+        }
+      };
+    }
+    case REMOVE_INGREDIENT: {
+      return {
+        ...state,
+        selectedIngredients: {
+          ...state.selectedIngredients,
+          totalPrice: state.selectedIngredients.totalPrice - action.currentIngredient.price,
+          otherIngredientsQty: {
+            ...state.selectedIngredients.otherIngredientsQty,
+            [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] - 1,
+          },
+          otherIngredients: state.selectedIngredients.otherIngredients.filter(item => item.listId !== action.currentIngredient.listId)
+        }
+      };
+    }
+    case SORT_INGREDIENTLIST: {
+      return {
+        ...state,
+        selectedIngredients: {
+          ...state.selectedIngredients,
+          otherIngredients: moveIngredient(state.selectedIngredients.otherIngredients,action.dragIndex,action.hoverIndex)
         }
       };
     }

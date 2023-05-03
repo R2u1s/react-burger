@@ -10,6 +10,7 @@ export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
+export const SORT_INGREDIENTLIST = 'SORT_INGREDIENTLIST';
 
 export const getIngredients = () => {
   return function (dispatch) {
@@ -109,6 +110,17 @@ export const removeIngredient = (ingredient) => {
     dispatch({
       type: REMOVE_INGREDIENT,
       currentIngredient: ingredient,
+    });
+  }
+}
+
+export const sortIngredient = (dragIndex, hoverIndex) => {
+  console.log('sort');
+  return function (dispatch) {
+    dispatch({
+      type: SORT_INGREDIENTLIST,
+      dragIndex: dragIndex,
+      hoverIndex: hoverIndex
     });
   }
 }
