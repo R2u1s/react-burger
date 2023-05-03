@@ -4,6 +4,8 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeIngredient } from '../../services/actions/burger';
+import { useDrop } from 'react-dnd/dist/hooks';
+import { addIngredient } from '../../services/actions/burger';
 
 const ConstructorElementsList = () => {
 
@@ -30,30 +32,40 @@ const ConstructorElementsList = () => {
     )
   }
 
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredients",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(ingredient) {
+      dispatch(addIngredient(ingredient));
+    },
+  });
+
   return (
-    <ul className={`${styles['constructor-elements-list__list']}`}>
+    <ul className={`${styles['constructor-elements-list__list']}`} ref={dropTarget}>
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id} >
         {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'top')}
       </li>}
 
-      {selectedIngredients.otherIngredients.length > 0 ? 
-      <ul className={styles['constructor-elements-list__list-ingredients']}>
-        {selectedIngredients.otherIngredients
-          .map(function (item) {
-            return (
-              <li className={styles['constructor-elements-list__item']} key={Math.random()} id={item._id}>
-                <DragIcon />
-                <ConstructorElement
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  handleClose={()=>{dispatch(removeIngredient(item))}}
-                />
-              </li>
-            )
-          })}
-      </ul>
-      : <p className="text text_type_main-default" style={{textAlign: "center"}}>Нет добавленных ингредиентов</p>
+      {selectedIngredients.otherIngredients.length > 0 ?
+        <ul className={styles['constructor-elements-list__list-ingredients']}>
+          {selectedIngredients.otherIngredients
+            .map(function (item) {
+              return (
+                <li className={styles['constructor-elements-list__item']} key={Math.random()} id={item._id}>
+                  <DragIcon />
+                  <ConstructorElement
+                    text={item.name}
+                    price={item.price}
+                    thumbnail={item.image}
+                    handleClose={() => { dispatch(removeIngredient(item)) }}
+                  />
+                </li>
+              )
+            })}
+        </ul>
+        : <p className="text text_type_main-default" style={{ textAlign: "center" }}>Нет добавленных ингредиентов</p>
       }
 
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id}>

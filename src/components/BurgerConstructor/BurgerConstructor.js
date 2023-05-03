@@ -7,7 +7,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { useSelector,useDispatch } from 'react-redux';
-import { postOrder,writeListIdToOrder } from '../../services/actions/burger';
+import { postOrder } from '../../services/actions/burger';
 
 function BurgerConstructor() {
 
