@@ -9,6 +9,7 @@ import { writeIngredientPreview } from '../../services/actions/burger';
 import { useDrag } from 'react-dnd';
 
 const BurgerIngredientsItem = ({ item, openModal }) => {
+
   const dispatch = useDispatch();
 
   const { selectedIngredients } = useSelector(store => ({
@@ -21,16 +22,18 @@ const BurgerIngredientsItem = ({ item, openModal }) => {
     :
     selectedIngredients.otherIngredientsQty[item._id];
 
-  const [{ opacity }, ref] = useDrag({
+  const [{isDrag}, ref] = useDrag({
     type: 'ingredients',
     item: item,
     collect: monitor => ({
-      opacity: monitor.isDragging() ? 0.5 : 1
+      isDrag: monitor.isDragging()
     })
   });
 
+  const className = isDrag ? styles['burger-ingredients__item']+` `+styles['burger-ingredients__item_dragging'] : styles['burger-ingredients__item']
+
   return (
-    <li className={styles['burger-ingredients__item']}
+    <li className={className}
       name='ingredient'
       id={item._id}
       onClick={() => {
