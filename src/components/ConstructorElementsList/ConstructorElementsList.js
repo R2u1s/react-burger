@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { useDrop, useDrag } from 'react-dnd/dist/hooks';
+import { useDrop } from 'react-dnd/dist/hooks';
 import { addIngredient } from '../../services/actions/burger';
 import ConstructorElementsListItem from '../ConstructorElementsListItem/ConstructorElementsListItem';
 
@@ -11,8 +11,7 @@ const ConstructorElementsList = () => {
   const dispatch = useDispatch();
 
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { ingredientsList, selectedIngredients } = useSelector(store => ({
-    ingredientsList: store.burger.ingredientsList,
+  const { selectedIngredients } = useSelector(store => ({
     selectedIngredients: store.burger.selectedIngredients,
   }));
 
@@ -31,7 +30,6 @@ const ConstructorElementsList = () => {
     )
   }
 
-  
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredients",
     collect: monitor => ({
@@ -67,6 +65,12 @@ const ConstructorElementsList = () => {
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id}>
         {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'bottom')}
       </li>}
+
+      {
+        isHover && <div className={`${styles['constructor-elements-list__overlay']}`}>
+          <div className={`${styles['constructor-elements-list__cross']}`}></div>
+        </div>
+      }
     </ul>
   )
 }
