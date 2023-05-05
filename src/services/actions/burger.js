@@ -1,5 +1,5 @@
 import { request } from "../../utils/utils";
-import { v4 as uuidv4 } from 'uuid'; 
+import { v4 as uuidv4 } from 'uuid';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -40,22 +40,14 @@ export const getIngredients = () => {
   };
 }
 
-export const writeIngredientPreview = (ingredient) => {
-  return function (dispatch) {
-    dispatch({
-      type: WRITE_INGREDIENT_PREVIEW,
-      currentIngredient: ingredient
-    });
-  }
-}
+export const writeIngredientPreview = (ingredient) => ({
+  type: WRITE_INGREDIENT_PREVIEW,
+  currentIngredient: ingredient
+});
 
-export const clearIngredientPreview = () => {
-  return function (dispatch) {
-    dispatch({
-      type: CLEAR_INGREDIENT_PREVIEW,
-    });
-  }
-}
+export const clearIngredientPreview = () => ({
+  type: CLEAR_INGREDIENT_PREVIEW,
+});
 
 export const postOrder = (ingredientsList) => {
 
@@ -98,29 +90,20 @@ export const addIngredient = (ingredient) => {
   const listId = uuidv4();
   const newIngredient = Object.assign({}, ingredient);
   newIngredient.listId = listId;
-  return function (dispatch) {
-    dispatch({
-      type: ADD_INGREDIENT,
-      currentIngredient: newIngredient,
-    });
-  }
+  return ({
+    type: ADD_INGREDIENT,
+    currentIngredient: newIngredient,
+  });
 }
 
-export const removeIngredient = (ingredient) => {
-  return function (dispatch) {
-    dispatch({
-      type: REMOVE_INGREDIENT,
-      currentIngredient: ingredient,
-    });
-  }
-}
+export const removeIngredient = (ingredient) => ({
+  type: REMOVE_INGREDIENT,
+  currentIngredient: ingredient
+});
 
-export const sortIngredient = (dragIndex, hoverIndex) => {
-  return function (dispatch) {
-    dispatch({
-      type: SORT_INGREDIENTLIST,
-      dragIndex: dragIndex,
-      hoverIndex: hoverIndex
-    });
-  }
-}
+
+export const sortIngredient = (dragIndex, hoverIndex) => ({
+  type: SORT_INGREDIENTLIST,
+  dragIndex: dragIndex,
+  hoverIndex: hoverIndex
+});

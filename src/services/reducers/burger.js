@@ -33,7 +33,6 @@ const initialState = {
     id: "---",
     status: "Ожидаем подтверждение заказа",
     todo: "Подождите...",
-    ingredients: [],
     totalPrice: 0
   },
 
@@ -77,8 +76,8 @@ export const burgerReducer = (state = initialState, action) => {
           id: action.orderId,
           status: 'Заказ отправлен',
           todo: 'Дождитесь готовности на орбитальной станции',
-          ingredients: action.ingredientsList
         },
+        selectedIngredients: initialState.selectedIngredients,
         postOrderFailed: false,
         postOrderRequest: false
       };
@@ -139,20 +138,6 @@ export const burgerReducer = (state = initialState, action) => {
         }
 
       }
-    }
-    case REMOVE_INGREDIENT: {
-      return {
-        ...state,
-        selectedIngredients: {
-          ...state.selectedIngredients,
-          totalPrice: state.selectedIngredients.totalPrice - action.currentIngredient.price,
-          otherIngredientsQty: {
-            ...state.selectedIngredients.otherIngredientsQty,
-            [action.currentIngredient._id]: state.selectedIngredients.otherIngredientsQty[action.currentIngredient._id] - 1,
-          },
-          otherIngredients: state.selectedIngredients.otherIngredients.filter(item => item.listId !== action.currentIngredient.listId)
-        }
-      };
     }
     case REMOVE_INGREDIENT: {
       return {
