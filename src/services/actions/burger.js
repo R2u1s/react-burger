@@ -115,7 +115,6 @@ export const removeIngredient = (ingredient) => {
 }
 
 export const sortIngredient = (dragIndex, hoverIndex) => {
-  console.log('sort');
   return function (dispatch) {
     dispatch({
       type: SORT_INGREDIENTLIST,

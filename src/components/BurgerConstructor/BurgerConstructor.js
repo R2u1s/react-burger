@@ -6,7 +6,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { postOrder } from '../../services/actions/burger';
 
 function BurgerConstructor() {
@@ -42,7 +42,16 @@ function BurgerConstructor() {
             <CurrencyIcon type="primary" />
           </div>
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={submitHandler}>Оформить заказ</Button>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => {
+            if (selectedIngredients.bun._id && selectedIngredients.otherIngredients.length > 0) {
+              submitHandler()}
+          }}>
+          Оформить заказ
+        </Button>
       </div>
       <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>
         <OrderDetails />
