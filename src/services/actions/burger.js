@@ -1,4 +1,5 @@
 import { request } from "../../utils/utils";
+import { v4 as uuidv4 } from 'uuid'; 
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -94,7 +95,7 @@ export const postOrder = (ingredientsList) => {
 }
 
 export const addIngredient = (ingredient) => {
-  const listId = Math.random();
+  const listId = uuidv4();
   const newIngredient = Object.assign({}, ingredient);
   newIngredient.listId = listId;
   return function (dispatch) {

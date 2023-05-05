@@ -57,7 +57,7 @@ const ConstructorElementsList = () => {
           {selectedIngredients.otherIngredients
             .map(function (item, index) {
               return (
-                <ConstructorElementsListItem ingredient={item} index={index} key={index} />
+                <ConstructorElementsListItem ingredient={item} index={index} key={item.listId} />
               )
             })}
         </ul>
