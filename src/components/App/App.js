@@ -8,14 +8,12 @@ import { getIngredients } from '../../services/actions/burger';
 function App() {
   const dispatch = useDispatch();
 
-  const { ingredientsList, selectedIngredients, currentIngredient, orderInfoNew, ingredientsRequest, ingredientsFailed } = useSelector(store => ({
+  const getData = (store) => ({
     ingredientsList: store.burger.ingredientsList,
-    selectedIngredients: store.burger.selectedIngredients,
-    currentIngredient: store.burger.currentIngredient,
-    orderInfo: store.burger.orderInfo,
     ingredientsRequest: store.burger.ingredientsRequest,
-    ingredientsFailed: store.burger.ingredientsFailed
-  }));
+  })
+
+  const { ingredientsList,ingredientsRequest } = useSelector(getData);
 
   React.useEffect(
     () => {

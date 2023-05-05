@@ -12,10 +12,11 @@ const BurgerIngredientsItem = ({ item, openModal }) => {
 
   const dispatch = useDispatch();
 
-  const { selectedIngredients } = useSelector(store => ({
+  const getData = (store) => ({
     selectedIngredients: store.burger.selectedIngredients
-  }));
+  })
 
+  const { selectedIngredients } = useSelector(getData);
 
   const qty = item.type === "bun" ?
     selectedIngredients.bun._id === item._id ? 2 : 0

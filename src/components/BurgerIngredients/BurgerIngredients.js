@@ -15,9 +15,11 @@ export const ingredientTypes = {
 
 function BurgerIngredients() {
 
-  const { ingredientsList } = useSelector(store => ({
-    ingredientsList: store.burger.ingredientsList
-  }));
+  const getData = (store) => ({
+    ingredientsList: store.burger.ingredientsList,
+  })
+
+  const { ingredientsList } = useSelector(getData);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 

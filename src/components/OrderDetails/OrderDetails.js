@@ -5,9 +5,11 @@ import { useSelector } from 'react-redux';
 
 function OrderDetails(){
 
-  const { orderDetails } = useSelector(store => ({
+  const getData = (store) => ({
     orderDetails: store.burger.orderDetails
-  }));
+  })
+
+  const { orderDetails } = useSelector(getData);
 
   return (
     <div className={`${styles['order-details']} pt-20 pb-15`}>

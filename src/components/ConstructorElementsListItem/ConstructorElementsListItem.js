@@ -12,9 +12,11 @@ import { sortIngredient } from '../../services/actions/burger';
 const ConstructorElementsListItem = ({ ingredient, index }) => {
   const dispatch = useDispatch();
 
-  const { ingredientsList } = useSelector(store => ({
-    ingredientsList: store.burger.selectedIngredients.otherIngredients,
-  }));
+  const getData = (store) => ({
+    ingredientsList: store.burger.selectedIngredients.otherIngredients
+  })
+
+  const { ingredientsList } = useSelector(getData);
 
   const ref = React.useRef(null);
 

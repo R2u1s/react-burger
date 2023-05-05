@@ -10,10 +10,11 @@ const ConstructorElementsList = () => {
 
   const dispatch = useDispatch();
 
+  const getData = (store) => ({
+    selectedIngredients: store.burger.selectedIngredients
+  })
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { selectedIngredients } = useSelector(store => ({
-    selectedIngredients: store.burger.selectedIngredients,
-  }));
+  const { selectedIngredients } = useSelector(getData);
 
   //отрисовка булки снизу сверху одной константой
   const bun = (name, priceBun, imageBun, topOrBottom) => {

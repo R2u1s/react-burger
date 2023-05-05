@@ -13,9 +13,11 @@ function BurgerConstructor() {
 
   const dispatch = useDispatch();
 
-  const { selectedIngredients } = useSelector(store => ({
+  const getData = (store) => ({
     selectedIngredients: store.burger.selectedIngredients,
-  }));
+  })
+
+  const { selectedIngredients } = useSelector(getData);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
