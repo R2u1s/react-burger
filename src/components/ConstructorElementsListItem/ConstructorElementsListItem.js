@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from '../ConstructorElementsList/ConstructorElementsList.module.css';
+import PropTypes from 'prop-types';
+import { chosenIngredientObjectType } from '../../utils/data';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,5 +51,9 @@ const ConstructorElementsListItem = ({ ingredient, index }) => {
   )
 }
 
+ConstructorElementsListItem.propTypes = {
+  ingredient: (PropTypes.shape(chosenIngredientObjectType)),
+  index: PropTypes.number
+};
 
 export default ConstructorElementsListItem;
