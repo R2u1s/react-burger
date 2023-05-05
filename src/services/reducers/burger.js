@@ -22,7 +22,7 @@ const initialState = {
     bun: {
       name: "Булка не выбрана",
       price: 0,
-      image: "https://code.s3.yandex.net/react/code/bun-02.png"
+      image: require('../../images/burger.png')
     },
     otherIngredients: [],
     otherIngredientsQty: {},

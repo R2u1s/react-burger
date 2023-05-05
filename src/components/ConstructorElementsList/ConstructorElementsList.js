@@ -20,6 +20,7 @@ const ConstructorElementsList = () => {
     let pos = '';
     topOrBottom === 'top' ? pos = 'верх' : pos = 'низ';
     return (
+      <>
       <ConstructorElement
         type={topOrBottom}
         isLocked='true'
@@ -27,6 +28,7 @@ const ConstructorElementsList = () => {
         price={priceBun}
         thumbnail={imageBun}
       />
+      </>
     )
   }
 
