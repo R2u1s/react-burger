@@ -6,7 +6,6 @@ import { ingredientObjectType } from '../../utils/data';
 import { useInView } from "react-intersection-observer";
 
 const BurgerIngredientsGroup = ({scrollTab,setScrollTab,refState,setRefState,ingredient,openModal}) => {
-
   //Отслеживание какие группы ингредиентов видны
   const ref = React.useRef();
   const { ref: inViewRef, inView } = useInView({
@@ -50,10 +49,15 @@ const BurgerIngredientsGroup = ({scrollTab,setScrollTab,refState,setRefState,ing
 }
 
 BurgerIngredientsGroup.propTypes = {
+  scrollTab: PropTypes.objectOf(PropTypes.bool),
+  setScrollTab: PropTypes.func,
+  refState: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  setRefState: PropTypes.func,
   ingredient: PropTypes.shape({
     type: PropTypes.string,
     list: PropTypes.arrayOf(PropTypes.shape(ingredientObjectType))
-  })
+  }),
+  openModal: PropTypes.func
 }; 
 
 export default BurgerIngredientsGroup;

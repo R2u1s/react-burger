@@ -7,10 +7,8 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
 const modalRoot = document.getElementById("modal");
 
-const Modal = (props) => {
+const Modal = ({active, setClose, children}) => {
 
-  const {active, setClose, children} = props;
-  
   const escFunction = React.useCallback((event) => {
     if (event.key === "Escape") {
       setClose();
@@ -43,6 +41,8 @@ const Modal = (props) => {
 }
 
 Modal.propTypes = {
+  active: PropTypes.bool,
+  setActive: PropTypes.func,
   children: PropTypes.object
 }; 
 
