@@ -6,70 +6,57 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { DataContext } from '../../services/dataContext';
-import { request } from '../../utils/utils';
+import { useSelector, useDispatch } from 'react-redux';
+import { postOrder } from '../../services/actions/burger';
 
-function BurgerConstructor(){
+function BurgerConstructor() {
 
-  //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  
-  const { orderInfo } = React.useContext(DataContext); 
+  const dispatch = useDispatch();
+
+  const getData = (store) => ({
+    selectedIngredients: store.burger.selectedIngredients,
+  })
+
+  const { selectedIngredients } = useSelector(getData);
+
   const { isModalOpen, openModal, closeModal } = useModal();
-
-  const [ orderSubmit, setOrderSubmit ] = React.useState({
-    id: "---",
-    status: "Ожидаем подтверждение заказа",
-    todo: 'Дождитесь готовности на орбитальной станции'
-  });
 
   function collectId() {
     let arrayOfId = [];
-    arrayOfId.push(orderInfo.ingredients.bun._id);
-    arrayOfId.push(orderInfo.ingredients.bun._id);
-    orderInfo.ingredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
+    arrayOfId.push(selectedIngredients.bun._id);
+    arrayOfId.push(selectedIngredients.bun._id);
+    selectedIngredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
     return arrayOfId;
   }
 
-  async function submitHandler(){
+  const submitHandler = () => {
     openModal();
-    let orderStatus = 'Заказ отправляется';
-
-    return await request("orders", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 
-        "ingredients": collectId()
-      })
-    })
-    .then(res => {
-      res.success ? (orderStatus = "Ваш заказ начали готовить") : (orderStatus = "Заказ не отправлен");
-      setOrderSubmit({
-        id: res.order.number.toString(),
-        status: orderStatus,
-        todo: 'Дождитесь готовности на орбитальной станции'
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    dispatch(postOrder(collectId()));
   }
 
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
-      <ConstructorElementsList className={'mb-10'}/>
+      <ConstructorElementsList className={'mb-10'} />
       <div className={`${styles['burger-constructor__overall-flex']}`}>
         <div className={`${styles['burger-constructor__price']}`}>
-          <p className="text text_type_digits-medium">{orderInfo.totalPrice}</p>
-          <div className={`${styles['burger-constructor__currency-icon']}`}> 
+          <p className="text text_type_digits-medium">{selectedIngredients.totalPrice}</p>
+          <div className={`${styles['burger-constructor__currency-icon']}`}>
             <CurrencyIcon type="primary" />
           </div>
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={submitHandler}>Оформить заказ</Button>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => {
+            if (selectedIngredients.bun._id && selectedIngredients.otherIngredients.length > 0) {
+              submitHandler()}
+          }}>
+          Оформить заказ
+        </Button>
       </div>
       <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>
-        <OrderDetails orderDetails={orderSubmit} />
+        <OrderDetails />
       </Modal>
     </section>
   );

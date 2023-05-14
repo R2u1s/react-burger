@@ -1,62 +1,79 @@
 import React from 'react';
 import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DataContext } from '../../services/dataContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd/dist/hooks';
+import { addIngredient } from '../../services/actions/burger';
+import ConstructorElementsListItem from '../ConstructorElementsListItem/ConstructorElementsListItem';
 
 const ConstructorElementsList = () => {
 
-  //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { orderInfo, orderDispatcher } = React.useContext(DataContext); 
+  const dispatch = useDispatch();
 
-  // функция удаления ингредиента из списка в заказе (её пробрасываем в компонент отрисовывающий ингредиенты)
-  function deleteIngredient(item) {
-    orderDispatcher({type: "remove", currentIngredient: item});
-  }
+  const getData = (store) => ({
+    selectedIngredients: store.burger.selectedIngredients
+  })
+  //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
+  const { selectedIngredients } = useSelector(getData);
 
   //отрисовка булки снизу сверху одной константой
   const bun = (name, priceBun, imageBun, topOrBottom) => {
-    let pos ='';
+    let pos = '';
     topOrBottom === 'top' ? pos = 'верх' : pos = 'низ';
     return (
+      <>
       <ConstructorElement
-          type = {topOrBottom}
-          isLocked = 'true'
-          text={`${name} (${pos})`}
-          price={priceBun}
-          thumbnail={imageBun}
-        />
+        type={topOrBottom}
+        isLocked='true'
+        text={`${name} (${pos})`}
+        price={priceBun}
+        thumbnail={imageBun}
+      />
+      </>
     )
   }
 
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredients",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(ingredient) {
+      dispatch(addIngredient(ingredient));
+    },
+  });
+
+  const [, drop] = useDrop({
+    accept: "sort",
+  });
+
   return (
-    
-    <ul className={`${styles['constructor-elements-list__list']}`}>
-     {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id} >
-        {bun(orderInfo.ingredients.bun.name,orderInfo.ingredients.bun.price, orderInfo.ingredients.bun.image,'top')}
-      </li> }
-     
-      { <ul className={styles['constructor-elements-list__list-ingredients']}>
-      {orderInfo.ingredients.otherIngredients
-        .map(function (item) {
-          return (
-            <li className={styles['constructor-elements-list__item']} key={item._id} id={item._id} onClick={()=>{
-              deleteIngredient(item);
-            }}>
-              <DragIcon />
-              <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-              />
-            </li>
-          )
-        })}
-        </ul>}
-        
+    <ul className={`${styles['constructor-elements-list__list']}`} ref={dropTarget}>
+      {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id} >
+        {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'top')}
+      </li>}
+
+      {selectedIngredients.otherIngredients.length > 0 ?
+        <ul className={styles['constructor-elements-list__list-ingredients']} ref={drop}>
+          {selectedIngredients.otherIngredients
+            .map(function (item, index) {
+              return (
+                <ConstructorElementsListItem ingredient={item} index={index} key={item.listId} />
+              )
+            })}
+        </ul>
+        : <p className="text text_type_main-default" style={{ textAlign: "center" }}>Нет добавленных ингредиентов</p>
+      }
+
       {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={bun._id} id={bun._id}>
-        {bun(orderInfo.ingredients.bun.name,orderInfo.ingredients.bun.price, orderInfo.ingredients.bun.image,'bottom')}
-      </li> }
+        {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'bottom')}
+      </li>}
+
+      {
+        isHover && <div className={`${styles['constructor-elements-list__overlay']}`}>
+          <div className={`${styles['constructor-elements-list__cross']}`}></div>
+        </div>
+      }
     </ul>
   )
 }

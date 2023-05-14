@@ -7,10 +7,8 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
 const modalRoot = document.getElementById("modal");
 
-const Modal = (props) => {
+const Modal = ({active, setClose, children}) => {
 
-  const {active, setClose, children} = props;
-  
   const escFunction = React.useCallback((event) => {
     if (event.key === "Escape") {
       setClose();
@@ -25,12 +23,14 @@ const Modal = (props) => {
       document.removeEventListener("keydown", escFunction)
     };
   }, [active]);
-  
+
   return ReactDOM.createPortal(
     (
-    <ModalOverlay active={active} setClose={setClose} children={children} onClick={setClose}>
+    <ModalOverlay active={active} setClose={setClose} children={children} onClick={setClose} >
       <div className={active ? `${styles.modal__container} ${styles.modal__contVisibility_active}` : `${styles.modal__container}`} onClick={(e) => e.stopPropagation()}>
-        <button className={styles['modal__close-button']} onClick={setClose}>
+        <button className={styles['modal__close-button']} onClick={() => {
+          setClose();
+        }}>
           <CloseIcon type="primary" />  
         </button>
         {children}
@@ -42,9 +42,8 @@ const Modal = (props) => {
 
 Modal.propTypes = {
   active: PropTypes.bool,
-  children: PropTypes.object,
   setActive: PropTypes.func,
-  setClose: PropTypes.func
+  children: PropTypes.object
 }; 
 
 export default Modal;

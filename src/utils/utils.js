@@ -27,3 +27,18 @@ export const request = (endpoint, options) => {
     .then(checkResponse)
     .then(checkSuccess);
 };
+
+export function arrayToObject(array) {
+  let object = {};
+  array.forEach((item) => {
+    object[item._id] = item;
+  });
+  return object;
+}
+
+export function moveIngredient(array, dragIndex, hoverIndex) {
+  const dragCard = array[dragIndex];
+  array.splice(dragIndex, 1);
+  array.splice(hoverIndex, 0, dragCard)
+  return array;
+}
