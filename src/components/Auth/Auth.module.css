@@ -1,4 +1,4 @@
-.config-container {
+.auth-container {
   margin: 0 auto;
   margin-top: calc(var(--offset-base-size)  * 35);
   max-width: 480px;
@@ -17,7 +17,7 @@
   justify-content: space-between;
 }
 
-.config-inputs {
+.auth-inputs {
   margin: 0;
   padding: 0;
   max-width: 100%;
@@ -28,7 +28,7 @@
   justify-content: space-between;
 }
 
-.config-extras {
+.auth-extras {
   margin: 0;
   padding: 0;
   max-width: 100%;
@@ -39,19 +39,19 @@
   justify-content: space-between;
 }
 
-.config-title {
+.auth-title {
   grid-area: title;
   text-align: center; 
 }
 
-.config-inputs {
+.auth-inputs {
   grid-area: inputs; 
 }
 
-.config-button {
+.auth-button {
   grid-area: button; 
 }
 
-.config-extras {
+.auth-extras {
   grid-area: extras; 
 }

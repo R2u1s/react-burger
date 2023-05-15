@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './Config.module.css';
+import styles from './Auth.module.css';
 
-function ConfigEnter() {
+function AuthEnter() {
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
 
@@ -13,9 +13,9 @@ function ConfigEnter() {
     setValuePassword(e.target.value)
   }
   return (
-    <>
-      <div className={`${styles['config-title']} text text_type_main-medium`}>Вход</div>
-      <div className={`${styles['config-inputs']}`}>
+    <div className={`${styles['auth-container']}`}>
+      <div className={`${styles['auth-title']} text text_type_main-medium`}>Вход</div>
+      <div className={`${styles['auth-inputs']}`}>
         <Input
           type={'email'}
           placeholder={'E-mail'}
@@ -34,8 +34,8 @@ function ConfigEnter() {
         />
       </div>
 
-    </>
+    </div>
   );
 }
 
-export default ConfigEnter;
+export default AuthEnter;
