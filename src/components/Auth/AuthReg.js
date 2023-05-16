@@ -5,7 +5,10 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 
-function AuthEnter() {
+function AuthReg() {
+
+  const [valueName, setValueName] = React.useState('');
+  const inputRefName = React.useRef(null);
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
@@ -16,8 +19,19 @@ function AuthEnter() {
   }
   return (
     <div className={`${styles['auth-container']}`}>
-      <div className={`${styles['auth-title']} text text_type_main-medium`}>Вход</div>
+      <div className={`${styles['auth-title']} text text_type_main-medium`}>Регистрация</div>
       <div className={`${styles['auth-inputs']}`}>
+        <Input
+          type={'text'}
+          placeholder={'Name'}
+          onChange={e => setValueName(e.target.value)}
+          value={valueName}
+          name={'name'}
+          error={false}
+          ref={inputRefName}
+          errorText={'Ошибка'}
+          size={'default'}
+        />
         <Input
           type={'email'}
           placeholder={'E-mail'}
@@ -41,17 +55,13 @@ function AuthEnter() {
           type="primary"
           size="large"
           onClick={() => { }}>
-          Войти
+          Зарегистрироваться
         </Button>
       </div>
       <div className={`${styles['auth-extras']}`}>
         <p className="text text_type_main-default text_color_inactive">
-          Вы - новый пользователь?
-          <span className={`${styles['auth-extra-link']}`}> Зарегистрироваться</span>
-        </p>
-        <p className="text text_type_main-default text_color_inactive">
-          Забыли пароль?
-          <span className={`${styles['auth-extra-link']}`}> Восстановить пароль</span>
+          Уже зарегистрированы?
+          <span className={`${styles['auth-extra-link']}`}> Войти</span>
         </p>
       </div>
 
@@ -59,4 +69,4 @@ function AuthEnter() {
   );
 }
 
-export default AuthEnter;
+export default AuthReg;

@@ -5,7 +5,7 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 
-function AuthEnter() {
+function AuthNewPassword() {
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
@@ -16,23 +16,24 @@ function AuthEnter() {
   }
   return (
     <div className={`${styles['auth-container']}`}>
-      <div className={`${styles['auth-title']} text text_type_main-medium`}>Вход</div>
+      <div className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</div>
       <div className={`${styles['auth-inputs']}`}>
+        <PasswordInput
+          placeholder={'Введите новый пароль'}
+          onChange={onChangePassword}
+          value={valuePassword}
+          name={'password'}
+        />
         <Input
-          type={'email'}
-          placeholder={'E-mail'}
+          type={'text'}
+          placeholder={'Введите код из письма'}
           onChange={e => setValueEmail(e.target.value)}
           value={valueEmail}
-          name={'email'}
+          name={'code'}
           error={false}
           ref={inputRefEmail}
           errorText={'Ошибка'}
           size={'default'}
-        />
-        <PasswordInput
-          onChange={onChangePassword}
-          value={valuePassword}
-          name={'password'}
         />
       </div>
       <div className={`${styles['auth-button']}`}>
@@ -41,17 +42,13 @@ function AuthEnter() {
           type="primary"
           size="large"
           onClick={() => { }}>
-          Войти
+          Сохранить
         </Button>
       </div>
       <div className={`${styles['auth-extras']}`}>
         <p className="text text_type_main-default text_color_inactive">
-          Вы - новый пользователь?
-          <span className={`${styles['auth-extra-link']}`}> Зарегистрироваться</span>
-        </p>
-        <p className="text text_type_main-default text_color_inactive">
-          Забыли пароль?
-          <span className={`${styles['auth-extra-link']}`}> Восстановить пароль</span>
+          Вспомнили пароль?
+          <span className={`${styles['auth-extra-link']}`}> Войти</span>
         </p>
       </div>
 
@@ -59,4 +56,4 @@ function AuthEnter() {
   );
 }
 
-export default AuthEnter;
+export default AuthNewPassword;
