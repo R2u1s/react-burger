@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 
 function AuthEnter() {
+
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
 
@@ -32,6 +34,25 @@ function AuthEnter() {
           value={valuePassword}
           name={'password'}
         />
+      </div>
+      <div className={`${styles['auth-button']}`}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => { }}>
+          Войти
+        </Button>
+      </div>
+      <div className={`${styles['auth-extras']}`}>
+        <p className="text text_type_main-default text_color_inactive">
+          Вы - новый пользователь?
+          <span className={`${styles['auth-extra-link']}`}> Зарегистрироваться</span>
+        </p>
+        <p className="text text_type_main-default text_color_inactive">
+          Забыли пароль?
+          <span className={`${styles['auth-extra-link']}`}> Восстановить пароль</span>
+        </p>
       </div>
 
     </div>
