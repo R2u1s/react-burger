@@ -4,8 +4,19 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
+import { useNavigate } from "react-router-dom";
 
-function AuthEnter() {
+function AuthLogin() {
+
+  const navigate = useNavigate();
+
+  function onClickReg() {
+    navigate('/register')
+  }
+
+  function onClickRecover() {
+    navigate('/forgot-password')
+  }
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
@@ -47,11 +58,11 @@ function AuthEnter() {
       <div className={`${styles['auth-extras']}`}>
         <p className="text text_type_main-default text_color_inactive">
           Вы - новый пользователь?
-          <span className={`${styles['auth-extra-link']}`}> Зарегистрироваться</span>
+          <span className={`${styles['auth-extra-link']}`} onClick={onClickReg}> Зарегистрироваться</span>
         </p>
         <p className="text text_type_main-default text_color_inactive">
           Забыли пароль?
-          <span className={`${styles['auth-extra-link']}`}> Восстановить пароль</span>
+          <span className={`${styles['auth-extra-link']}`} onClick={onClickRecover}> Восстановить пароль</span>
         </p>
       </div>
 
@@ -59,4 +70,4 @@ function AuthEnter() {
   );
 }
 
-export default AuthEnter;
+export default AuthLogin;

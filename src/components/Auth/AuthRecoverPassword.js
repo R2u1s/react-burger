@@ -3,8 +3,15 @@ import PropTypes from 'prop-types';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
+import { useNavigate } from "react-router-dom";
 
 function AuthRecoverPassword() {
+
+  const navigate = useNavigate();
+
+  function onClick() {
+    navigate('/login')
+  }
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
@@ -37,7 +44,7 @@ function AuthRecoverPassword() {
       <div className={`${styles['auth-extras']}`}>
         <p className="text text_type_main-default text_color_inactive">
           Вспомнили пароль?
-          <span className={`${styles['auth-extra-link']}`}> Войти</span>
+          <span className={`${styles['auth-extra-link']}`} onClick={onClick}> Войти</span>
         </p>
       </div>
 

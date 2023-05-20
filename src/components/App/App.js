@@ -1,42 +1,27 @@
 import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
-import Main from '../Main/Main'
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/burger';
+import Main from '../Main/Main';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AuthLogin from '../Auth/AuthLogin';
+import AuthReg from '../Auth/AuthReg';
+import AuthRecoverPassword from '../Auth/AuthRecoverPassword';
+import AuthNewPassword from '../Auth/AuthNewPassword';
 
 function App() {
-  const dispatch = useDispatch();
-
-  const getData = (store) => ({
-    ingredientsList: store.burger.ingredientsList,
-    ingredientsRequest: store.burger.ingredientsRequest,
-  })
-
-  const { ingredientsList,ingredientsRequest } = useSelector(getData);
-
-  React.useEffect(
-    () => {
-      dispatch(getIngredients());
-    },
-    [dispatch]
-  );
-
-  const content = React.useMemo(
-    () => {
-      return ingredientsRequest ? (
-        "Загрузка"
-      ) : (
-        <Main />
-      );
-    },
-    [ingredientsRequest, ingredientsList]
-  );
 
   return (
     <>
       <AppHeader />
-      {content}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AuthLogin />} />
+          <Route path="/login" element={<AuthLogin />} />
+          <Route path="/register" element={<AuthReg />} />
+          <Route path="/forgot-password" element={<AuthRecoverPassword />} />
+          <Route path="/reset-password" element={<AuthNewPassword />} />
+{/*           <Route path="*" element={<NotFound404 />} /> */}
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
