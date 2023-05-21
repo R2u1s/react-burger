@@ -4,8 +4,9 @@ import Main from '../Main/Main';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AuthLogin from '../Auth/AuthLogin';
 import AuthReg from '../Auth/AuthReg';
-import AuthRecoverPassword from '../Auth/AuthRecoverPassword';
-import AuthNewPassword from '../Auth/AuthNewPassword';
+import AuthForgotPassword from '../Auth/AuthForgotPassword';
+import AuthResetPassword from '../Auth/AuthResetPassword';
+import Profile from '../Profile/Profile';
 
 function App() {
 
@@ -14,11 +15,11 @@ function App() {
       <AppHeader />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AuthLogin />} />
-          <Route path="/login" element={<AuthLogin />} />
+          <Route path="/" element={<Profile />} />
+{/*           <Route path="/login" element={<AuthLogin />} />
           <Route path="/register" element={<AuthReg />} />
-          <Route path="/forgot-password" element={<AuthRecoverPassword />} />
-          <Route path="/reset-password" element={<AuthNewPassword />} />
+          <Route path="/forgot-password" element={<AuthForgotPassword />} />
+          <Route path="/reset-password" element={<AuthResetPassword />} /> */}
 {/*           <Route path="*" element={<NotFound404 />} /> */}
         </Routes>
       </BrowserRouter>

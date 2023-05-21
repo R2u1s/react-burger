@@ -2,41 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { postEmail } from '../../services/actions/auth';
 
-function AuthNewPassword() {
+function AuthForgotPassword() {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const getData = (store) => ({
+    postEmailRequest: store.auth.postEmailRequest,
+    postEmailFailed: store.auth.postEmailFailed,
+  })
 
-  function onClick() {
+  const { postEmailRequest, postEmailFailed } = useSelector(getData);
+
+  function onClickLoginPage() {
     navigate('/login')
   }
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
 
-  const [valuePassword, setValuePassword] = React.useState('')
-  const onChangePassword = e => {
-    setValuePassword(e.target.value)
+  function onClickRecover() {
+    dispatch(postEmail(valueEmail));
+    navigate('/reset-password');
   }
+
   return (
     <div className={`${styles['auth-container']}`}>
       <div className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</div>
       <div className={`${styles['auth-inputs']}`}>
-        <PasswordInput
-          placeholder={'Введите новый пароль'}
-          onChange={onChangePassword}
-          value={valuePassword}
-          name={'password'}
-        />
         <Input
-          type={'text'}
-          placeholder={'Введите код из письма'}
+          type={'email'}
+          placeholder={'E-mail'}
           onChange={e => setValueEmail(e.target.value)}
           value={valueEmail}
-          name={'code'}
+          name={'email'}
           error={false}
           ref={inputRefEmail}
           errorText={'Ошибка'}
@@ -48,19 +51,18 @@ function AuthNewPassword() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => { }}>
-          Сохранить
+          onClick={onClickRecover}>
+          Воcстановить
         </Button>
       </div>
       <div className={`${styles['auth-extras']}`}>
         <p className="text text_type_main-default text_color_inactive">
           Вспомнили пароль?
-          <span className={`${styles['auth-extra-link']}`} onClick={onClick}> Войти</span>
+          <span className={`${styles['auth-extra-link']}`} onClick={onClickLoginPage}> Войти</span>
         </p>
       </div>
-
     </div>
   );
 }
 
-export default AuthNewPassword;
+export default AuthForgotPassword;

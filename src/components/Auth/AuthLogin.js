@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../../services/actions/auth';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 function AuthLogin() {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function onClickReg() {
     navigate('/register')
@@ -25,6 +28,11 @@ function AuthLogin() {
   const onChangePassword = e => {
     setValuePassword(e.target.value)
   }
+
+  const submitHandler = () => {
+    dispatch(login({valueEmail,valuePassword}));
+  }
+
   return (
     <div className={`${styles['auth-container']}`}>
       <div className={`${styles['auth-title']} text text_type_main-medium`}>Вход</div>
@@ -51,7 +59,7 @@ function AuthLogin() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => { }}>
+          onClick={submitHandler}>
           Войти
         </Button>
       </div>

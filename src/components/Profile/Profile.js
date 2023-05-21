@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './Profile.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registration } from '../../services/actions/auth';
-import styles from './Auth.module.css';
 
-function AuthReg() {
+function Profile() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,17 +29,17 @@ function AuthReg() {
   }
 
   const submitHandler = () => {
-    dispatch(registration({valueEmail,valuePassword,valueName}));
+    dispatch(registration({ valueEmail, valuePassword, valueName }));
   }
 
   return (
-    <div className={`${styles['auth-container']}`}>
-      <div className={`${styles['auth-title']} text text_type_main-medium`}>Регистрация</div>
-      <div className={`${styles['auth-inputs']}`}>
+    <section className={`${styles['profile']}`}>
+      <div className={`${styles['profile-inputs']}`}>
         <Input
           type={'text'}
           placeholder={'Name'}
           onChange={e => setValueName(e.target.value)}
+          icon={'EditIcon'}
           value={valueName}
           name={'name'}
           error={false}
@@ -51,6 +51,7 @@ function AuthReg() {
           type={'email'}
           placeholder={'E-mail'}
           onChange={e => setValueEmail(e.target.value)}
+          icon={'EditIcon'}
           value={valueEmail}
           name={'email'}
           error={false}
@@ -60,28 +61,27 @@ function AuthReg() {
         />
         <PasswordInput
           onChange={onChangePassword}
+          icon={'EditIcon'}
           value={valuePassword}
           name={'password'}
         />
       </div>
-      <div className={`${styles['auth-button']}`}>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={submitHandler}>
-          Зарегистрироваться
-        </Button>
-      </div>
-      <div className={`${styles['auth-extras']}`}>
-        <p className="text text_type_main-default text_color_inactive">
-          Уже зарегистрированы?
-          <span className={`${styles['auth-extra-link']}`} onClick={onClick}> Войти</span>
-        </p>
-      </div>
-
-    </div>
+      <ul className={`${styles['profile-nav']}`}>
+        <li className={`${styles['profile-nav-element']} text text_type_main-medium`}>
+          Профиль
+        </li>
+        <li className={`${styles['profile-nav-element']} text text_type_main-medium text_color_inactive`}>
+          История заказов
+        </li>
+        <li className={`${styles['profile-nav-element']} text text_type_main-medium text_color_inactive`}>
+          Выход
+        </li>
+        <li className={`${styles['profile-nav-element']} text text_type_main-default text_color_inactive`}>
+          В этом разделе вы можете изменить свои персональные данные
+        </li>
+      </ul>
+    </section>
   );
 }
 
-export default AuthReg;
+export default Profile;
