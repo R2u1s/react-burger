@@ -8,8 +8,14 @@ import { DndProvider } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/burger';
+import { CONSTRUCTOR } from '../AppHeader/AppHeader';
 
-function Main() {
+function Main({highlightActive}) {
+
+  React.useEffect(() => {
+    highlightActive(CONSTRUCTOR);
+  }, []);
+
   const dispatch = useDispatch();
 
   const getData = (store) => ({

@@ -7,8 +7,14 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 import { useNavigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 
 function AuthLogin() {
+
+  const getUser = (store) => ({
+    user: store.auth
+  });
+  const { user } = useSelector(getUser);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,6 +37,16 @@ function AuthLogin() {
 
   const submitHandler = () => {
     dispatch(login({valueEmail,valuePassword}));
+  }
+
+  if (user.name) {
+    return (
+            // Переадресовываем авторизованного пользователя на главную страницу
+      <Navigate
+        to="/"
+                replace
+      />
+    );
   }
 
   return (

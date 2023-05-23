@@ -7,11 +7,23 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { registration } from '../../services/actions/auth';
+import { PROFILE } from '../AppHeader/AppHeader';
+import { Navigate } from 'react-router-dom';
 
-function Profile() {
+function Profile({highlightActive}) {
+
+  React.useEffect(() => {
+    highlightActive(PROFILE);
+  }, []);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const getUser = (store) => ({
+    user: store.auth
+  });
+
+  const { user } = useSelector(getUser);
 
   function onClick() {
     navigate('/login')
@@ -28,10 +40,6 @@ function Profile() {
     setValuePassword(e.target.value)
   }
 
-  const submitHandler = () => {
-    dispatch(registration({ valueEmail, valuePassword, valueName }));
-  }
-
   return (
     <section className={`${styles['profile']}`}>
       <div className={`${styles['profile-inputs']}`}>
@@ -40,7 +48,7 @@ function Profile() {
           placeholder={'Name'}
           onChange={e => setValueName(e.target.value)}
           icon={'EditIcon'}
-          value={valueName}
+          value={user.name}
           name={'name'}
           error={false}
           ref={inputRefName}
@@ -52,7 +60,7 @@ function Profile() {
           placeholder={'E-mail'}
           onChange={e => setValueEmail(e.target.value)}
           icon={'EditIcon'}
-          value={valueEmail}
+          value={user.email}
           name={'email'}
           error={false}
           ref={inputRefEmail}
@@ -62,7 +70,7 @@ function Profile() {
         <PasswordInput
           onChange={onChangePassword}
           icon={'EditIcon'}
-          value={valuePassword}
+          value={'password'}
           name={'password'}
         />
       </div>

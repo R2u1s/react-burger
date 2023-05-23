@@ -5,31 +5,79 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useNavigate } from 'react-router-dom';
 
-function AppHeader() {
+export const CONSTRUCTOR = '';
+export const ORDERS = 'orders';
+export const PROFILE = 'profile';
+
+function AppHeader({ active }) {
+
+  const navigate = useNavigate();
+
+  function onClickConstructor() {
+    navigate('/');
+  }
+  function onClickOrders() {
+    navigate('/');
+  }
+  function onClickProfile() {
+    navigate('/profile');
+  }
+
   return (
     <header className={`${styles.header} mt-10 mb-10 pt-4 pb-4`}>
       <nav className={styles.header__nav}>
         <ul className={styles.header__list}>
           <div className={styles.header__flex}>
             <li>
-              <a href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
-                <BurgerIcon type="primary" />
-                <p className="text text_type_main-default">Конструктор</p>
-              </a>
+              <div className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`} onClick={onClickConstructor}>
+                {active === CONSTRUCTOR
+                  ?
+                  <>
+                    <BurgerIcon type="primary" />
+                    <p className="text text_type_main-default">Конструктор</p>
+                  </>
+                  :
+                  <>
+                    <BurgerIcon type="secondary" />
+                    <p className="text text_type_main-default text_color_inactive">Конструктор</p>
+                  </>
+                }
+              </div>
             </li>
             <li>
-              <a href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
-                <ListIcon type="secondary" />
-                <p className="text text_type_main-default text_color_inactive">Лента заказов</p>
-              </a>
+              <div href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`} onClick={onClickOrders}>
+                {active === ORDERS
+                  ?
+                  <>
+                    <ListIcon type="primary" />
+                    <p className="text text_type_main-default">Лента заказов</p>
+                  </>
+                  :
+                  <>
+                    <ListIcon type="secondary" />
+                    <p className="text text_type_main-default text_color_inactive">Лента заказов</p>
+                  </>
+                }
+              </div>
             </li>
           </div>
           <li>
-            <a href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`}>
-              <ProfileIcon type="secondary" />
-              <p className="text text_type_main-default text_color_inactive">Личный кабинет</p>
-            </a>
+            <div className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`} onClick={onClickProfile}>
+              {active === PROFILE
+                ?
+                <>
+                  <ProfileIcon type="primary" />
+                  <p className="text text_type_main-default">Личный кабинет</p>
+                </>
+                :
+                <>
+                  <ProfileIcon type="secondary" />
+                  <p className="text text_type_main-default text_color_inactive">Личный кабинет</p>
+                </>
+              }
+            </div>
           </li>
         </ul>
       </nav>

@@ -13,26 +13,21 @@ import {
   LOGOUT_FAILED,
   TOKEN_REQUEST,
   TOKEN_SUCCESS,
-  TOKEN_FAILED
+  TOKEN_FAILED,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILED
 } from "../actions/auth";
 
 const initialState = {
-  email: '',
-  password: '',
-  name: '',
+  email: null,
+  password: null,
+  name: null,
   accessToken: '',
   refreshToken: '',
 
-  postEmailRequest: false,
-  postEmailFailed: false,
-  loginRequest: false,
-  loginFailed: false,
-  regRequest: false,
-  regFailed: false,
-  logoutRequest: false,
-  logoutFailed: false,
-  tokenRequest: false,
-  tokenFailed: false,
+  authRequest: false,
+  authFailed: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -42,54 +37,54 @@ export const authReducer = (state = initialState, action) => {
     case EMAIL_REQUEST: {
       return {
         ...state,
-        postEmailRequest: true
+        authRequest: true
       };
     }
     case EMAIL_SUCCESS: {
       return {
         ...state,
-        postEmailFailed: false,
-        postEmailRequest: false
+        authFailed: false,
+        authRequest: false
       };
     }
     case EMAIL_FAILED: {
       return {
         ...state,
-        postEmailFailed: true,
-        postEmailRequest: false
+        authFailed: true,
+        authRequest: false
       };
     }
     //Авторизация
     case LOGIN_REQUEST: {
       return {
         ...state,
-        loginRequest: true
+        authRequest: true
       };
     }
     case LOGIN_SUCCESS: {
       return {
         ...state,
-/*         email: action.data.user.email,
-        name: action.data.user.name, */
+        email: action.data.user.email,
+        name: action.data.user.name,
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
 
-        loginFailed: false,
-        loginRequest: false
+       authFailed: false,
+       authRequest: false
       };
     }
     case LOGIN_FAILED: {
       return {
         ...state,
-        loginFailed: true,
-        loginRequest: false
+        authFailed: true,
+        authRequest: false
       };
     }
     //Регистрация
     case REG_REQUEST: {
       return {
         ...state,
-        regRequest: true
+        authRequest: true
       };
     }
     case REG_SUCCESS: {
@@ -98,43 +93,43 @@ export const authReducer = (state = initialState, action) => {
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
 
-        regFailed: false,
-        regRequest: false
+        authFailed: false,
+        authRequest: false
       };
     }
     case REG_FAILED: {
       return {
         ...state,
-        regFailed: true,
-        regRequest: false
+        authFailed: true,
+        authRequest: false
       };
     }
     //Авторизация
     case LOGOUT_REQUEST: {
       return {
         ...state,
-        logoutRequest: true
+        authRequest: true
       };
     }
     case LOGOUT_SUCCESS: {
       return {
         ...state,
-        logoutFailed: false,
-        logoutRequest: false
+        authFailed: false,
+        authRequest: false
       };
     }
     case LOGOUT_FAILED: {
       return {
         ...state,
-        logoutFailed: true,
-        logoutRequest: false
+        authFailed: true,
+        authRequest: false
       };
     }
     //Обновление токена
     case TOKEN_REQUEST: {
       return {
         ...state,
-        tokenRequest: true
+        authRequest: true
       };
     }
     case TOKEN_SUCCESS: {
@@ -142,15 +137,39 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
-        tokenFailed: false,
-        tokenRequest: false
+        authFailed: false,
+        authRequest: false
       };
     }
     case TOKEN_FAILED: {
       return {
         ...state,
-        tokenFailed: true,
-        tokenRequest: false
+        authFailed: true,
+        authRequest: false
+      };
+    }
+    //Запрос информации пользователя
+    case GET_USER_REQUEST: {
+      return {
+        ...state,
+        authRequest: true
+      };
+    }
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        email: action.data.user.email,
+        name: action.data.user.name,
+
+        authFailed: false,
+        authRequest: false
+      };
+    }
+    case GET_USER_FAILED: {
+      return {
+        ...state,
+        authFailed: true,
+        authRequest: false
       };
     }
     default: {

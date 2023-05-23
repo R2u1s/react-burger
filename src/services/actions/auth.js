@@ -1,4 +1,4 @@
-import { request } from "../../utils/utils";
+import { request,setCookie,getCookie } from "../../utils/utils";
 
 //Восстановление пароля. Отправка email
 export const EMAIL_REQUEST = 'EMAIL_REQUEST';
@@ -20,6 +20,14 @@ export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 export const TOKEN_REQUEST = 'TOKEN_REQUEST';
 export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 export const TOKEN_FAILED = 'TOKEN_FAILED';
+//Получение информации о пользователе
+export const GET_USER_REQUEST = 'GET_USER_REQUEST';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED = 'GET_USER_FAILED';
+//Изменение информации о пользователе
+export const CHANGE_USER_REQUEST = 'CHANGE_USER_REQUEST';
+export const CHANGE_USER_SUCCESS = 'CHANGE_USER_SUCCESS';
+export const CHANGE_USER_FAILED = 'CHANGE_USER_FAILED';
 
 export const postEmail = (email) => {
   return function (dispatch) {
@@ -58,6 +66,7 @@ export const postEmail = (email) => {
 
 //Авторизация
 export const login = (data) => {
+  console.log(data.valueEmail);
   return function (dispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -74,10 +83,12 @@ export const login = (data) => {
     })
       .then(res => {
         if (res && res.success) {
-          console.log(res);
+          if (res.accessToken) {
+            setCookie('token', res.accessToken.split('Bearer ')[1]);
+          }
           dispatch({
             type: LOGIN_SUCCESS,
-            data: res.data
+            data: res
           });
         } else {
           dispatch({
@@ -113,7 +124,6 @@ export const registration = (data) => {
     })
       .then(res => {
         if (res && res.success) {
-          console.log(res);
           dispatch({
             type: TOKEN_SUCCESS,
             data: res.data
@@ -189,7 +199,7 @@ export const refreshToken = (token) => {
           console.log(res);
           dispatch({
             type: TOKEN_SUCCESS,
-            data: res.data
+            data: res
           });
         } else {
           dispatch({
@@ -200,6 +210,45 @@ export const refreshToken = (token) => {
       .catch(error => {
         dispatch({
           type: TOKEN_FAILED
+        });
+        console.log(error);
+      });
+  };
+}
+
+//Получение информации о пользователе
+export const getUserRequest = () => {
+  return function (dispatch) {
+    dispatch({
+      type: GET_USER_REQUEST
+    });
+    request("auth/user", {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + getCookie('token')
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer'
+    })
+      .then(res => {
+        if (res && res.success) {
+          dispatch({
+            type: GET_USER_SUCCESS,
+            data: res
+          });
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          });
+        }
+      })
+      .catch(error => {
+        dispatch({
+          type: GET_USER_FAILED
         });
         console.log(error);
       });
