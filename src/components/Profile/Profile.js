@@ -1,14 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './Profile.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { registration } from '../../services/actions/auth';
 import { PROFILE } from '../AppHeader/AppHeader';
-import { Navigate } from 'react-router-dom';
+import { logout } from '../../services/actions/auth';
 
 function Profile({highlightActive}) {
 
@@ -38,6 +35,11 @@ function Profile({highlightActive}) {
   const [valuePassword, setValuePassword] = React.useState('')
   const onChangePassword = e => {
     setValuePassword(e.target.value)
+  }
+
+  const logoutHandler = () => {
+    console.log('click on logout');
+    dispatch(logout(user.refreshToken));
   }
 
   return (
@@ -81,7 +83,7 @@ function Profile({highlightActive}) {
         <li className={`${styles['profile-nav-element']} text text_type_main-medium text_color_inactive`}>
           История заказов
         </li>
-        <li className={`${styles['profile-nav-element']} text text_type_main-medium text_color_inactive`}>
+        <li className={`${styles['profile-nav-element']} text text_type_main-medium text_color_inactive`} onClick={logoutHandler}>
           Выход
         </li>
         <li className={`${styles['profile-nav-element']} text text_type_main-default text_color_inactive`}>

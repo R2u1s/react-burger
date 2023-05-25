@@ -43,7 +43,7 @@ function AuthLogin() {
     return (
             // Переадресовываем авторизованного пользователя на главную страницу
       <Navigate
-        to="/"
+        to={user.lastURL}
                 replace
       />
     );

@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserRequest } from '../services/actions/auth';
+import { getUserRequest, refreshToken,saveLastUrl } from '../services/actions/auth';
 
 export const ProtectedRouteElement = ({ element }) => {
 
@@ -14,9 +14,15 @@ export const ProtectedRouteElement = ({ element }) => {
 
   useEffect(
     () => {
-      dispatch(getUserRequest());
+      dispatch(saveLastUrl(element.type.name));
+      if (user.accessToken) {
+        dispatch(getUserRequest(user.accessToken));
+      } else {
+          dispatch(refreshToken());
+      }
+      
     },
-    [dispatch]
+    [dispatch,user.name,user.accessToken]
   );
 
   const content = useMemo(
@@ -24,7 +30,7 @@ export const ProtectedRouteElement = ({ element }) => {
       return (user.authRequest || !user.name && !user.authFailed) ? 
         <p style={{textAlign:'center'}}>Загрузка...</p>
        : (
-        user.name ? element : <Navigate to="/login" replace />
+        user.refreshToken ? element : <Navigate to="/login" replace />
       );
     },
     [user.name, user.authRequest]

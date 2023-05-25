@@ -1,4 +1,4 @@
-import { request,setCookie,getCookie } from "../../utils/utils";
+import { request, setCookie, getCookie } from "../../utils/utils";
 
 //Восстановление пароля. Отправка email
 export const EMAIL_REQUEST = 'EMAIL_REQUEST';
@@ -28,6 +28,8 @@ export const GET_USER_FAILED = 'GET_USER_FAILED';
 export const CHANGE_USER_REQUEST = 'CHANGE_USER_REQUEST';
 export const CHANGE_USER_SUCCESS = 'CHANGE_USER_SUCCESS';
 export const CHANGE_USER_FAILED = 'CHANGE_USER_FAILED';
+//Запись последнего адреса URL
+export const SAVE_LAST_URL = 'SAVE_LAST_URL';
 
 export const postEmail = (email) => {
   return function (dispatch) {
@@ -66,7 +68,7 @@ export const postEmail = (email) => {
 
 //Авторизация
 export const login = (data) => {
-  console.log(data.valueEmail);
+
   return function (dispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -84,7 +86,7 @@ export const login = (data) => {
       .then(res => {
         if (res && res.success) {
           if (res.accessToken) {
-            setCookie('token', res.accessToken.split('Bearer ')[1]);
+            setCookie('token', res.refreshToken);
           }
           dispatch({
             type: LOGIN_SUCCESS,
@@ -117,10 +119,10 @@ export const registration = (data) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "email": data.valueEmail, 
-        "password": data.valuePassword, 
-        "name": data.valueName 
-    })
+        "email": data.valueEmail,
+        "password": data.valuePassword,
+        "name": data.valueName
+      })
     })
       .then(res => {
         if (res && res.success) {
@@ -160,7 +162,6 @@ export const logout = (token) => {
     })
       .then(res => {
         if (res && res.success) {
-          console.log(res);
           dispatch({
             type: LOGOUT_SUCCESS,
           });
@@ -180,44 +181,47 @@ export const logout = (token) => {
 }
 
 //Обновление токена
-export const refreshToken = (token) => {
-  return function (dispatch) {
+export const refreshToken = () => {
+  console.log('refresh');
+  return async function (dispatch) {
     dispatch({
       type: TOKEN_REQUEST
     });
-    request("auth/token", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "token": token,
+    try {
+      return await request("auth/token", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "token": getCookie('token'),
+        })
       })
-    })
-      .then(res => {
-        if (res && res.success) {
-          console.log(res);
-          dispatch({
-            type: TOKEN_SUCCESS,
-            data: res
-          });
-        } else {
-          dispatch({
-            type: TOKEN_FAILED
-          });
-        }
-      })
-      .catch(error => {
-        dispatch({
-          type: TOKEN_FAILED
-        });
-        console.log(error);
+        .then(res => {
+          if (res && res.success) {
+            dispatch({
+              type: TOKEN_SUCCESS,
+              data: res
+            });
+            setCookie('token', res.refreshToken);
+          } else {
+            dispatch({
+              type: TOKEN_FAILED
+            });
+          }
+        })
+    }
+    catch (error) {
+      dispatch({
+        type: TOKEN_FAILED
       });
+      return console.log(error);
+    };
   };
 }
 
 //Получение информации о пользователе
-export const getUserRequest = () => {
+export const getUserRequest = (token) => {
   return function (dispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -229,7 +233,8 @@ export const getUserRequest = () => {
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + getCookie('token')
+        /*         Authorization: 'Bearer ' + getCookie('token') */
+        Authorization: token
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer'
@@ -240,10 +245,6 @@ export const getUserRequest = () => {
             type: GET_USER_SUCCESS,
             data: res
           });
-        } else {
-          dispatch({
-            type: GET_USER_FAILED
-          });
         }
       })
       .catch(error => {
@@ -252,5 +253,15 @@ export const getUserRequest = () => {
         });
         console.log(error);
       });
+  };
+}
+
+//Запись последнего адреса страницы
+export const saveLastUrl = (path) => {
+  return function (dispatch) {
+    dispatch({
+      type: SAVE_LAST_URL,
+      data: path
+    });
   };
 }

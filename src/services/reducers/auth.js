@@ -16,7 +16,8 @@ import {
   TOKEN_FAILED,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
-  GET_USER_FAILED
+  GET_USER_FAILED,
+  SAVE_LAST_URL
 } from "../actions/auth";
 
 const initialState = {
@@ -28,6 +29,8 @@ const initialState = {
 
   authRequest: false,
   authFailed: false,
+
+  lastURL:'/'
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -69,8 +72,8 @@ export const authReducer = (state = initialState, action) => {
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
 
-       authFailed: false,
-       authRequest: false
+        authFailed: false,
+        authRequest: false
       };
     }
     case LOGIN_FAILED: {
@@ -113,9 +116,7 @@ export const authReducer = (state = initialState, action) => {
     }
     case LOGOUT_SUCCESS: {
       return {
-        ...state,
-        authFailed: false,
-        authRequest: false
+        state
       };
     }
     case LOGOUT_FAILED: {
@@ -170,6 +171,12 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         authFailed: true,
         authRequest: false
+      };
+    }
+    case SAVE_LAST_URL: {
+      return {
+        ...state,
+        lastURL: '/' + action.data.toLowerCase()
       };
     }
     default: {
