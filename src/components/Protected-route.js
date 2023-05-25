@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useHref } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserRequest, refreshToken,saveLastUrl } from '../services/actions/auth';
@@ -6,6 +6,7 @@ import { getUserRequest, refreshToken,saveLastUrl } from '../services/actions/au
 export const ProtectedRouteElement = ({ element }) => {
 
   const dispatch = useDispatch();
+  const his = useHref();
 
   const getUser = (store) => ({
     user: store.auth
@@ -14,7 +15,7 @@ export const ProtectedRouteElement = ({ element }) => {
 
   useEffect(
     () => {
-      dispatch(saveLastUrl(element.type.name));
+      dispatch(saveLastUrl(his));
       if (user.accessToken) {
         dispatch(getUserRequest(user.accessToken));
       } else {
@@ -30,7 +31,7 @@ export const ProtectedRouteElement = ({ element }) => {
       return (user.authRequest || !user.name && !user.authFailed) ? 
         <p style={{textAlign:'center'}}>Загрузка...</p>
        : (
-        user.refreshToken ? element : <Navigate to="/login" replace />
+        user.accessToken ? element : <Navigate to="/login" replace />
       );
     },
     [user.name, user.authRequest]

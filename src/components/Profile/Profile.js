@@ -38,7 +38,6 @@ function Profile({highlightActive}) {
   }
 
   const logoutHandler = () => {
-    console.log('click on logout');
     dispatch(logout(user.refreshToken));
   }
 

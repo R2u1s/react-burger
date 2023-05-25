@@ -182,7 +182,6 @@ export const logout = (token) => {
 
 //Обновление токена
 export const refreshToken = () => {
-  console.log('refresh');
   return async function (dispatch) {
     dispatch({
       type: TOKEN_REQUEST

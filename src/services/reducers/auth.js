@@ -30,7 +30,7 @@ const initialState = {
   authRequest: false,
   authFailed: false,
 
-  lastURL:'/'
+  lastURL:''
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -176,7 +176,7 @@ export const authReducer = (state = initialState, action) => {
     case SAVE_LAST_URL: {
       return {
         ...state,
-        lastURL: '/' + action.data.toLowerCase()
+        lastURL: action.data
       };
     }
     default: {

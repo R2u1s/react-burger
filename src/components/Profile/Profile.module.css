@@ -36,10 +36,18 @@
   cursor: pointer;
 }
 
+.profile-nav-element:hover {
+	color: var(--text-primary-color);
+  transition: var(--common-transition);
+}
+
 .profile-nav-element:last-of-type {
   margin-top: calc(var(--offset-base-size)  * 20);
   height: 48px;
   line-height: 24px;
 }
 
-
+.profile-nav-element:last-of-type:hover {
+	color: var(--text-inactive-color);
+  cursor:auto;
+}

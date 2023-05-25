@@ -8,6 +8,7 @@ import AuthForgotPassword from '../Auth/AuthForgotPassword';
 import AuthResetPassword from '../Auth/AuthResetPassword';
 import Profile from '../Profile/Profile';
 import { ProtectedRouteElement } from '../Protected-route.js';
+import { ProtectedRouteElementAuthorized } from '../Protected-route Authorized';
 
 function App() {
 
@@ -19,10 +20,10 @@ function App() {
         <AppHeader active={active} />
         <Routes>
           <Route path="/" element={<Main highlightActive={setActive} />} />
-          <Route path="/login" element={<AuthLogin />} />
-          <Route path="/register" element={<AuthReg />} />
-          <Route path="/forgot-password" element={<AuthForgotPassword />} />
-          <Route path="/reset-password" element={<AuthResetPassword />} />
+          <Route path="/login" element={<ProtectedRouteElementAuthorized element={<AuthLogin />}/>} />
+          <Route path="/register" element={<ProtectedRouteElementAuthorized element={<AuthReg />}/>} />
+          <Route path="/forgot-password" element={<ProtectedRouteElementAuthorized element={<AuthForgotPassword />}/>} />
+          <Route path="/reset-password" element={<ProtectedRouteElementAuthorized element={<AuthResetPassword />}/>} />
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile highlightActive={setActive} />} />} />
           {/*           <Route path="*" element={<NotFound404 />} /> */}
         </Routes>

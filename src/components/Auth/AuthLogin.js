@@ -6,8 +6,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
-import { useNavigate } from "react-router-dom";
-import { Navigate } from 'react-router-dom';
+import { Navigate,useNavigate } from "react-router-dom";
 
 function AuthLogin() {
 
