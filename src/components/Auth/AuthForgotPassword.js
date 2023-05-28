@@ -5,18 +5,12 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { postEmail } from '../../services/actions/auth';
+import { forgotPassword, postEmail } from '../../services/actions/auth';
 
 function AuthForgotPassword() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const getData = (store) => ({
-    postEmailRequest: store.auth.postEmailRequest,
-    postEmailFailed: store.auth.postEmailFailed,
-  })
-
-  const { postEmailRequest, postEmailFailed } = useSelector(getData);
 
   function onClickLoginPage() {
     navigate('/login')
@@ -27,6 +21,7 @@ function AuthForgotPassword() {
 
   function onClickRecover() {
     dispatch(postEmail(valueEmail));
+    dispatch(forgotPassword());
     navigate('/reset-password');
   }
 

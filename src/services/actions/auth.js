@@ -30,6 +30,12 @@ export const CHANGE_USER_SUCCESS = 'CHANGE_USER_SUCCESS';
 export const CHANGE_USER_FAILED = 'CHANGE_USER_FAILED';
 //Запись последнего адреса URL
 export const SAVE_LAST_URL = 'SAVE_LAST_URL';
+//Запрос восстановления пароля
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+//Восстановление пароля
+export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
 
 export const postEmail = (email) => {
   return function (dispatch) {
@@ -262,5 +268,51 @@ export const saveLastUrl = (path) => {
       type: SAVE_LAST_URL,
       data: path
     });
+  };
+}
+
+//Запрос восстановления пароля
+export const forgotPassword = (path) => {
+  return function (dispatch) {
+    dispatch({
+      type: FORGOT_PASSWORD,
+    });
+  };
+}
+
+//Авторизация
+export const resetPassword = (data) => {
+  return function (dispatch) {
+    dispatch({
+      type: RESET_PASSWORD_REQUEST
+    });
+    request("password-reset/reset", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "password": data.valuePassword,
+        "token": data.valueCode
+      })
+    })
+      .then(res => {
+        if (res && res.success) {
+          dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+            data: res
+          });
+        } else {
+          dispatch({
+            type: RESET_PASSWORD_FAILED
+          });
+        }
+      })
+      .catch(error => {
+        dispatch({
+          type: RESET_PASSWORD_FAILED
+        });
+        console.log(error);
+      });
   };
 }

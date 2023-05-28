@@ -5,22 +5,30 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 import { useNavigate } from "react-router-dom";
+import { resetPassword } from '../../services/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 function AuthResetPassword() {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function onClick() {
     navigate('/login')
   }
 
-  const [valueEmail, setValueEmail] = React.useState('');
-  const inputRefEmail = React.useRef(null);
+  const [valueCode, setValueCode] = React.useState('');
+  const inputRefCode = React.useRef(null);
 
   const [valuePassword, setValuePassword] = React.useState('')
   const onChangePassword = e => {
     setValuePassword(e.target.value)
   }
+
+  const submitHandler = () => {
+    dispatch(resetPassword({valuePassword,valueCode}));
+  }
+
   return (
     <div className={`${styles['auth-container']}`}>
       <div className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</div>
@@ -34,11 +42,11 @@ function AuthResetPassword() {
         <Input
           type={'text'}
           placeholder={'Введите код из письма'}
-          onChange={e => setValueEmail(e.target.value)}
-          value={valueEmail}
+          onChange={e => setValueCode(e.target.value)}
+          value={valueCode}
           name={'code'}
           error={false}
-          ref={inputRefEmail}
+          ref={inputRefCode}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -48,7 +56,7 @@ function AuthResetPassword() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => { }}>
+          onClick={submitHandler}>
           Сохранить
         </Button>
       </div>
