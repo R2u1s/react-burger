@@ -36,6 +36,10 @@ export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
 export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
 export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
+//Изменение информации пользователя
+export const CHANGE_USERINFO_REQUEST = 'CHANGE_USERINFO_REQUEST';
+export const CHANGE_USERINFO_SUCCESS = 'CHANGE_USERINFO_SUCCESS';
+export const CHANGE_USERINFO_FAILED = 'CHANGE_USERINFO_FAILED';
 
 export const postEmail = (email) => {
   return function (dispatch) {
@@ -311,6 +315,46 @@ export const resetPassword = (data) => {
       .catch(error => {
         dispatch({
           type: RESET_PASSWORD_FAILED
+        });
+        console.log(error);
+      });
+  };
+}
+
+//Изменение информации пользователя
+export const changeUserInfo = (data,token) => {
+  const password = data.valuePassword === '******' ? null : data.valuePassword;
+  return function (dispatch) {
+    dispatch({
+      type: CHANGE_USERINFO_REQUEST
+    });
+    request("auth/user", {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      },
+      body: JSON.stringify({
+        "name": data.valueName,
+        "email": data.valueEmail,
+        "password": password
+      })
+    })
+      .then(res => {
+        if (res && res.success) {
+          dispatch({
+            type: CHANGE_USERINFO_SUCCESS,
+            data: res
+          });
+        } else {
+          dispatch({
+            type: CHANGE_USERINFO_FAILED
+          });
+        }
+      })
+      .catch(error => {
+        dispatch({
+          type: CHANGE_USERINFO_FAILED
         });
         console.log(error);
       });

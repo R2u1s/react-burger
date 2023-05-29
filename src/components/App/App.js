@@ -10,6 +10,7 @@ import Profile from '../Profile/Profile';
 import { Protected } from '../Protected.js';
 import { ProtectedAuthorized } from '../ProtectedAuthorized';
 import { useDispatch, useSelector } from 'react-redux';
+import Ingredient from '../Auth/Ingredient';
 
 function App() {
 
@@ -34,7 +35,9 @@ function App() {
             <ProtectedAuthorized element={<AuthResetPassword />}/> :
             <ProtectedAuthorized element={<AuthForgotPassword />}/>
           } />
-          <Route path="/profile" element={<Protected element={<Profile highlightActive={setActive} />} />} />
+          <Route path="/profile" element={<Protected element={<Profile highlightActive={setActive} />}/>}/>
+          <Route path="/ingredients/:id" element={<Ingredient />} />
+          
           {/*           <Route path="*" element={<NotFound404 />} /> */}
         </Routes>
       </BrowserRouter>

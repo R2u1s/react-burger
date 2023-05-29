@@ -7,12 +7,34 @@
 .profile-inputs {
   margin: 0 auto;
   padding: 0;
-  max-width: 100%;
+  max-width: 480px;
   display: flex;
   flex-flow: column;
   gap: calc(var(--offset-base-size)  * 6);
   align-items: center;
   justify-content: space-between;
+}
+
+.profile-buttons {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: end;
+  gap: calc(var(--offset-base-size)  * 5);
+}
+
+.profile-cancel {
+  height: 100%;
+  line-height: 64px;
+  text-decoration: none;
+  cursor: pointer; 
+  color:#4C4CFF;
+  text-align: center;
+}
+
+.profile-buttons__active {
+  display: none;
 }
 
 .profile-nav {

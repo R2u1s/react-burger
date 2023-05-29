@@ -11,6 +11,7 @@ import { useDrag } from 'react-dnd';
 const BurgerIngredientsItem = ({ item, openModal }) => {
 
   const dispatch = useDispatch();
+/*   const navigate = useNavigate(); */
 
   const getData = (store) => ({
     selectedIngredients: store.burger.selectedIngredients
@@ -40,6 +41,7 @@ const BurgerIngredientsItem = ({ item, openModal }) => {
       onClick={() => {
         openModal();
         dispatch(writeIngredientPreview(item));
+/*         navigate(`/ingredients/${item._id}`); */
       }}
       ref={ref}>
       <img src={item.image}></img>

@@ -21,12 +21,15 @@ import {
   FORGOT_PASSWORD,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILED
+  RESET_PASSWORD_FAILED,
+  CHANGE_USERINFO_REQUEST,
+  CHANGE_USERINFO_SUCCESS,
+  CHANGE_USERINFO_FAILED
 } from "../actions/auth";
 
 const initialState = {
   email: null,
-  password: null,
+  password: '******',
   name: null,
   accessToken: '',
   refreshToken: '',
@@ -121,7 +124,14 @@ export const authReducer = (state = initialState, action) => {
     }
     case LOGOUT_SUCCESS: {
       return {
-        state
+        ...state,
+        name: '',
+        email: '',
+        password: '******',
+        accessToken:'',
+        refreshToken:'',
+        authFailed: false,
+        authRequest: false
       };
     }
     case LOGOUT_FAILED: {
@@ -207,6 +217,30 @@ export const authReducer = (state = initialState, action) => {
       };
     }
     case RESET_PASSWORD_FAILED: {
+      return {
+        ...state,
+        authFailed: true,
+        authRequest: false
+      };
+    }
+    //Изменение информации пользователя
+    case CHANGE_USERINFO_REQUEST: {
+      return {
+        ...state,
+        authRequest: true
+      };
+    }
+    case CHANGE_USERINFO_SUCCESS: {
+      return {
+        ...state,
+        email: action.data.user.email,
+        name: action.data.user.name,
+
+        authFailed: false,
+        authRequest: false
+      };
+    }
+    case CHANGE_USERINFO_FAILED: {
       return {
         ...state,
         authFailed: true,

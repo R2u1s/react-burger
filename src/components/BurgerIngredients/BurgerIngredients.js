@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import { useSelector } from 'react-redux';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { useLocation, useParams } from 'react-router-dom';
 
 export const ingredientTypes = {
   bun: "Булки",

@@ -1,5 +1,5 @@
 .ingredient-details {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   display: grid;
   grid-template:
@@ -16,7 +16,7 @@
 }
 
 .ingredient-details__title {
-  margin:0;
+  margin:0 auto;
   grid-area: title;
   height: 64px;
   display: flex;

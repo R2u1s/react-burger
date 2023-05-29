@@ -2,12 +2,11 @@ import React from 'react';
 import styles from './Profile.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PROFILE } from '../AppHeader/AppHeader';
-import { logout } from '../../services/actions/auth';
+import { logout, changeUserInfo } from '../../services/actions/auth';
 
-function Profile({highlightActive}) {
+function Profile({ highlightActive }) {
 
   React.useEffect(() => {
     highlightActive(PROFILE);
@@ -33,13 +32,34 @@ function Profile({highlightActive}) {
   const inputRefEmail = React.useRef(null);
 
   const [valuePassword, setValuePassword] = React.useState('')
-  const onChangePassword = e => {
-    setValuePassword(e.target.value)
-  }
+
+  const [isInputChange, setIsInputChange] = React.useState(false);
 
   const logoutHandler = () => {
     dispatch(logout(user.refreshToken));
   }
+
+  React.useEffect(
+    () => {
+      setValueName(user.name);
+      setValueEmail(user.email);
+      setValuePassword(user.password);
+    },
+    []
+  );
+
+  const cancelHandler = () => {
+    setIsInputChange(false);
+    setValueName(user.name);
+    setValueEmail(user.email);
+    setValuePassword(user.password);
+  }
+
+  const saveHandler = () => {
+    dispatch(changeUserInfo({ valueName, valueEmail, valuePassword }, user.accessToken));
+  }
+
+  const classNameToggle = isInputChange ? `${styles['profile-buttons']}` : `${styles['profile-buttons', 'profile-buttons__active']}`
 
   return (
     <section className={`${styles['profile']}`}>
@@ -47,9 +67,12 @@ function Profile({highlightActive}) {
         <Input
           type={'text'}
           placeholder={'Name'}
-          onChange={e => setValueName(e.target.value)}
+          onChange={e => {
+            setIsInputChange(true);
+            setValueName(e.target.value);
+          }}
           icon={'EditIcon'}
-          value={user.name}
+          value={valueName}
           name={'name'}
           error={false}
           ref={inputRefName}
@@ -59,21 +82,40 @@ function Profile({highlightActive}) {
         <Input
           type={'email'}
           placeholder={'E-mail'}
-          onChange={e => setValueEmail(e.target.value)}
+          onChange={e => {
+            setIsInputChange(true);
+            setValueEmail(e.target.value);
+          }}
           icon={'EditIcon'}
-          value={user.email}
+          value={valueEmail}
           name={'email'}
           error={false}
           ref={inputRefEmail}
           errorText={'Ошибка'}
           size={'default'}
+
         />
-        <PasswordInput
-          onChange={onChangePassword}
+        <Input
+          type={'password'}
+          placeholder={'Пароль'}
+          onChange={e => {
+            setIsInputChange(true);
+            setValuePassword(e.target.value);
+          }}
           icon={'EditIcon'}
-          value={'password'}
+          value={valuePassword}
           name={'password'}
         />
+        <div className={classNameToggle}>
+          <p className={`${styles['profile-cancel']} text text_type_main-default`} onClick={cancelHandler}>Отмена</p>
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={saveHandler}>
+            Сохранить
+          </Button>
+        </div>
       </div>
       <ul className={`${styles['profile-nav']}`}>
         <li className={`${styles['profile-nav-element']} text text_type_main-medium`}>

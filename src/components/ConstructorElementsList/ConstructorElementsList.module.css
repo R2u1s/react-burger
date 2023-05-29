@@ -1,6 +1,6 @@
 .constructor-elements-list__item {
   margin:0;
-  width: 568px;
+  width: 588px;
   display: flex;
   flex-flow: row;
   gap: calc(var(--offset-base-size)  * 2);
