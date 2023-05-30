@@ -4,7 +4,7 @@ import styles from './OrderDetails.module.css';
 import { useSelector } from 'react-redux';
 
 function OrderDetails(){
-
+  
   const getData = (store) => ({
     orderDetails: store.burger.orderDetails
   })

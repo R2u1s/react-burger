@@ -9,17 +9,25 @@ import AuthResetPassword from '../Auth/AuthResetPassword';
 import Profile from '../Profile/Profile';
 import { Protected } from '../Protected.js';
 import { ProtectedAuthorized } from '../ProtectedAuthorized';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import Ingredient from '../Auth/Ingredient';
 
 function App() {
 
   const [active, setActive] = React.useState(CONSTRUCTOR);
 
+  const dispatch = useDispatch();
   const getUser = (store) => ({
     user: store.auth
   });
+
   const { user } = useSelector(getUser);
+
+  const getIngredients = (store) => ({
+    currentIngredient: store.burger
+  })
+
+  const { currentIngredient } = useSelector(getIngredients);
 
   return (
     <>
@@ -27,17 +35,20 @@ function App() {
         <AppHeader active={active} />
         <Routes>
           <Route path="/" element={<Main highlightActive={setActive} />} />
-          <Route path="/login" element={<ProtectedAuthorized element={<AuthLogin />}/>} />
-          <Route path="/register" element={<ProtectedAuthorized element={<AuthReg />}/>} />
-          <Route path="/forgot-password" element={<ProtectedAuthorized element={<AuthForgotPassword />}/>} />
+          <Route path="/login" element={<ProtectedAuthorized element={<AuthLogin />} />} />
+          <Route path="/register" element={<ProtectedAuthorized element={<AuthReg />} />} />
+          <Route path="/forgot-password" element={<ProtectedAuthorized element={<AuthForgotPassword />} />} />
           <Route path="/reset-password" element={
             user.forgotPassword ?
-            <ProtectedAuthorized element={<AuthResetPassword />}/> :
-            <ProtectedAuthorized element={<AuthForgotPassword />}/>
+              <ProtectedAuthorized element={<AuthResetPassword />} /> :
+              <ProtectedAuthorized element={<AuthForgotPassword />} />
           } />
-          <Route path="/profile" element={<Protected element={<Profile highlightActive={setActive} />}/>}/>
-          <Route path="/ingredients/:id" element={<Ingredient />} />
-          
+          <Route path="/profile" element={<Protected element={<Profile highlightActive={setActive} />} />} />
+          {<Route path="/ingredients/:id" element={
+            user.lastURL === '/' ?
+              <Main highlightActive={setActive} /> :
+              <Ingredient />
+          } />}
           {/*           <Route path="*" element={<NotFound404 />} /> */}
         </Routes>
       </BrowserRouter>

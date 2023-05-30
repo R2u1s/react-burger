@@ -55,9 +55,9 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
       </div>
-      <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>
+{/*       <Modal>
         <OrderDetails />
-      </Modal>
+      </Modal> */}
     </section>
   );
 }

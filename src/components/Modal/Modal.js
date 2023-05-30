@@ -4,46 +4,59 @@ import ReactDOM from 'react-dom';
 import styles from './Modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModal } from '../../services/actions/modal';
+import { useNavigate } from 'react-router-dom';
 
 const modalRoot = document.getElementById("modal");
 
-const Modal = ({active, setClose, children}) => {
+const Modal = ({clearFunc, children}) => {
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const getModal = (store) => ({
+    isModalOpen: store.modal.isModalOpen
+  });
+  const { isModalOpen } = useSelector(getModal);
+
+  function closeHandler() {
+    dispatch(closeModal());
+    navigate(-1);
+    clearFunc();
+  }
 
   const escFunction = React.useCallback((event) => {
     if (event.key === "Escape") {
-      setClose();
+      closeHandler();
     }
   }, []);
 
   React.useEffect(() => {
-    if (active) {
+    if (isModalOpen) {
       document.addEventListener("keydown", escFunction)
-    } 
+    }
     return () => {
       document.removeEventListener("keydown", escFunction)
     };
-  }, [active]);
+  }, [isModalOpen]);
 
   return ReactDOM.createPortal(
     (
-    <ModalOverlay active={active} setClose={setClose} children={children} onClick={setClose} >
-      <div className={active ? `${styles.modal__container} ${styles.modal__contVisibility_active}` : `${styles.modal__container}`} onClick={(e) => e.stopPropagation()}>
-        <button className={styles['modal__close-button']} onClick={() => {
-          setClose();
-        }}>
-          <CloseIcon type="primary" />  
-        </button>
-        {children}
-      </div>  
-    </ModalOverlay>
+      <ModalOverlay children={children} >
+        <div className={isModalOpen ? `${styles.modal__container} ${styles.modal__contVisibility_active}` : `${styles.modal__container}`} onClick={(e) => e.stopPropagation()}>
+          <button className={styles['modal__close-button']} onClick={closeHandler}>
+            <CloseIcon type="primary" />
+          </button>
+          {children}
+        </div>
+      </ModalOverlay>
     ), modalRoot
   );
 }
 
 Modal.propTypes = {
-  active: PropTypes.bool,
-  setActive: PropTypes.func,
   children: PropTypes.object
-}; 
+};
 
 export default Modal;

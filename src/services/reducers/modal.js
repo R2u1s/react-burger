@@ -8,17 +8,14 @@ const initialState = {
 }
 
 export const modalReducer = (state = initialState, action) => {
-  console.log('modalReducer');
   switch (action.type) {
     case OPEN_MODAL: {
       return {
-        ...state,
         isModalOpen: true
       };
     }
     case CLOSE_MODAL: {
       return {
-        ...state,
         isModalOpen: false
       };
     }

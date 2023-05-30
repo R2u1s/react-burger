@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/burger';
 import { CONSTRUCTOR } from '../AppHeader/AppHeader';
+import { saveLastUrl } from '../../services/actions/auth';
 
 function Main({highlightActive}) {
 
@@ -28,6 +29,7 @@ function Main({highlightActive}) {
   React.useEffect(
     () => {
       dispatch(getIngredients());
+      dispatch(saveLastUrl(window.location.pathname));
     },
     [dispatch]
   );

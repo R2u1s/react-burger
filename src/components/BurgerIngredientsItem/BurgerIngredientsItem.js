@@ -7,11 +7,13 @@ import { ingredientObjectType } from '../../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { writeIngredientPreview } from '../../services/actions/burger';
 import { useDrag } from 'react-dnd';
+import { openModal } from '../../services/actions/modal';
+import { useNavigate, Link } from 'react-router-dom';
 
-const BurgerIngredientsItem = ({ item, openModal }) => {
+const BurgerIngredientsItem = ({ item }) => {
 
   const dispatch = useDispatch();
-/*   const navigate = useNavigate(); */
+  const navigate = useNavigate();
 
   const getData = (store) => ({
     selectedIngredients: store.burger.selectedIngredients
@@ -24,7 +26,7 @@ const BurgerIngredientsItem = ({ item, openModal }) => {
     :
     selectedIngredients.otherIngredientsQty[item._id];
 
-  const [{isDrag}, ref] = useDrag({
+  const [{ isDrag }, ref] = useDrag({
     type: 'ingredients',
     item: item,
     collect: monitor => ({
@@ -32,32 +34,32 @@ const BurgerIngredientsItem = ({ item, openModal }) => {
     })
   });
 
-  const className = isDrag ? styles['burger-ingredients__item']+` `+styles['burger-ingredients__item_dragging'] : styles['burger-ingredients__item']
+  const className = isDrag ? styles['burger-ingredients__item'] + ` ` + styles['burger-ingredients__item_dragging'] : styles['burger-ingredients__item']
 
   return (
-    <li className={className}
+    <li
       name='ingredient'
       id={item._id}
       onClick={() => {
-        openModal();
+        dispatch(openModal());
         dispatch(writeIngredientPreview(item));
-/*         navigate(`/ingredients/${item._id}`); */
       }}
       ref={ref}>
-      <img src={item.image}></img>
-      <div className={styles['burger-ingredients__price']}>
-        <p className="text text_type_digits-default">{item.price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className="text text_type_main-default">{item.name}</p>
-      {qty > 0 ? <Counter count={qty} size="default" extraClass="m-1" /> : <></>}
+      <Link to={{ pathname: `/ingredients/${item._id}` }} className={className}>
+        <img src={item.image}></img>
+        <div className={styles['burger-ingredients__price']}>
+          <p className="text text_type_digits-default">{item.price}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className="text text_type_main-default">{item.name}</p>
+        {qty > 0 ? <Counter count={qty} size="default" extraClass="m-1" /> : <></>}
+      </Link>
     </li>
   );
 }
 
 BurgerIngredientsItem.propTypes = {
   item: (PropTypes.shape(ingredientObjectType)),
-  openModal: PropTypes.func
 };
 
 export default BurgerIngredientsItem;
