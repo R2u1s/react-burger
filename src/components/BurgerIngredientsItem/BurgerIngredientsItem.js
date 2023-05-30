@@ -7,10 +7,9 @@ import { ingredientObjectType } from '../../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { writeIngredientPreview } from '../../services/actions/burger';
 import { useDrag } from 'react-dnd';
-import { openModal } from '../../services/actions/modal';
 import { useNavigate, Link } from 'react-router-dom';
 
-const BurgerIngredientsItem = ({ item }) => {
+const BurgerIngredientsItem = ({ item, openModal }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ const BurgerIngredientsItem = ({ item }) => {
       name='ingredient'
       id={item._id}
       onClick={() => {
-        dispatch(openModal());
+        openModal();
         dispatch(writeIngredientPreview(item));
       }}
       ref={ref}>
