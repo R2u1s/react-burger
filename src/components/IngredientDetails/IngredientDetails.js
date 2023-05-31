@@ -15,7 +15,7 @@ function IngredientDetails() {
 
   let { currentIngredient,ingredientsList } = useSelector(getData);
 
-  //если в сторе нет ингредиента для просмотра в модальном окне - заменяем его на передаваемый в пропсе, но не изменяем стор
+  //если в сторе нет ингредиента для просмотра в модальном окне - заменяем его, взяв id из адресной строки, не изменяем стор
   if (!('_id' in currentIngredient) && path.id) {
     currentIngredient = ingredientsList[path.id];
   }

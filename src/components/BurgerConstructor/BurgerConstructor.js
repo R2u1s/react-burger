@@ -7,46 +7,29 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { clearIngredientsList, postOrder } from '../../services/actions/burger';
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const getData = (store) => ({
     selectedIngredients: store.burger.selectedIngredients,
   })
 
-  const getUser = (store) => ({
-    user: store.auth
-  });
-
-  const { user } = useSelector(getUser);
-
   const { selectedIngredients } = useSelector(getData);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  function collectId() {
-    let arrayOfId = [];
-    arrayOfId.push(selectedIngredients.bun._id);
-    arrayOfId.push(selectedIngredients.bun._id);
-    selectedIngredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
-    return arrayOfId;
-  }
+  const [orderRequest,setOrderRequest] = React.useState(false);
 
   const submitHandler = () => {
-    if (user.name) {
-      openModal();
-      dispatch(postOrder(collectId()));
-    } else {
-      navigate('/login');
-    }
+    setOrderRequest(true);
+    openModal();
   }
 
   function clearHandler() {
+    setOrderRequest(false);
     dispatch(clearIngredientsList());
   }
 
@@ -72,7 +55,7 @@ function BurgerConstructor() {
         </Button>
       </div>
        <Modal active={isModalOpen} setActive={openModal} setClose={closeModal} clearFunc={clearHandler}>
-        <OrderDetails />
+        <OrderDetails orderRequest={orderRequest}/>
       </Modal>
     </section>
   );

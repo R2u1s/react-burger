@@ -40,6 +40,9 @@ export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
 export const CHANGE_USERINFO_REQUEST = 'CHANGE_USERINFO_REQUEST';
 export const CHANGE_USERINFO_SUCCESS = 'CHANGE_USERINFO_SUCCESS';
 export const CHANGE_USERINFO_FAILED = 'CHANGE_USERINFO_FAILED';
+//Запись refreshToken из Cookie
+export const SAVE_TOKEN_FROM_COOKIE = 'SAVE_TOKEN_FROM_COOKIE';
+
 
 export const postEmail = (email) => {
   return function (dispatch) {
@@ -78,7 +81,6 @@ export const postEmail = (email) => {
 
 //Авторизация
 export const login = (data) => {
-
   return function (dispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -266,23 +268,15 @@ export const getUserRequest = (token) => {
 }
 
 //Запись последнего адреса страницы
-export const saveLastUrl = (path) => {
-  return function (dispatch) {
-    dispatch({
-      type: SAVE_LAST_URL,
-      data: path
-    });
-  };
-}
+export const saveLastUrl = (path) => ({
+  type: SAVE_LAST_URL,
+  data: path
+})
 
 //Запрос восстановления пароля
-export const forgotPassword = (path) => {
-  return function (dispatch) {
-    dispatch({
-      type: FORGOT_PASSWORD,
-    });
-  };
-}
+export const forgotPassword = () => ({
+  type: FORGOT_PASSWORD,
+})
 
 //Авторизация
 export const resetPassword = (data) => {
@@ -322,7 +316,7 @@ export const resetPassword = (data) => {
 }
 
 //Изменение информации пользователя
-export const changeUserInfo = (data,token) => {
+export const changeUserInfo = (data, token) => {
   const password = data.valuePassword === '******' ? null : data.valuePassword;
   return function (dispatch) {
     dispatch({
@@ -360,3 +354,8 @@ export const changeUserInfo = (data,token) => {
       });
   };
 }
+
+export const saveTokenFromCookie = () => ({
+  type: SAVE_TOKEN_FROM_COOKIE,
+  data: getCookie('token')
+});

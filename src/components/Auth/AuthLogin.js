@@ -6,7 +6,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
-import { Navigate,useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function AuthLogin() {
 
@@ -34,23 +34,26 @@ function AuthLogin() {
     setValuePassword(e.target.value)
   }
 
-  const submitHandler = () => {
-    dispatch(login({valueEmail,valuePassword}));
-  }
+  const submitHandler = React.useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(login({ valueEmail, valuePassword }));
+    }
+  )
 
   if (user.name) {
     return (
-            // Переадресовываем авторизованного пользователя на последнюю страницу
+      // Переадресовываем авторизованного пользователя на последнюю страницу
       <Navigate
         to={user.lastURL}
-                replace
+        replace
       />
     );
   }
 
   return (
-    <div className={`${styles['auth-container']}`}>
-      <div className={`${styles['auth-title']} text text_type_main-medium`}>Вход</div>
+    <form className={`${styles['auth-container']}`} noValidate>
+      <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Вход</h2>
       <div className={`${styles['auth-inputs']}`}>
         <Input
           type={'email'}
@@ -71,7 +74,7 @@ function AuthLogin() {
       </div>
       <div className={`${styles['auth-button']}`}>
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
           onClick={submitHandler}>
@@ -89,7 +92,7 @@ function AuthLogin() {
         </p>
       </div>
 
-    </div>
+    </form>
   );
 }
 

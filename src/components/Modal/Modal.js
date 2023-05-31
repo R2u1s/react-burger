@@ -14,7 +14,7 @@ const Modal = ({active, setClose, children, clearFunc}) => {
 
   function closeHandler() {
     setClose();
-    navigate(-1);
+    !(window.location.pathname === '/') && navigate(-1);
     clearFunc();
   }
 

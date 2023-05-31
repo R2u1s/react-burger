@@ -1,10 +1,9 @@
 import { Navigate, useHref } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserRequest, refreshToken,saveLastUrl } from '../services/actions/auth';
+import { getUserRequest, refreshToken, saveLastUrl, saveTokenFromCookie } from '../services/actions/auth';
 
 export const Protected = ({ element }) => {
-
   const dispatch = useDispatch();
   const his = useHref();
 
@@ -16,23 +15,25 @@ export const Protected = ({ element }) => {
   useEffect(
     () => {
       dispatch(saveLastUrl(his));
-      if (user.accessToken) {
+      if (user.accessToken && !user.name) {
         dispatch(getUserRequest(user.accessToken));
       } else {
+        if (!user.refreshToken) {
           dispatch(refreshToken());
+        }
       }
-      
     },
-    [dispatch,user.accessToken]
+    [dispatch, user.accessToken]
   );
 
   const content = useMemo(
     () => {
-      return (user.authRequest || !user.name && !user.authFailed) ? 
-        <p style={{textAlign:'center'}}>Загрузка...</p>
-       : (
-        user.accessToken ? element : <Navigate to="/login" replace />
-      );
+      return (user.authRequest || !user.name && !user.authFailed) ?
+        <p style={{ textAlign: 'center' }}>Загрузка...</p> :
+        (user.accessToken ?
+          element :
+          <Navigate to="/login" replace />
+        );
     },
     [user.name, user.authRequest]
   );

@@ -1,34 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import styles from './OrderDetails.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserRequest, refreshToken } from '../../services/actions/auth';
+import { Navigate } from 'react-router-dom';
+import { postOrder } from '../../services/actions/burger';
 
-function OrderDetails(){
-  
+function OrderDetails({ orderRequest }) {
+  const dispatch = useDispatch();
+
   const getData = (store) => ({
-    orderDetails: store.burger.orderDetails
+    orderDetails: store.burger.orderDetails,
+    selectedIngredients: store.burger.selectedIngredients,
+    postOrderRequest: store.burger.postOrderRequest,
+    postOrderFailed: store.burger.postOrderFailed
   })
 
-  const { orderDetails } = useSelector(getData);
+  const getUser = (store) => ({
+    user: store.auth
+  });
+  const { user } = useSelector(getUser);
+
+  const { orderDetails, selectedIngredients, postOrderRequest, postOrderFailed } = useSelector(getData);
+
+  function collectId() {
+    let arrayOfId = [];
+    arrayOfId.push(selectedIngredients.bun._id);
+    arrayOfId.push(selectedIngredients.bun._id);
+    selectedIngredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
+    return arrayOfId;
+  }
+
+  React.useEffect(
+    () => {
+      if (orderRequest) {
+        if (user.accessToken) {
+          dispatch(getUserRequest(user.accessToken));
+        } else {
+          dispatch(refreshToken());
+        }
+      }
+      if (selectedIngredients.otherIngredients.length > 0) {
+        dispatch(postOrder(collectId()));
+      }
+    },
+    [dispatch, user.accessToken, orderRequest]
+  );
+
+  const content = React.useMemo(
+    () => {
+      if (orderRequest) {
+        return (user.authRequest || !user.name && !user.authFailed) ?
+          <p style={{ textAlign: 'center' }}>Аутентификация...</p>
+          : (
+            user.name ?
+              ((postOrderRequest) ?
+                <p style={{ textAlign: 'center' }}>Отправка заказа...</p>
+                : (
+                  <div className={`${styles['order-details']} pt-20 pb-15`}>
+                    <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>
+                    <p className={`${styles['order-details__id-text']} text text_type_main-medium`}>идентификатор заказа</p>
+                    <div className={styles['order-details__icon']}>
+                    </div>
+                    <p className={`${styles['order-details__status']} text text_type_main-small`}>{orderDetails.status}</p>
+                    <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
+                  </div>
+                ))
+              : <Navigate to="/login" replace />
+          )
+      }
+    },
+    [user.authRequest, postOrderRequest,orderRequest]
+  );
 
   return (
-    <div className={`${styles['order-details']} pt-20 pb-15`}>
-      <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>
-      <p className={`${styles['order-details__id-text']} text text_type_main-medium`}>идентификатор заказа</p>
-      <div className={styles['order-details__icon']}>
-      </div>
-      <p className={`${styles['order-details__status']} text text_type_main-small`}>{orderDetails.status}</p>
-      <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
-    </div>
+    <>
+      {content}
+    </>
   );
 }
 
-OrderDetails.propTypes = {
-  orderDetails: (PropTypes.shape({
-    id: PropTypes.string,
-    status: PropTypes.string,
-    todo: PropTypes.string
-  }))
-}; 
-
 export default OrderDetails;
+
