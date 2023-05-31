@@ -52,47 +52,51 @@ function AuthLogin() {
   }
 
   return (
-    <form className={`${styles['auth-container']}`} noValidate>
-      <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Вход</h2>
-      <div className={`${styles['auth-inputs']}`}>
-        <Input
-          type={'email'}
-          placeholder={'E-mail'}
-          onChange={e => setValueEmail(e.target.value)}
-          value={valueEmail}
-          name={'email'}
-          error={false}
-          ref={inputRefEmail}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
-        <PasswordInput
-          onChange={onChangePassword}
-          value={valuePassword}
-          name={'password'}
-        />
-      </div>
-      <div className={`${styles['auth-button']}`}>
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="large"
-          onClick={submitHandler}>
-          Войти
-        </Button>
-      </div>
-      <div className={`${styles['auth-extras']}`}>
-        <p className="text text_type_main-default text_color_inactive">
-          Вы - новый пользователь?
-          <span className={`${styles['auth-extra-link']}`} onClick={onClickReg}> Зарегистрироваться</span>
-        </p>
-        <p className="text text_type_main-default text_color_inactive">
-          Забыли пароль?
-          <span className={`${styles['auth-extra-link']}`} onClick={onClickRecover}> Восстановить пароль</span>
-        </p>
-      </div>
-
-    </form>
+      user.name ?
+      <Navigate
+      to={user.lastURL}
+      replace
+    /> :
+        <form className={`${styles['auth-container']}`} noValidate>
+          <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Вход</h2>
+          <div className={`${styles['auth-inputs']}`}>
+            <Input
+              type={'email'}
+              placeholder={'E-mail'}
+              onChange={e => setValueEmail(e.target.value)}
+              value={valueEmail}
+              name={'email'}
+              error={false}
+              ref={inputRefEmail}
+              errorText={'Ошибка'}
+              size={'default'}
+            />
+            <PasswordInput
+              onChange={onChangePassword}
+              value={valuePassword}
+              name={'password'}
+            />
+          </div>
+          <div className={`${styles['auth-button']}`}>
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              onClick={submitHandler}>
+              Войти
+            </Button>
+          </div>
+          <div className={`${styles['auth-extras']}`}>
+            <p className="text text_type_main-default text_color_inactive">
+              Вы - новый пользователь?
+              <span className={`${styles['auth-extra-link']}`} onClick={onClickReg}> Зарегистрироваться</span>
+            </p>
+            <p className="text text_type_main-default text_color_inactive">
+              Забыли пароль?
+              <span className={`${styles['auth-extra-link']}`} onClick={onClickRecover}> Восстановить пароль</span>
+            </p>
+          </div>
+        </form>
   );
 }
 

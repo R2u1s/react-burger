@@ -15,7 +15,7 @@ function AuthResetPassword() {
   const dispatch = useDispatch();
 
   function onClick() {
-    navigate(PATH_LOGIN)
+    navigate(PATH_LOGIN);
   }
 
   const [valueCode, setValueCode] = React.useState('');
@@ -30,6 +30,7 @@ function AuthResetPassword() {
     e => {
       e.preventDefault();
       dispatch(resetPassword({valuePassword,valueCode}));
+      navigate(PATH_LOGIN);
     }
   )
 
