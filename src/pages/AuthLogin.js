@@ -1,24 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { login } from '../services/actions/auth';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { registration } from '../../services/actions/auth';
 import styles from './Auth.module.css';
+import { Navigate, useNavigate } from "react-router-dom";
+import { PATH_FORGOT_PASSWORD, PATH_REGISTER } from '../components/App/App';
 
-function AuthReg() {
+function AuthLogin() {
+
+  const getUser = (store) => ({
+    user: store.auth
+  });
+  const { user } = useSelector(getUser);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  function onClick() {
-    navigate('/login')
+  function onClickReg() {
+    navigate(PATH_REGISTER);
   }
 
-  const [valueName, setValueName] = React.useState('');
-  const inputRefName = React.useRef(null);
+  function onClickRecover() {
+    navigate(PATH_FORGOT_PASSWORD);
+  }
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
@@ -28,25 +34,27 @@ function AuthReg() {
     setValuePassword(e.target.value)
   }
 
-  const submitHandler = () => {
-    dispatch(registration({valueEmail,valuePassword,valueName}));
+  const submitHandler = React.useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(login({ valueEmail, valuePassword }));
+    }
+  )
+
+  if (user.name) {
+    return (
+      // Переадресовываем авторизованного пользователя на последнюю страницу
+      <Navigate
+        to={user.lastURL}
+        replace
+      />
+    );
   }
 
   return (
-    <div className={`${styles['auth-container']}`}>
-      <div className={`${styles['auth-title']} text text_type_main-medium`}>Регистрация</div>
+    <form className={`${styles['auth-container']}`} noValidate>
+      <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Вход</h2>
       <div className={`${styles['auth-inputs']}`}>
-        <Input
-          type={'text'}
-          placeholder={'Name'}
-          onChange={e => setValueName(e.target.value)}
-          value={valueName}
-          name={'name'}
-          error={false}
-          ref={inputRefName}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
         <Input
           type={'email'}
           placeholder={'E-mail'}
@@ -66,22 +74,26 @@ function AuthReg() {
       </div>
       <div className={`${styles['auth-button']}`}>
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
           onClick={submitHandler}>
-          Зарегистрироваться
+          Войти
         </Button>
       </div>
       <div className={`${styles['auth-extras']}`}>
         <p className="text text_type_main-default text_color_inactive">
-          Уже зарегистрированы?
-          <span className={`${styles['auth-extra-link']}`} onClick={onClick}> Войти</span>
+          Вы - новый пользователь?
+          <span className={`${styles['auth-extra-link']}`} onClick={onClickReg}> Зарегистрироваться</span>
+        </p>
+        <p className="text text_type_main-default text_color_inactive">
+          Забыли пароль?
+          <span className={`${styles['auth-extra-link']}`} onClick={onClickRecover}> Восстановить пароль</span>
         </p>
       </div>
 
-    </div>
+    </form>
   );
 }
 
-export default AuthReg;
+export default AuthLogin;

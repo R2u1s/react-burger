@@ -40,9 +40,6 @@ export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
 export const CHANGE_USERINFO_REQUEST = 'CHANGE_USERINFO_REQUEST';
 export const CHANGE_USERINFO_SUCCESS = 'CHANGE_USERINFO_SUCCESS';
 export const CHANGE_USERINFO_FAILED = 'CHANGE_USERINFO_FAILED';
-//Запись refreshToken из Cookie
-export const SAVE_TOKEN_FROM_COOKIE = 'SAVE_TOKEN_FROM_COOKIE';
-
 
 export const postEmail = (email) => {
   return function (dispatch) {
@@ -354,8 +351,3 @@ export const changeUserInfo = (data, token) => {
       });
   };
 }
-
-export const saveTokenFromCookie = () => ({
-  type: SAVE_TOKEN_FROM_COOKIE,
-  data: getCookie('token')
-});

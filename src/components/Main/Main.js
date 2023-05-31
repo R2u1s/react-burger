@@ -55,4 +55,8 @@ function Main({highlightActive}) {
   );
 }
 
+Main.propTypes = {
+ highlightActive: PropTypes.func
+};
+
 export default Main;

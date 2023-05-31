@@ -1,7 +1,9 @@
 import { Navigate } from 'react-router-dom';
-import { useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshToken } from '../services/actions/auth';
+import { PATH_MAIN } from './App/App';
 
 export const ProtectedAuthorized = ({ element }) => {
 
@@ -22,7 +24,11 @@ export const ProtectedAuthorized = ({ element }) => {
   return (user.authRequest) ?
     <p style={{ textAlign: 'center' }}>Загрузка...</p>
     : (
-      user.accessToken ? <Navigate to={'/'} replace /> : element
+      user.accessToken ? <Navigate to={PATH_MAIN} replace /> : element
     );
 
 }
+
+ProtectedAuthorized.propTypes = {
+  element: PropTypes.object
+};

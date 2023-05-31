@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { forgotPassword, postEmail } from '../../services/actions/auth';
+import { useDispatch } from 'react-redux';
+import { forgotPassword, postEmail } from '../services/actions/auth';
+import { PATH_LOGIN, PATH_RESET_PASSWORD } from '../components/App/App';
 
 function AuthForgotPassword() {
 
@@ -13,21 +13,24 @@ function AuthForgotPassword() {
   const dispatch = useDispatch();
 
   function onClickLoginPage() {
-    navigate('/login')
+    navigate(PATH_LOGIN)
   }
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
 
-  function onClickRecover() {
-    dispatch(postEmail(valueEmail));
-    dispatch(forgotPassword());
-    navigate('/reset-password');
-  }
+  const submitHandler = React.useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(postEmail(valueEmail));
+      dispatch(forgotPassword());
+      navigate(PATH_RESET_PASSWORD);
+    }
+  )
 
   return (
-    <div className={`${styles['auth-container']}`}>
-      <div className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</div>
+    <form className={`${styles['auth-container']}`} noValidate>
+      <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</h2>
       <div className={`${styles['auth-inputs']}`}>
         <Input
           type={'email'}
@@ -43,10 +46,10 @@ function AuthForgotPassword() {
       </div>
       <div className={`${styles['auth-button']}`}>
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
-          onClick={onClickRecover}>
+          onClick={submitHandler}>
           Воcстановить
         </Button>
       </div>
@@ -56,7 +59,7 @@ function AuthForgotPassword() {
           <span className={`${styles['auth-extra-link']}`} onClick={onClickLoginPage}> Войти</span>
         </p>
       </div>
-    </div>
+    </form>
   );
 }
 

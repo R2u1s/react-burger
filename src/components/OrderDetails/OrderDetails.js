@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import styles from './OrderDetails.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserRequest, refreshToken } from '../../services/actions/auth';
 import { Navigate } from 'react-router-dom';
 import { postOrder } from '../../services/actions/burger';
+import { PATH_LOGIN } from '../App/App';
 
 function OrderDetails({ orderRequest }) {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ function OrderDetails({ orderRequest }) {
   const content = React.useMemo(
     () => {
       if (orderRequest) {
-        return (user.authRequest || !user.name && !user.authFailed) ?
+        return (user.authRequest || (!user.name && !user.authFailed)) ?
           <p style={{ textAlign: 'center' }}>Аутентификация...</p>
           : (
             user.name ?
@@ -66,7 +67,7 @@ function OrderDetails({ orderRequest }) {
                     <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
                   </div>
                 ))
-              : <Navigate to="/login" replace />
+              : <Navigate to={PATH_LOGIN} replace />
           )
       }
     },
@@ -79,6 +80,10 @@ function OrderDetails({ orderRequest }) {
     </>
   );
 }
+
+OrderDetails.propTypes = {
+  orderRequest: PropTypes.bool
+};
 
 export default OrderDetails;
 

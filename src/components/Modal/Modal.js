@@ -50,6 +50,9 @@ const Modal = ({active, setClose, children, clearFunc}) => {
 }
 
 Modal.propTypes = {
+  active: PropTypes.bool,
+  setClose: PropTypes.func,
+  clearFunc: PropTypes.func,
   children: PropTypes.object
 };
 

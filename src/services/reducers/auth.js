@@ -24,8 +24,7 @@ import {
   RESET_PASSWORD_FAILED,
   CHANGE_USERINFO_REQUEST,
   CHANGE_USERINFO_SUCCESS,
-  CHANGE_USERINFO_FAILED,
-  SAVE_TOKEN_FROM_COOKIE
+  CHANGE_USERINFO_FAILED
 } from "../actions/auth";
 
 const initialState = {
@@ -246,12 +245,6 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         authFailed: true,
         authRequest: false
-      };
-    }
-    case SAVE_TOKEN_FROM_COOKIE: {
-      return {
-        ...state,
-        refreshToken: action.data
       };
     }
     default: {

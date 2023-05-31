@@ -5,8 +5,9 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 import { useNavigate } from "react-router-dom";
-import { resetPassword } from '../../services/actions/auth';
+import { resetPassword } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { PATH_LOGIN } from '../components/App/App';
 
 function AuthResetPassword() {
 
@@ -14,7 +15,7 @@ function AuthResetPassword() {
   const dispatch = useDispatch();
 
   function onClick() {
-    navigate('/login')
+    navigate(PATH_LOGIN)
   }
 
   const [valueCode, setValueCode] = React.useState('');
@@ -25,12 +26,15 @@ function AuthResetPassword() {
     setValuePassword(e.target.value)
   }
 
-  const submitHandler = () => {
-    dispatch(resetPassword({valuePassword,valueCode}));
-  }
+  const submitHandler = React.useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(resetPassword({valuePassword,valueCode}));
+    }
+  )
 
   return (
-    <div className={`${styles['auth-container']}`}>
+    <form className={`${styles['auth-container']}`}>
       <div className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</div>
       <div className={`${styles['auth-inputs']}`}>
         <PasswordInput
@@ -53,7 +57,7 @@ function AuthResetPassword() {
       </div>
       <div className={`${styles['auth-button']}`}>
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
           onClick={submitHandler}>
@@ -66,8 +70,7 @@ function AuthResetPassword() {
           <span className={`${styles['auth-extra-link']}`} onClick={onClick}> Войти</span>
         </p>
       </div>
-
-    </div>
+    </form>
   );
 }
 

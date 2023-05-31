@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Profile.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PROFILE } from '../AppHeader/AppHeader';
+import { PROFILE } from '../../components/AppHeader/AppHeader';
 import ProfileInputs from './ProfileInputs';
-import { logout, changeUserInfo } from '../../services/actions/auth';
-import Orders from '../Orders/Orders';
+import { logout } from '../../services/actions/auth';
+import Orders from '../../components/Orders/Orders';
 import TabProfile from './TabProfile';
 import { useNavigate } from 'react-router-dom';
+import { PATH_PROFILE, PATH_PROFILE_ORDERS } from '../../components/App/App';
 
 function Profile({ highlightActive }) {
 
@@ -28,11 +29,11 @@ function Profile({ highlightActive }) {
   const { user } = useSelector(getUser);
 
   const onClickProfile = () => {
-    navigate('/profile');
+    navigate(PATH_PROFILE);
   }
 
   const onClickOrders = () => {
-    navigate('/profile/orders');
+    navigate(PATH_PROFILE_ORDERS);
   }
 
   const logoutHandler = () => {
@@ -58,5 +59,9 @@ function Profile({ highlightActive }) {
     </section>
   );
 }
+
+Profile.propTypes = {
+  highlightActive: PropTypes.func
+};
 
 export default Profile;

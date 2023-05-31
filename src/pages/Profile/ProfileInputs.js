@@ -1,14 +1,11 @@
 import React from 'react';
 import styles from './Profile.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
-import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PROFILE } from '../AppHeader/AppHeader';
-import { logout, changeUserInfo } from '../../services/actions/auth';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { changeUserInfo } from '../../services/actions/auth';
 
 function ProfileInputs() {
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const getUser = (store) => ({

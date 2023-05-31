@@ -1,30 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../services/actions/auth';
+import { useNavigate } from "react-router-dom";
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { registration } from '../services/actions/auth';
 import styles from './Auth.module.css';
-import { Navigate, useNavigate } from "react-router-dom";
+import { PATH_LOGIN } from '../components/App/App';
 
-function AuthLogin() {
-
-  const getUser = (store) => ({
-    user: store.auth
-  });
-  const { user } = useSelector(getUser);
+function AuthReg() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  function onClickReg() {
-    navigate('/register')
+  function onClick() {
+    navigate(PATH_LOGIN)
   }
 
-  function onClickRecover() {
-    navigate('/forgot-password')
-  }
+  const [valueName, setValueName] = React.useState('');
+  const inputRefName = React.useRef(null);
 
   const [valueEmail, setValueEmail] = React.useState('');
   const inputRefEmail = React.useRef(null);
@@ -37,24 +32,25 @@ function AuthLogin() {
   const submitHandler = React.useCallback(
     e => {
       e.preventDefault();
-      dispatch(login({ valueEmail, valuePassword }));
+      dispatch(registration({valueEmail,valuePassword,valueName}));
     }
   )
 
-  if (user.name) {
-    return (
-      // Переадресовываем авторизованного пользователя на последнюю страницу
-      <Navigate
-        to={user.lastURL}
-        replace
-      />
-    );
-  }
-
   return (
     <form className={`${styles['auth-container']}`} noValidate>
-      <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Вход</h2>
+      <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Регистрация</h2>
       <div className={`${styles['auth-inputs']}`}>
+        <Input
+          type={'text'}
+          placeholder={'Name'}
+          onChange={e => setValueName(e.target.value)}
+          value={valueName}
+          name={'name'}
+          error={false}
+          ref={inputRefName}
+          errorText={'Ошибка'}
+          size={'default'}
+        />
         <Input
           type={'email'}
           placeholder={'E-mail'}
@@ -74,21 +70,17 @@ function AuthLogin() {
       </div>
       <div className={`${styles['auth-button']}`}>
         <Button
-          htmlType="submit"
+          htmlType="button"
           type="primary"
           size="large"
           onClick={submitHandler}>
-          Войти
+          Зарегистрироваться
         </Button>
       </div>
       <div className={`${styles['auth-extras']}`}>
         <p className="text text_type_main-default text_color_inactive">
-          Вы - новый пользователь?
-          <span className={`${styles['auth-extra-link']}`} onClick={onClickReg}> Зарегистрироваться</span>
-        </p>
-        <p className="text text_type_main-default text_color_inactive">
-          Забыли пароль?
-          <span className={`${styles['auth-extra-link']}`} onClick={onClickRecover}> Восстановить пароль</span>
+          Уже зарегистрированы?
+          <span className={`${styles['auth-extra-link']}`} onClick={onClick}> Войти</span>
         </p>
       </div>
 
@@ -96,4 +88,4 @@ function AuthLogin() {
   );
 }
 
-export default AuthLogin;
+export default AuthReg;

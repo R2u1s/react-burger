@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Ingredient.module.css';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import IngredientDetails from '../components/IngredientDetails/IngredientDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients, writeIngredientPreview } from '../../services/actions/burger';
+import { getIngredients, writeIngredientPreview } from '../services/actions/burger';
 import { useParams } from 'react-router-dom';
 
 

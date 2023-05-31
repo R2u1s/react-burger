@@ -11,7 +11,7 @@ function IngredientDetails() {
   const getData = (store) => ({
     currentIngredient: store.burger.currentIngredient,
     ingredientsList: store.burger.ingredientsList
-  })
+  });
 
   let { currentIngredient,ingredientsList } = useSelector(getData);
 

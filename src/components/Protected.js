@@ -1,7 +1,9 @@
 import { Navigate, useHref } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserRequest, refreshToken, saveLastUrl, saveTokenFromCookie } from '../services/actions/auth';
+import { getUserRequest, refreshToken, saveLastUrl } from '../services/actions/auth';
+import { PATH_LOGIN } from './App/App';
 
 export const Protected = ({ element }) => {
   const dispatch = useDispatch();
@@ -28,11 +30,11 @@ export const Protected = ({ element }) => {
 
   const content = useMemo(
     () => {
-      return (user.authRequest || !user.name && !user.authFailed) ?
+      return (user.authRequest || (!user.name & !user.authFailed)) ?
         <p style={{ textAlign: 'center' }}>Загрузка...</p> :
         (user.accessToken ?
           element :
-          <Navigate to="/login" replace />
+          <Navigate to={PATH_LOGIN} replace />
         );
     },
     [user.name, user.authRequest]
@@ -44,3 +46,7 @@ export const Protected = ({ element }) => {
     </>
   );
 }
+
+Protected.propTypes = {
+  element: PropTypes.object
+};
