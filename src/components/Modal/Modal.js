@@ -35,7 +35,7 @@ const Modal = ({active, setClose, children, clearFunc}) => {
 
   return ReactDOM.createPortal(
     (
-      <ModalOverlay active={active} setClose={setClose} children={children} onClick={setClose} >
+      <ModalOverlay active={active} setClose={closeHandler} children={children} onClick={setClose} >
       <div className={active ? `${styles.modal__container} ${styles.modal__contVisibility_active}` : `${styles.modal__container}`} onClick={(e) => e.stopPropagation()}>
         <button className={styles['modal__close-button']} onClick={() => {
           closeHandler();

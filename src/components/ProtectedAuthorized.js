@@ -26,7 +26,6 @@ export const ProtectedAuthorized = ({ element }) => {
     : (
       user.accessToken ? <Navigate to={user.lastURL} replace /> : element
     );
-
 }
 
 ProtectedAuthorized.propTypes = {
