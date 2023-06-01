@@ -5,19 +5,14 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/burger';
 import { CONSTRUCTOR } from '../AppHeader/AppHeader';
-import { saveLastUrl } from '../../services/actions/auth';
 
 function Main({highlightActive}) {
 
   React.useEffect(() => {
     highlightActive(CONSTRUCTOR);
   }, []);
-
-  const dispatch = useDispatch();
 
   const getData = (store) => ({
     ingredientsList: store.burger.ingredientsList,
@@ -26,19 +21,11 @@ function Main({highlightActive}) {
 
   const { ingredientsList, ingredientsRequest } = useSelector(getData);
 
-  React.useEffect(
-    () => {
-      dispatch(getIngredients());
-      dispatch(saveLastUrl(window.location.pathname));
-    },
-    [dispatch]
-  );
-
   const content = React.useMemo(
     () => {
       return ingredientsRequest ? (
         "Загрузка"
-      ) : (
+      ) : ( 
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
           <BurgerConstructor />

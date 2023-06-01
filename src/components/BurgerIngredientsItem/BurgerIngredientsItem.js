@@ -7,12 +7,13 @@ import { ingredientObjectType } from '../../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { writeIngredientPreview } from '../../services/actions/burger';
 import { useDrag } from 'react-dnd';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 const BurgerIngredientsItem = ({ item, openModal }) => {
 
+  let location = useLocation();
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const getData = (store) => ({
     selectedIngredients: store.burger.selectedIngredients
@@ -44,7 +45,7 @@ const BurgerIngredientsItem = ({ item, openModal }) => {
         dispatch(writeIngredientPreview(item));
       }}
       ref={ref}>
-      <Link to={{ pathname: `/ingredients/${item._id}` }} className={className}>
+      <Link to={{ pathname: `/ingredients/${item._id}`}} state={{ background: location }} className={className}>
         <img src={item.image}></img>
         <div className={styles['burger-ingredients__price']}>
           <p className="text text_type_digits-default">{item.price}</p>

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import { rootReducer } from './services/reducers';
 import thunk from 'redux-thunk';
+import { BrowserRouter } from 'react-router-dom';
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -21,7 +22,9 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+    <BrowserRouter>
+        <App />
+        </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
@@ -30,4 +33,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
- 
