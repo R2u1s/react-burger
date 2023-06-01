@@ -8,6 +8,11 @@ import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-component
 import { registration } from '../services/actions/auth';
 import styles from './Auth.module.css';
 import { PATH_LOGIN } from '../components/App/App';
+import { useForm } from '../hooks/useForm';
+
+const INPUT_NAME = 'name';
+const INPUT_EMAIL = 'email';
+const INPUT_PASSWORD = 'password';
 
 function AuthReg() {
 
@@ -15,65 +20,57 @@ function AuthReg() {
   const dispatch = useDispatch();
 
   function onClick() {
-    navigate(PATH_LOGIN)
+    navigate(PATH_LOGIN);
   }
-
-  const [valueName, setValueName] = React.useState('');
-  const inputRefName = React.useRef(null);
-
-  const [valueEmail, setValueEmail] = React.useState('');
-  const inputRefEmail = React.useRef(null);
-
-  const [valuePassword, setValuePassword] = React.useState('')
-  const onChangePassword = e => {
-    setValuePassword(e.target.value)
-  }
+  
+  const {values, handleChange} = useForm({
+    [INPUT_NAME]: '',
+    [INPUT_EMAIL]: '',
+    [INPUT_PASSWORD]: ''
+  });
 
   const submitHandler = React.useCallback(
     e => {
       e.preventDefault();
-      dispatch(registration({valueEmail,valuePassword,valueName}));
+      dispatch(registration(values[INPUT_NAME],values[INPUT_EMAIL],values[INPUT_PASSWORD]));
     }
   )
 
   return (
-    <form className={`${styles['auth-container']}`} noValidate>
+    <form className={`${styles['auth-container']}`} onSubmit={submitHandler} noValidate>
       <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Регистрация</h2>
       <div className={`${styles['auth-inputs']}`}>
         <Input
           type={'text'}
           placeholder={'Name'}
-          onChange={e => setValueName(e.target.value)}
-          value={valueName}
-          name={'name'}
+          onChange={handleChange}
+          value={values[INPUT_NAME]}
+          name={INPUT_NAME}
           error={false}
-          ref={inputRefName}
           errorText={'Ошибка'}
           size={'default'}
         />
         <Input
           type={'email'}
           placeholder={'E-mail'}
-          onChange={e => setValueEmail(e.target.value)}
-          value={valueEmail}
-          name={'email'}
+          onChange={handleChange}
+          value={values[INPUT_EMAIL]}
+          name={INPUT_EMAIL}
           error={false}
-          ref={inputRefEmail}
           errorText={'Ошибка'}
           size={'default'}
         />
         <PasswordInput
-          onChange={onChangePassword}
-          value={valuePassword}
-          name={'password'}
+          onChange={handleChange}
+          value={values[INPUT_PASSWORD]}
+          name={INPUT_PASSWORD}
         />
       </div>
       <div className={`${styles['auth-button']}`}>
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
-          size="large"
-          onClick={submitHandler}>
+          size="large">
           Зарегистрироваться
         </Button>
       </div>

@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { resetPassword } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { PATH_LOGIN } from '../components/App/App';
+import { useForm } from '../hooks/useForm';
+
+const INPUT_CODE = 'code';
+const INPUT_PASSWORD = 'password';
 
 function AuthResetPassword() {
 
@@ -18,40 +22,36 @@ function AuthResetPassword() {
     navigate(PATH_LOGIN);
   }
 
-  const [valueCode, setValueCode] = React.useState('');
-  const inputRefCode = React.useRef(null);
-
-  const [valuePassword, setValuePassword] = React.useState('')
-  const onChangePassword = e => {
-    setValuePassword(e.target.value)
-  }
+  const {values, handleChange} = useForm({
+    [INPUT_PASSWORD]: '',
+    [INPUT_CODE]: ''
+  });
 
   const submitHandler = React.useCallback(
     e => {
       e.preventDefault();
-      dispatch(resetPassword({valuePassword,valueCode}));
+      dispatch(resetPassword(values[INPUT_PASSWORD], values[INPUT_CODE]));
       navigate(PATH_LOGIN);
     }
   )
 
   return (
-    <form className={`${styles['auth-container']}`}>
+    <form className={`${styles['auth-container']}`} onSubmit={submitHandler}>
       <div className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</div>
       <div className={`${styles['auth-inputs']}`}>
         <PasswordInput
           placeholder={'Введите новый пароль'}
-          onChange={onChangePassword}
-          value={valuePassword}
-          name={'password'}
+          onChange={handleChange}
+          value={values[INPUT_PASSWORD]}
+          name={INPUT_PASSWORD}
         />
         <Input
           type={'text'}
           placeholder={'Введите код из письма'}
-          onChange={e => setValueCode(e.target.value)}
-          value={valueCode}
-          name={'code'}
+          onChange={handleChange}
+          value={values[INPUT_CODE]}
+          name={INPUT_CODE}
           error={false}
-          ref={inputRefCode}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -60,8 +60,7 @@ function AuthResetPassword() {
         <Button
           htmlType="submit"
           type="primary"
-          size="large"
-          onClick={submitHandler}>
+          size="large">
           Сохранить
         </Button>
       </div>

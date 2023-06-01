@@ -3,6 +3,11 @@ import styles from './Profile.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { changeUserInfo } from '../../services/actions/auth';
+import { useForm } from '../../hooks/useForm';
+
+const INPUT_NAME = 'name';
+const INPUT_EMAIL = 'email';
+const INPUT_PASSWORD = 'password';
 
 function ProfileInputs() {
 
@@ -14,53 +19,43 @@ function ProfileInputs() {
 
   const { user } = useSelector(getUser);
 
-  const [valueName, setValueName] = React.useState('');
-  const inputRefName = React.useRef(null);
-
-  const [valueEmail, setValueEmail] = React.useState('');
-  const inputRefEmail = React.useRef(null);
-
-  const [valuePassword, setValuePassword] = React.useState('')
+  const {values, handleChange, setValues} = useForm({
+    [INPUT_NAME]: user.name,
+    [INPUT_EMAIL]: user.email,
+    [INPUT_PASSWORD]: user.password
+  });
 
   const [isInputChange, setIsInputChange] = React.useState(false);
 
-
-  React.useEffect(
-    () => {
-      setValueName(user.name);
-      setValueEmail(user.email);
-      setValuePassword(user.password);
-    },
-    []
-  );
-
   const cancelHandler = () => {
     setIsInputChange(false);
-    setValueName(user.name);
-    setValueEmail(user.email);
-    setValuePassword(user.password);
+    setValues({
+      [INPUT_NAME]: '',
+      [INPUT_EMAIL]: '',
+      [INPUT_PASSWORD]: ''
+    });
   }
 
-  const saveHandler = () => {
-    dispatch(changeUserInfo({ valueName, valueEmail, valuePassword }, user.accessToken));
+  const saveHandler = (e) => {
+    e.preventDefault();
+    dispatch(changeUserInfo(values[INPUT_NAME],values[INPUT_EMAIL], values[INPUT_PASSWORD], user.accessToken));
   }
 
   const classNameToggle = isInputChange ? `${styles['profile-buttons']}` : `${styles['profile-buttons', 'profile-buttons__active']}`
 
   return (
-      <div className={`${styles['profile-inputs']}`}>
+      <form className={`${styles['profile-inputs']}`} onSubmit={saveHandler}>
         <Input
           type={'text'}
           placeholder={'Name'}
           onChange={e => {
             setIsInputChange(true);
-            setValueName(e.target.value);
+            handleChange(e);
           }}
           icon={'EditIcon'}
-          value={valueName}
-          name={'name'}
+          value={values[INPUT_NAME]}
+          name={INPUT_NAME}
           error={false}
-          ref={inputRefName}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -69,13 +64,12 @@ function ProfileInputs() {
           placeholder={'E-mail'}
           onChange={e => {
             setIsInputChange(true);
-            setValueEmail(e.target.value);
+            handleChange(e);
           }}
           icon={'EditIcon'}
-          value={valueEmail}
-          name={'email'}
+          value={values[INPUT_EMAIL]}
+          name={INPUT_EMAIL}
           error={false}
-          ref={inputRefEmail}
           errorText={'Ошибка'}
           size={'default'}
 
@@ -85,23 +79,22 @@ function ProfileInputs() {
           placeholder={'Пароль'}
           onChange={e => {
             setIsInputChange(true);
-            setValuePassword(e.target.value);
+            handleChange(e);
           }}
           icon={'EditIcon'}
-          value={valuePassword}
-          name={'password'}
+          value={values[INPUT_PASSWORD]}
+          name={INPUT_PASSWORD}
         />
         <div className={classNameToggle}>
           <p className={`${styles['profile-cancel']} text text_type_main-default`} onClick={cancelHandler}>Отмена</p>
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
-            size="large"
-            onClick={saveHandler}>
+            size="large">
             Сохранить
           </Button>
         </div>
-      </div>
+      </form>
   );
 }
 

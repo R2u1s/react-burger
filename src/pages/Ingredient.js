@@ -19,13 +19,6 @@ function Ingredient() {
 
   const { ingredientsList, ingredientsRequest } = useSelector(getData);
 
-  React.useEffect(
-    () => {
-      dispatch(getIngredients());
-    },
-    [dispatch]
-  );
-
   const content = React.useMemo(
     () => {
       return (ingredientsRequest || !ingredientsList[path.id]) ? (

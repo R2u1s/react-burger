@@ -24,7 +24,7 @@ export const ProtectedAuthorized = ({ element }) => {
   return (user.authRequest) ?
     <p style={{ textAlign: 'center' }}>Загрузка...</p>
     : (
-      user.accessToken ? <Navigate to={user.lastURL} replace /> : element
+      user.accessToken ? <Navigate to={'/'} replace /> : element
     );
 }
 

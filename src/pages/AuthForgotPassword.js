@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { forgotPassword, postEmail } from '../services/actions/auth';
 import { PATH_LOGIN, PATH_RESET_PASSWORD } from '../components/App/App';
+import { useForm } from '../hooks/useForm';
+
+const INPUT_EMAIL = 'email';
 
 function AuthForgotPassword() {
 
@@ -16,30 +19,31 @@ function AuthForgotPassword() {
     navigate(PATH_LOGIN)
   }
 
-  const [valueEmail, setValueEmail] = React.useState('');
-  const inputRefEmail = React.useRef(null);
+  const {values, handleChange} = useForm({
+    [INPUT_EMAIL]: '',
+  });
+
 
   const submitHandler = React.useCallback(
     e => {
       e.preventDefault();
-      dispatch(postEmail(valueEmail));
+      dispatch(postEmail(values[INPUT_EMAIL]));
       dispatch(forgotPassword());
       navigate(PATH_RESET_PASSWORD);
     }
   )
 
   return (
-    <form className={`${styles['auth-container']}`} noValidate>
+    <form className={`${styles['auth-container']}`} onSubmit={submitHandler} noValidate>
       <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Восстановление пароля</h2>
       <div className={`${styles['auth-inputs']}`}>
         <Input
           type={'email'}
           placeholder={'E-mail'}
-          onChange={e => setValueEmail(e.target.value)}
-          value={valueEmail}
-          name={'email'}
+          onChange={handleChange}
+          value={values[INPUT_EMAIL]}
+          name={INPUT_EMAIL}
           error={false}
-          ref={inputRefEmail}
           errorText={'Ошибка'}
           size={'default'}
         />
@@ -48,8 +52,7 @@ function AuthForgotPassword() {
         <Button
           htmlType="submit"
           type="primary"
-          size="large"
-          onClick={submitHandler}>
+          size="large">
           Воcстановить
         </Button>
       </div>

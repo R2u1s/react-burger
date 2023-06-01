@@ -7,6 +7,10 @@ import { PasswordInput } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from './Auth.module.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import { PATH_FORGOT_PASSWORD, PATH_REGISTER } from '../components/App/App';
+import { useForm } from '../hooks/useForm';
+
+const INPUT_EMAIL = 'email';
+const INPUT_PASSWORD = 'password';
 
 function AuthLogin() {
 
@@ -26,18 +30,15 @@ function AuthLogin() {
     navigate(PATH_FORGOT_PASSWORD);
   }
 
-  const [valueEmail, setValueEmail] = React.useState('');
-  const inputRefEmail = React.useRef(null);
-
-  const [valuePassword, setValuePassword] = React.useState('')
-  const onChangePassword = e => {
-    setValuePassword(e.target.value)
-  }
+  const {values, handleChange} = useForm({
+    [INPUT_EMAIL]: '',
+    [INPUT_PASSWORD]: ''
+  });
 
   const submitHandler = React.useCallback(
     e => {
       e.preventDefault();
-      dispatch(login({ valueEmail, valuePassword }));
+      dispatch(login( values[INPUT_EMAIL], values[INPUT_PASSWORD] ));
     }
   )
 
@@ -57,32 +58,30 @@ function AuthLogin() {
       to={user.lastURL}
       replace
     /> :
-        <form className={`${styles['auth-container']}`} noValidate>
+        <form className={`${styles['auth-container']}`} onSubmit={submitHandler} noValidate>
           <h2 className={`${styles['auth-title']} text text_type_main-medium`}>Вход</h2>
           <div className={`${styles['auth-inputs']}`}>
             <Input
               type={'email'}
               placeholder={'E-mail'}
-              onChange={e => setValueEmail(e.target.value)}
-              value={valueEmail}
-              name={'email'}
+              onChange={handleChange}
+              value={values[INPUT_EMAIL]}
+              name={INPUT_EMAIL}
               error={false}
-              ref={inputRefEmail}
               errorText={'Ошибка'}
               size={'default'}
             />
             <PasswordInput
-              onChange={onChangePassword}
-              value={valuePassword}
-              name={'password'}
+              onChange={handleChange}
+              value={values[INPUT_PASSWORD]}
+              name={INPUT_PASSWORD}
             />
           </div>
           <div className={`${styles['auth-button']}`}>
             <Button
               htmlType="submit"
               type="primary"
-              size="large"
-              onClick={submitHandler}>
+              size="large">
               Войти
             </Button>
           </div>

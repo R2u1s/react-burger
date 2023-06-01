@@ -7,6 +7,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { clearIngredientPreview } from '../../services/actions/burger';
+import { useNavigate } from 'react-router-dom';
 
 export const ingredientTypes = {
   bun: "Булки",
@@ -17,12 +18,19 @@ export const ingredientTypes = {
 function BurgerIngredients() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getData = (store) => ({
     ingredientsList: store.burger.ingredientsList,
   })
 
   const { isModalOpen, openModal, closeModal } = useModal();
+
+  const closeModalHandler = () => {
+    closeModal();
+    !(window.location.pathname === '/') && navigate(-1);
+    dispatch(clearIngredientPreview(),'200');
+  }
 
   const { ingredientsList } = useSelector(getData);
 
@@ -68,7 +76,7 @@ function BurgerIngredients() {
   }
 
   function clearHandler() {
-    dispatch(clearIngredientPreview());
+    
   }
 
   return (
@@ -77,12 +85,30 @@ function BurgerIngredients() {
         <h1 className={`mb-5 text text_type_main-large`}>Соберите бургер</h1>
         <Tabs scrollTab={scrollTab} setScrollTab={setScrollTab} onClickTab={onClickTab} />
         <ul className={styles['burger-ingredients__ingredients']} >
-          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} refState={refState} setRefState={setRefState} ingredient={{ type: ingredientTypes.bun, list: filteredData.buns }} openModal={openModal} />
-          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} refState={refState} setRefState={setRefState} ingredient={{ type: ingredientTypes.sauce, list: filteredData.sauces }} openModal={openModal} />
-          <BurgerIngredientsGroup scrollTab={scrollTab} setScrollTab={setScrollTab} refState={refState} setRefState={setRefState} ingredient={{ type: ingredientTypes.main, list: filteredData.mains }} openModal={openModal} />
+          <BurgerIngredientsGroup
+            scrollTab={scrollTab}
+            setScrollTab={setScrollTab}
+            refState={refState} setRefState={setRefState}
+            ingredient={{ type: ingredientTypes.bun, list: filteredData.buns }}
+            openModal={openModal} />
+          <BurgerIngredientsGroup
+            scrollTab={scrollTab}
+            setScrollTab={setScrollTab}
+            refState={refState}
+            setRefState={setRefState}
+            ingredient={{ type: ingredientTypes.sauce, list: filteredData.sauces }}
+            openModal={openModal} />
+          <BurgerIngredientsGroup
+            scrollTab={scrollTab}
+            setScrollTab={setScrollTab}
+            refState={refState}
+            setRefState={setRefState}
+            ingredient={{ type: ingredientTypes.main, list: filteredData.mains }}
+            openModal={openModal} />
         </ul>
       </section>
-      <Modal active={isModalOpen} setActive={openModal} setClose={closeModal} clearFunc={clearHandler}>
+      <Modal active={isModalOpen} setActive={openModal}
+        setClose={closeModalHandler}>
         <IngredientDetails />
       </Modal>
     </>

@@ -57,7 +57,6 @@ export const postEmail = (email) => {
     })
       .then(res => {
         if (res && res.success) {
-          console.log(res);
           dispatch({
             type: EMAIL_SUCCESS
           });
@@ -77,7 +76,7 @@ export const postEmail = (email) => {
 }
 
 //Авторизация
-export const login = (data) => {
+export const login = (email,password) => {
   return function (dispatch) {
     dispatch({
       type: LOGIN_REQUEST
@@ -88,8 +87,8 @@ export const login = (data) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "email": data.valueEmail,
-        "password": data.valuePassword
+        "email": email,
+        "password": password
       })
     })
       .then(res => {
@@ -117,7 +116,7 @@ export const login = (data) => {
 }
 
 //Регистрация
-export const registration = (data) => {
+export const registration = (name,email,password) => {
   return function (dispatch) {
     dispatch({
       type: TOKEN_REQUEST
@@ -128,9 +127,9 @@ export const registration = (data) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "email": data.valueEmail,
-        "password": data.valuePassword,
-        "name": data.valueName
+        "email": email,
+        "password": password,
+        "name": name
       })
     })
       .then(res => {
@@ -276,7 +275,7 @@ export const forgotPassword = () => ({
 })
 
 //Авторизация
-export const resetPassword = (data) => {
+export const resetPassword = (password,code) => {
   return function (dispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
@@ -287,8 +286,8 @@ export const resetPassword = (data) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "password": data.valuePassword,
-        "token": data.valueCode
+        "password": password,
+        "token": code
       })
     })
       .then(res => {
@@ -313,8 +312,8 @@ export const resetPassword = (data) => {
 }
 
 //Изменение информации пользователя
-export const changeUserInfo = (data, token) => {
-  const password = data.valuePassword === '******' ? null : data.valuePassword;
+export const changeUserInfo = (name,email,valuePassword, token) => {
+  const password = valuePassword === '******' ? null : valuePassword;
   return function (dispatch) {
     dispatch({
       type: CHANGE_USERINFO_REQUEST
@@ -326,8 +325,8 @@ export const changeUserInfo = (data, token) => {
         Authorization: token
       },
       body: JSON.stringify({
-        "name": data.valueName,
-        "email": data.valueEmail,
+        "name": name,
+        "email": email,
         "password": password
       })
     })
