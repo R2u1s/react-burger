@@ -14,7 +14,6 @@ import Profile from '../../pages/Profile/Profile';
 import { getIngredients } from '../../services/actions/burger';
 import { saveLastUrl } from '../../services/actions/auth';
 
-
 export const PATH_MAIN = "/";
 export const PATH_LOGIN = "/login";
 export const PATH_REGISTER = "/register";
@@ -25,7 +24,7 @@ export const PATH_PROFILE_ORDERS = "/profile/orders";
 export const PATH_INGREDIENTS_ID = "/ingredients/:id";
 
 function App() {
-  let location = useLocation();
+  const location = useLocation();
 
   const [active, setActive] = React.useState(CONSTRUCTOR);
 
@@ -61,13 +60,8 @@ function App() {
           } />
           <Route path={PATH_PROFILE} element={<Protected element={<Profile highlightActive={setActive} />} />} />
           <Route path={PATH_PROFILE_ORDERS} element={<Protected element={<Profile highlightActive={setActive} />} />} />
-{/*           {<Route path={PATH_INGREDIENTS_ID} element={
-            user.lastURL === PATH_MAIN ?
-              <Main highlightActive={setActive} /> :
-              <Ingredient />
-          } />} */}
-          <Route path={PATH_INGREDIENTS_ID} element={<Ingredient />} />
           {background && <Route path={PATH_INGREDIENTS_ID} element={<Main highlightActive={setActive} />} />}
+          <Route path={PATH_INGREDIENTS_ID} element={<Ingredient />} />
         </Routes>
     </>
   );

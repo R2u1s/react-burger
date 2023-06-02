@@ -7,11 +7,11 @@ import { ingredientObjectType } from '../../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { writeIngredientPreview } from '../../services/actions/burger';
 import { useDrag } from 'react-dnd';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const BurgerIngredientsItem = ({ item, openModal }) => {
 
-  let location = useLocation();
+  const location = useLocation();
 
   const dispatch = useDispatch();
 

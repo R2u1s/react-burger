@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { clearIngredientPreview } from '../../services/actions/burger';
+import { clearIngredientPreview, writeIngredientPreview } from '../../services/actions/burger';
 import { useNavigate } from 'react-router-dom';
 
 export const ingredientTypes = {
@@ -22,17 +22,22 @@ function BurgerIngredients() {
 
   const getData = (store) => ({
     ingredientsList: store.burger.ingredientsList,
-  })
+  });
+
+  const { ingredientsList } = useSelector(getData);
+
+  const getUser = (store) => ({
+    user: store.auth
+  });
+  const { user } = useSelector(getUser);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const closeModalHandler = () => {
     closeModal();
     !(window.location.pathname === '/') && navigate(-1);
-    dispatch(clearIngredientPreview(),'200');
+    dispatch(clearIngredientPreview(), '200');
   }
-
-  const { ingredientsList } = useSelector(getData);
 
   const filteredData = React.useMemo(
     () => {
@@ -75,9 +80,19 @@ function BurgerIngredients() {
     }
   }
 
-  function clearHandler() {
-    
-  }
+  React.useEffect(
+    () => {
+      const index = window.location.pathname.split('/').findIndex((item) => item === 'ingredients');
+      if (index) {
+        const currentIngredient = ingredientsList[window.location.pathname.split('/')[index + 1]];
+        if (currentIngredient) {
+          dispatch(writeIngredientPreview(currentIngredient));
+          openModal();
+        }
+      };
+    },
+    []
+  );
 
   return (
     <>

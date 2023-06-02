@@ -8,7 +8,7 @@ import { DndProvider } from 'react-dnd';
 import { useSelector } from 'react-redux';
 import { CONSTRUCTOR } from '../AppHeader/AppHeader';
 
-function Main({highlightActive}) {
+function Main({ highlightActive }) {
 
   React.useEffect(() => {
     highlightActive(CONSTRUCTOR);
@@ -25,11 +25,11 @@ function Main({highlightActive}) {
     () => {
       return ingredientsRequest ? (
         "Загрузка"
-      ) : ( 
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
+      ) : (
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
       );
     },
     [ingredientsRequest, ingredientsList]
@@ -43,7 +43,7 @@ function Main({highlightActive}) {
 }
 
 Main.propTypes = {
- highlightActive: PropTypes.func
+  highlightActive: PropTypes.func
 };
 
 export default Main;

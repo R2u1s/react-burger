@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Ingredient.module.css';
 import IngredientDetails from '../components/IngredientDetails/IngredientDetails';
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients, writeIngredientPreview } from '../services/actions/burger';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 
 function Ingredient() {
 
-  const dispatch = useDispatch();
   const path = useParams();
 
   const getData = (store) => ({
