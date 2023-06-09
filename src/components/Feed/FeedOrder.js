@@ -5,7 +5,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from 'react-redux';
 import { sum } from '../../utils/utils';
 
-const FeedOrder = ({ order }) => {
+const FeedOrder = ({ status, order }) => {
 
   const getData = (store) => ({
     ingredientsList: store.burger.ingredientsList,
@@ -22,9 +22,17 @@ const FeedOrder = ({ order }) => {
           {order.createdAt}
         </div>
       </div>
-      <div className={`${styles['feed__id-time']} text text_type_main-medium`}>
+      <div className={`text text_type_main-medium`}>
         {order.name}
       </div>
+      {status && (order.status === "done" ?
+        (<p className={`${styles['feed__status']} text text_type_main-default text_color_success`}>
+          {order.status}
+        </p>) :
+        (<p className={`${styles['feed__status']} text text_type_main-default`}>
+          {order.status}
+        </p>))
+      }
       <div className={styles['feed__icons-total']}>
         <div className={styles['feed__icons']}>
           {order.ingredients.map(function (id, index) {
@@ -57,6 +65,7 @@ const FeedOrder = ({ order }) => {
 
 FeedOrder.propTypes = {
   order: (PropTypes.object),
+  status: (PropTypes.bool)
 };
 
 export default FeedOrder;

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Feed.module.css';
-import { FEED } from '../AppHeader/AppHeader';
-import FeedLenta from './FeedLenta';
-import FeedInfo from './FeedInfo';
+import styles from '../../components/Feed/Feed.module.css';
+import { FEED } from '../../components/AppHeader/AppHeader';
+import FeedLenta from '../../components/Feed/FeedLenta';
+import FeedInfo from '../../components/Feed/FeedInfo';
 
 function Feed({ highlightActive }) {
 

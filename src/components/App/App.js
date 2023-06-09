@@ -13,7 +13,7 @@ import Ingredient from '../../pages/Ingredient';
 import Profile from '../../pages/Profile/Profile';
 import { getIngredients } from '../../services/actions/burger';
 import { saveLastUrl } from '../../services/actions/auth';
-import Feed from '../Feed/Feed';
+import Feed from '../../pages/Feed/Feed';
 
 export const PATH_MAIN = "/";
 export const PATH_LOGIN = "/login";
@@ -66,7 +66,7 @@ function App() {
           <Route path={PATH_PROFILE_ORDERS} element={<Protected element={<Profile highlightActive={setActive} />} />} />
           {background && <Route path={PATH_INGREDIENTS_ID} element={<Main highlightActive={setActive} />} />}
           <Route path={PATH_INGREDIENTS_ID} element={<Ingredient />} />
-          <Route path={PATH_FEED} element={<Feed highlightActive={setActive} />}/>
+          <Route path={PATH_FEED} element={<Protected element={<Feed highlightActive={setActive} />} />} />
         </Routes>
     </>
   );

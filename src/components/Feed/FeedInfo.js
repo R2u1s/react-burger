@@ -14,7 +14,7 @@ function FeedInfo() {
             </p>
             <ul className={styles['feed__info-status-list']}>
               {serverAnswer.orders.map(function (item) {
-                return item.status === "done" && <li className={`text text_type_digits-default text_color_success`}>
+                return item.status === "done" && <li key={Math.random()} className={`text text_type_digits-default text_color_success`}>
                   {item._id}
                 </li>
               })}
@@ -26,7 +26,7 @@ function FeedInfo() {
             </p>
             <ul className={styles['feed__info-status-list']}>
               {serverAnswer.orders.map(function (item) {
-                return item.status !== "done" && <li className={`text text_type_digits-default`}>
+                return item.status !== "done" && <li key={Math.random()} className={`text text_type_digits-default`}>
                 {item._id}
               </li>
               })}

@@ -1,22 +1,21 @@
 .profile {
-  margin:0;
-  margin-top: calc(var(--offset-base-size)  * 30);
-  position: relative;
+  margin: 0 auto;
+  width: 1240px;
+  display: flex;
+  flex-flow: row;
+  justify-content: start;
+  gap:calc(var(--offset-base-size)*15);
 }
 
 .profile-nav {
-  margin: 0;
   padding: 0;
-  position:absolute;
-  top:0;
-  right:calc((100%/2) + 300px);
-  width:320px;
+  width: 320px;
   display: flex;
   flex-flow: column;
 }
 
 .profile-nav-element {
-  margin:0;
+  margin: 0;
   padding: 0;
   list-style-type: none;
   width: 100%;
@@ -26,28 +25,28 @@
 }
 
 .profile-nav-element:hover {
-	color: var(--text-primary-color);
+  color: var(--text-primary-color);
   transition: var(--common-transition);
 }
 
 .profile-nav-element:last-of-type {
-  margin-top: calc(var(--offset-base-size)  * 20);
+  margin-top: calc(var(--offset-base-size) * 20);
   height: 48px;
   line-height: 24px;
 }
 
 .profile-nav-element:last-of-type:hover {
-	color: var(--text-inactive-color);
-  cursor:auto;
+  color: var(--text-inactive-color);
+  cursor: auto;
 }
 
 .profile-inputs {
-  margin: 0 auto;
   padding: 0;
   max-width: 480px;
+  height:min-content;
   display: flex;
   flex-flow: column;
-  gap: calc(var(--offset-base-size)  * 6);
+  gap: calc(var(--offset-base-size) * 6);
   align-items: center;
   justify-content: space-between;
 }
@@ -58,15 +57,15 @@
   display: flex;
   flex-flow: row;
   justify-content: end;
-  gap: calc(var(--offset-base-size)  * 5);
+  gap: calc(var(--offset-base-size) * 5);
 }
 
 .profile-cancel {
   height: 100%;
   line-height: 64px;
   text-decoration: none;
-  cursor: pointer; 
-  color:#4C4CFF;
+  cursor: pointer;
+  color: #4C4CFF;
   text-align: center;
 }
 

@@ -37,7 +37,7 @@ export const Protected = ({ element }) => {
           <Navigate to={PATH_LOGIN} replace />
         );
     },
-    [user.name, user.authRequest]
+    [his,user.name, user.authRequest]
   );
 
   return (
