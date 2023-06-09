@@ -9,7 +9,7 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
 
 export const CONSTRUCTOR = '';
-export const ORDERS = 'orders';
+export const FEED = 'feed';
 export const PROFILE = 'profile';
 
 function AppHeader({ active }) {
@@ -19,8 +19,8 @@ function AppHeader({ active }) {
   function onClickConstructor() {
     navigate('/');
   }
-  function onClickOrders() {
-    navigate('/');
+  function onClickFeed() {
+    navigate('/feed');
   }
   function onClickProfile() {
     navigate('/profile');
@@ -48,8 +48,8 @@ function AppHeader({ active }) {
               </div>
             </li>
             <li>
-              <div href='#' className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`} onClick={onClickOrders}>
-                {active === ORDERS
+              <div className={`${styles.header__item} pl-4 pr-4 pt-5 pb-5`} onClick={onClickFeed}>
+                {active === FEED
                   ?
                   <>
                     <ListIcon type="primary" />

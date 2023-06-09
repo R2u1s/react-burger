@@ -33,11 +33,6 @@ function BurgerConstructor() {
     openModal();
   }
 
-  function clearHandler() {
-    setOrderRequest(false);
-    dispatch(clearIngredientsList());
-  }
-
   return (
     <section className={`${styles['burger-constructor']} pt-15`}>
       <ConstructorElementsList className={'mb-10'} />

@@ -13,6 +13,7 @@ import Ingredient from '../../pages/Ingredient';
 import Profile from '../../pages/Profile/Profile';
 import { getIngredients } from '../../services/actions/burger';
 import { saveLastUrl } from '../../services/actions/auth';
+import Feed from '../Feed/Feed';
 
 export const PATH_MAIN = "/";
 export const PATH_LOGIN = "/login";
@@ -22,8 +23,11 @@ export const PATH_RESET_PASSWORD = "/reset-password";
 export const PATH_PROFILE = "/profile";
 export const PATH_PROFILE_ORDERS = "/profile/orders";
 export const PATH_INGREDIENTS_ID = "/ingredients/:id";
+export const PATH_FEED = "/feed";
+export const PATH_FEED_ID = "/feed/:id";
 
 function App() {
+
   const location = useLocation();
 
   const [active, setActive] = React.useState(CONSTRUCTOR);
@@ -62,6 +66,7 @@ function App() {
           <Route path={PATH_PROFILE_ORDERS} element={<Protected element={<Profile highlightActive={setActive} />} />} />
           {background && <Route path={PATH_INGREDIENTS_ID} element={<Main highlightActive={setActive} />} />}
           <Route path={PATH_INGREDIENTS_ID} element={<Ingredient />} />
+          <Route path={PATH_FEED} element={<Feed highlightActive={setActive} />}/>
         </Routes>
     </>
   );
