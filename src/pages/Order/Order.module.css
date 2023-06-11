@@ -1,0 +1,120 @@
+.order {
+  margin:0 auto;
+  margin-top: calc(var(--offset-base-size) * 20.5);
+  width: 640px;
+  display: grid;
+  grid-template:
+    'id'
+    '.' calc(var(--offset-base-size)  * 10)
+    'name'
+    '.' calc(var(--offset-base-size)  * 3)
+    'status'
+    '.' calc(var(--offset-base-size)  * 15)
+    'consist'
+    '.' calc(var(--offset-base-size)  * 6)
+    'ingredients'
+    '.' calc(var(--offset-base-size)  * 10)
+    'time-total'
+    / 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order__id {
+  margin:0;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  grid-area: id;
+}
+
+.order__name {
+  margin:0;
+  height: 30px;
+  line-height: 30px;
+  grid-area: name;
+}
+
+.order__status {
+  margin:0;
+  height: 24px;
+  line-height: 24px;
+  grid-area: status;
+}
+
+.order__consist {
+  margin:0;
+  height: 30px;
+  line-height: 30px;
+  grid-area: consist;
+}
+
+.order__ingredients {
+  margin:0;
+  padding: 0;
+  width: 100%;
+  max-height: 312px;
+  overflow:auto;
+  list-style-type: none;
+  display: flex;
+  flex-flow: column;
+  gap: calc(var(--offset-base-size)*4);
+  grid-area: ingredients;
+}
+
+.order__ingredients::-webkit-scrollbar {
+  width: 8px;
+  /* ширина scrollbar */
+}
+
+.order__ingredients::-webkit-scrollbar-track {
+  background: transparent;
+  /* цвет дорожки */
+}
+
+.order__ingredients::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  /* цвет плашки */
+}
+
+.order__ingredients::-webkit-scrollbar-track-piece:start {
+  background: #2F2F37;
+}
+
+.order__ingredient {
+  margin:0;
+  padding:0;
+  width: calc(100% - (var(--offset-base-size)*6));
+  height: 64px;
+  display:flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order__ingredient-flex {
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  gap:calc(var(--offset-base-size)*4);
+}
+
+.order__ingredient-name {
+  margin:0;
+  padding:0;
+  max-width: 320px;
+  height: 100%;
+}
+
+.order__ingredient-time-total {
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  grid-area: time-total;
+}

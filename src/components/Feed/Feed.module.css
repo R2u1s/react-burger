@@ -65,6 +65,7 @@
   display:flex;
   flex-flow: column;
   gap:calc(var(--offset-base-size)*6);
+  cursor: pointer;
 }
 
 .feed__id-time {

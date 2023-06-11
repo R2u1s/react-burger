@@ -4,8 +4,15 @@ import styles from './Feed.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { sum } from '../../utils/utils';
+import { useNavigate } from 'react-router-dom';
 
-const FeedOrder = ({ status, order }) => {
+const FeedOrder = ({ status, order, navigatePath }) => {
+
+  const navigate = useNavigate();
+
+  const onClickHandler = (id) => {
+    navigate(`${navigatePath}/${id}`);
+  }
 
   const getData = (store) => ({
     ingredientsList: store.burger.ingredientsList,
@@ -13,14 +20,14 @@ const FeedOrder = ({ status, order }) => {
   const { ingredientsList } = useSelector(getData);
 
   return (
-    <li name='order' id={order._id} className={styles['feed__order']}>
+    <li name='order' id={order._id} className={styles['feed__order']} onClick={() => { onClickHandler(order._id) }}>
       <div className={styles['feed__id-time']}>
         <div className="text text_type_digits-default">
           {`#${order._id}`}
         </div>
-        <div className="text text_type_main-default text_color_inactive">
+        <p className="text text_type_main-default text_color_inactive">
           {order.createdAt}
-        </div>
+        </p>
       </div>
       <div className={`text text_type_main-medium`}>
         {order.name}

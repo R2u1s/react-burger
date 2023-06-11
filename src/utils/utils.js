@@ -84,3 +84,19 @@ export const sum = (arr) => {
     return previousValue + item;
   });
 }
+
+export function uniqueItem(arr) {
+  return arr.reduce(function (prevVal, item) {
+    if (!prevVal[item]) {
+      // если ключа ещё нет в объекте, значит это первое повторение
+      prevVal[item] = 1;
+    } else {
+      // иначе увеличим количество повторений на 1
+      prevVal[item] += 1;
+    }
+  
+    // и вернём изменённый объект
+    return prevVal;
+  }, {}); // Начальное значение — пустой объект.
+  
+}

@@ -13,7 +13,8 @@ import Ingredient from '../../pages/Ingredient';
 import Profile from '../../pages/Profile/Profile';
 import { getIngredients } from '../../services/actions/burger';
 import { saveLastUrl } from '../../services/actions/auth';
-import Feed from '../../pages/Feed/Feed';
+import Feed from '../../pages/Feed';
+import Order from '../../pages/Order/Order';
 
 export const PATH_MAIN = "/";
 export const PATH_LOGIN = "/login";
@@ -22,9 +23,11 @@ export const PATH_FORGOT_PASSWORD = "/forgot-password";
 export const PATH_RESET_PASSWORD = "/reset-password";
 export const PATH_PROFILE = "/profile";
 export const PATH_PROFILE_ORDERS = "/profile/orders";
+export const PATH_PROFILE_ORDERS_ID = "/profile/orders/:id";
 export const PATH_INGREDIENTS_ID = "/ingredients/:id";
 export const PATH_FEED = "/feed";
 export const PATH_FEED_ID = "/feed/:id";
+
 
 function App() {
 
@@ -66,7 +69,9 @@ function App() {
           <Route path={PATH_PROFILE_ORDERS} element={<Protected element={<Profile highlightActive={setActive} />} />} />
           {background && <Route path={PATH_INGREDIENTS_ID} element={<Main highlightActive={setActive} />} />}
           <Route path={PATH_INGREDIENTS_ID} element={<Ingredient />} />
-          <Route path={PATH_FEED} element={<Protected element={<Feed highlightActive={setActive} />} />} />
+          <Route path={PATH_FEED} element={<Feed highlightActive={setActive} />} />
+          <Route path={PATH_FEED_ID} element={<Order highlightActive={setActive} />} />
+          <Route path={PATH_PROFILE_ORDERS_ID} element={<Protected element={<Order highlightActive={setActive} />} />} />
         </Routes>
     </>
   );
