@@ -23,7 +23,7 @@ const FeedOrder = ({ status, order, navigatePath }) => {
     <li name='order' id={order._id} className={styles['feed__order']} onClick={() => { onClickHandler(order._id) }}>
       <div className={styles['feed__id-time']}>
         <div className="text text_type_digits-default">
-          {`#${order._id}`}
+          {`#${order.number}`}
         </div>
         <p className="text text_type_main-default text_color_inactive">
           {order.createdAt}

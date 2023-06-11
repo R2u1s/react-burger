@@ -1,8 +1,15 @@
 import React from 'react';
 import styles from './Feed.module.css';
 import { serverAnswer } from '../../utils/data';
+import { useSelector } from 'react-redux';
 
 function FeedInfo() {
+
+  const getWs = (store) => ({
+    wsConnected: store.wsOrders.wsConnected,
+    orders:store.wsOrders.orders
+  })
+  const {orders} = useSelector(getWs);
 
   return (
     <>
@@ -13,9 +20,9 @@ function FeedInfo() {
               Готовы:
             </p>
             <ul className={styles['feed__info-status-list']}>
-              {serverAnswer.orders.map(function (item) {
+              {orders.orders.map(function (item) {
                 return item.status === "done" && <li key={Math.random()} className={`text text_type_digits-default text_color_success`}>
-                  {item._id}
+                  {item.number}
                 </li>
               })}
             </ul>
@@ -25,9 +32,9 @@ function FeedInfo() {
               В работе:
             </p>
             <ul className={styles['feed__info-status-list']}>
-              {serverAnswer.orders.map(function (item) {
+              {orders.orders.map(function (item) {
                 return item.status !== "done" && <li key={Math.random()} className={`text text_type_digits-default`}>
-                {item._id}
+                {item.number}
               </li>
               })}
             </ul>
@@ -38,7 +45,7 @@ function FeedInfo() {
             Выполнено за всё время:
           </p>
           <p className={`${styles['feed__info-digits-shadow']} text text_type_digits-large`}>
-            {serverAnswer.total}
+            {orders.total}
           </p>
         </div>
         <div className={styles['feed__info-column']}>
@@ -46,7 +53,7 @@ function FeedInfo() {
             Выполнено за сегодня:
           </p>
           <p className={`${styles['feed__info-digits-shadow']} text text_type_digits-large`}>
-            {serverAnswer.totalToday}
+            {orders.totalToday}
           </p>
         </div>
       </section>

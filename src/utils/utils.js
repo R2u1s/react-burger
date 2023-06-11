@@ -100,3 +100,5 @@ export function uniqueItem(arr) {
   }, {}); // Начальное значение — пустой объект.
   
 }
+
+export const getCurrentTimestamp = () => new Date().getTime() / 1000;

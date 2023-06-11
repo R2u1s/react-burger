@@ -197,10 +197,36 @@
 .feed__info-status-list {
   margin: 0;
   padding: 0;
+  max-height: 320px;
   display: flex;
   flex-flow: column;
   list-style-type: none;
+  overflow:auto;
   gap:calc(var(--offset-base-size)*2);
+}
+
+.feed__info-status-list::-webkit-scrollbar {
+  width: 8px;
+  /* ширина scrollbar */
+}
+
+.feed__info-status-list::-webkit-scrollbar-track {
+  background: transparent;
+  /* цвет дорожки */
+}
+
+.feed__info-status-list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  /* цвет плашки */
+}
+
+.feed__info-status-list::-webkit-scrollbar-track-piece:start {
+  background: #2F2F37;
+}
+
+.feed__info-status-list::-webkit-scrollbar-track-piece:end {
+  background: #2F2F37;
+  margin-bottom: 52px;
 }
 
 .feed__info-digits-shadow {
