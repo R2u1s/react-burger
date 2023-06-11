@@ -20,18 +20,23 @@ function Order() {
 
   const { ingredientsList, ingredientsRequest } = useSelector(getData);
 
-  const order = serverAnswer.orders.find(item => item._id === path.id);
+  const getWs = (store) => ({
+    wsConnected: store.wsOrders.wsConnected,
+    orders: store.wsOrders.orders
+  })
 
-  const uniqueIngredients = uniqueItem(order.ingredients);
+  const { wsConnected, orders } = useSelector(getWs);
 
   const content = React.useMemo(
     () => {
-      return ingredientsRequest ? (
-        "Загрузка"
-      ) : (
-        <>{
+      if (ingredientsRequest || JSON.stringify(ingredientsList) === '{}' || !wsConnected || orders.orders.length === 0 ) {
+        return <p style={{margin:'0 auto',width:'min-content'}}>Загрузка...</p>
+      } else {
+        const order = orders.orders.find(item => item._id === path.id);
+        const uniqueIngredients = uniqueItem(order.ingredients);
+        return (<>{
           <section className={styles['order']}>
-            <p className={`${styles['order__id']} text text_type_digits-default`}>{`#${order._id}`}</p>
+            <p className={`${styles['order__id']} text text_type_digits-default`}>{`#${order.number}`}</p>
             <p className={`${styles['order__name']} text text_type_main-medium`}>{`${order.name}`}</p>
             {order.status === "done" ?
               (<p className={`${styles['order__status']} text text_type_main-default text_color_success`}>
@@ -74,10 +79,10 @@ function Order() {
               </div>
             </div>
           </section>
-        }</>
-      );
+        }</>)
+      }
     },
-    [ingredientsRequest, ingredientsList]
+    [ingredientsRequest, ingredientsList, wsConnected, orders]
   );
 
   return (
