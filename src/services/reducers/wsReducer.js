@@ -3,35 +3,38 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-  WS_GET_USER_ORDERS
+  WS_CONNECTION_SUCCESS_USER,
+  WS_CONNECTION_ERROR_USER,
+  WS_CONNECTION_CLOSED_USER,
+  WS_GET_ORDERS_USER
 } from '../actions/wsActions';
 
-import { getCurrentTimestamp } from '../../utils/utils';
-
 const initialState = {
-  wsConnected: false,
-  orders: {orders:[]},
-  userOrders: []
+  wsConnectedAll: false,
+  wsConnectedUser: false,
+  orders: { orders: [] },
+  userOrders: { orders: [] }
 };
 
 export const wsReducer = (state = initialState, action) => {
+
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
-        wsConnected: true
+        wsConnectedAll: true
       };
 
     case WS_CONNECTION_ERROR:
       return {
         ...state,
-        wsConnected: false
+        wsConnectedAll: false
       };
 
     case WS_CONNECTION_CLOSED:
       return {
         ...state,
-        wsConnected: false
+        wsConnectedAll: false
       };
 
     case WS_GET_ORDERS:
@@ -39,18 +42,30 @@ export const wsReducer = (state = initialState, action) => {
         ...state,
         orders: action.payload,
       };
-    case WS_GET_USER_ORDERS:
+
+    case WS_CONNECTION_SUCCESS_USER:
       return {
         ...state,
-        userOrders: [
-          ...state.userOrders,
-          {
-            userOrders: action.payload,
-            timestamp: getCurrentTimestamp()
-          }
-        ],
+        wsConnectedUser: true
       };
 
+    case WS_CONNECTION_ERROR_USER:
+      return {
+        ...state,
+        wsConnectedUser: false
+      };
+
+    case WS_CONNECTION_CLOSED_USER:
+      return {
+        ...state,
+        wsConnectedUser: false
+      };
+
+    case WS_GET_ORDERS_USER:
+      return {
+        ...state,
+        userOrders: action.payload,
+      };
     default:
       return state;
   }

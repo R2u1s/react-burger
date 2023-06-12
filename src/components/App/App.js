@@ -15,8 +15,7 @@ import { getIngredients } from '../../services/actions/burger';
 import { saveLastUrl } from '../../services/actions/auth';
 import Feed from '../../pages/Feed';
 import Order from '../../pages/Order/Order';
-import { wsGetOrders } from '../../services/actions/wsActions';
-import { WS_CONNECTION_START } from '../../services/actions/wsActions';
+import { WS_CONNECTION_CLOSED,WS_CONNECTION_CLOSED_USER} from '../../services/actions/wsActions';
 
 export const PATH_MAIN = "/";
 export const PATH_LOGIN = "/login";
@@ -49,22 +48,6 @@ function App() {
       dispatch(saveLastUrl(window.location.pathname));
     },
     [dispatch]
-  );
-
-  const getWs = (store) => ({
-    wsConnected: store.wsOrders.wsConnected,
-  })
-  const { wsConnected } = useSelector(getWs);
-
-  React.useEffect(
-    () => {
-      if (wsConnected) {
-        dispatch(wsGetOrders);
-      } else {
-        dispatch({ type: WS_CONNECTION_START });
-      }
-    },
-    [wsConnected]
   );
 
   const background = location.state?.background;

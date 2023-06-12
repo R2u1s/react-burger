@@ -9,6 +9,9 @@ import Orders from '../../components/Orders/Orders';
 import TabProfile from './TabProfile';
 import { useNavigate } from 'react-router-dom';
 import { PATH_PROFILE, PATH_PROFILE_ORDERS } from '../../components/App/App';
+import { WS_CONNECTION_CLOSED, wsGetOrdersUser } from '../../services/actions/wsActions';
+import { WS_CONNECTION_START_USER } from '../../services/actions/wsActions';
+import { wsConnectionClosed } from '../../services/actions/wsActions';
 
 function Profile({ highlightActive }) {
 

@@ -5,6 +5,8 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from 'react-redux';
 import { sum } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
+import { statusRus } from '../../utils/data';
+import date from 'date-and-time';
 
 const FeedOrder = ({ status, order, navigatePath }) => {
 
@@ -18,6 +20,15 @@ const FeedOrder = ({ status, order, navigatePath }) => {
     ingredientsList: store.burger.ingredientsList,
   });
   const { ingredientsList } = useSelector(getData);
+
+const formatDate = () => {
+  const orderDate = new Date('2023-06-12T05:53:18.497Z');
+  const now = new Date();
+
+  return orderDate.toISOString().parse('YYYY-MM-DDTHH:mm:ssZ');
+}
+
+console.log(formatDate());
 
   return (
     <li name='order' id={order._id} className={styles['feed__order']} onClick={() => { onClickHandler(order._id) }}>
@@ -34,10 +45,10 @@ const FeedOrder = ({ status, order, navigatePath }) => {
       </div>
       {status && (order.status === "done" ?
         (<p className={`${styles['feed__status']} text text_type_main-default text_color_success`}>
-          {order.status}
+          {statusRus(order.status)}
         </p>) :
         (<p className={`${styles['feed__status']} text text_type_main-default`}>
-          {order.status}
+          {statusRus(order.status)}
         </p>))
       }
       <div className={styles['feed__icons-total']}>

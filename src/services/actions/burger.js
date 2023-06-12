@@ -50,7 +50,7 @@ export const clearIngredientPreview = () => ({
   type: CLEAR_INGREDIENT_PREVIEW,
 });
 
-export const postOrder = (ingredientsList) => {
+export const postOrder = (ingredientsList,token) => {
 
   return function (dispatch) {
     dispatch({
@@ -59,6 +59,7 @@ export const postOrder = (ingredientsList) => {
     request("orders", {
       method: 'POST',
       headers: {
+        authorization: token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({

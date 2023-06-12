@@ -1,13 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './Order.module.css';
 import stylesFeed from '../../components/Feed/Feed.module.css';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { serverAnswer } from '../../utils/data';
 import { sum } from '../../utils/utils';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { uniqueItem } from '../../utils/utils';
+import { statusRus } from '../../utils/data';
 
 function Order() {
 
@@ -21,15 +20,15 @@ function Order() {
   const { ingredientsList, ingredientsRequest } = useSelector(getData);
 
   const getWs = (store) => ({
-    wsConnected: store.wsOrders.wsConnected,
+    wsConnectedAll: store.wsOrders.wsConnectedAll,
     orders: store.wsOrders.orders
   })
 
-  const { wsConnected, orders } = useSelector(getWs);
+  const { wsConnectedAll, orders } = useSelector(getWs);
 
   const content = React.useMemo(
     () => {
-      if (ingredientsRequest || JSON.stringify(ingredientsList) === '{}' || !wsConnected || orders.orders.length === 0 ) {
+      if (ingredientsRequest || JSON.stringify(ingredientsList) === '{}' || !wsConnectedAll || orders.orders.length === 0 ) {
         return <p style={{margin:'0 auto',width:'min-content'}}>Загрузка...</p>
       } else {
         const order = orders.orders.find(item => item._id === path.id);
@@ -40,10 +39,10 @@ function Order() {
             <p className={`${styles['order__name']} text text_type_main-medium`}>{`${order.name}`}</p>
             {order.status === "done" ?
               (<p className={`${styles['order__status']} text text_type_main-default text_color_success`}>
-                {order.status}
+                {statusRus(order.status)}
               </p>) :
               (<p className={`${styles['order__status']} text text_type_main-default`}>
-                {order.status}
+                {statusRus(order.status)}
               </p>)
             }
             <p className={`${styles['order__consist']} text text_type_main-medium`}>Состав:</p>
@@ -82,7 +81,7 @@ function Order() {
         }</>)
       }
     },
-    [ingredientsRequest, ingredientsList, wsConnected, orders]
+    [ingredientsRequest, ingredientsList, wsConnectedAll, orders]
   );
 
   return (

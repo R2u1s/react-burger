@@ -8,7 +8,8 @@ import reportWebVitals from './reportWebVitals';
 import { rootReducer } from './services/reducers';
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
-import { socketMiddleware } from './services/middleware/socketMiddleware';
+import { socketMiddlewareOrders } from './services/middleware/socketMiddlewareOrders';
+import { socketMiddlewareUserOrders } from './services/middleware/socketMiddlewareUserOrders';
 
 import {
   WS_CONNECTION_CLOSED,
@@ -16,18 +17,30 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_GET_ORDERS,
-  WS_GET_USER_ORDERS
+  WS_CONNECTION_CLOSED_USER,
+  WS_CONNECTION_ERROR_USER,
+  WS_CONNECTION_START_USER,
+  WS_CONNECTION_SUCCESS_USER,
+  WS_GET_ORDERS_USER
 } from './services/actions/wsActions';
 
 const wsUrlAll = 'wss://norma.nomoreparties.space/orders/all';
+const wsUrlUser = 'wss://norma.nomoreparties.space/orders';
 
-const wsActions = {
+const wsActionsAll = {
   wsInit: WS_CONNECTION_START,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
-  onOrders: WS_GET_ORDERS,
-  onUserOrders: WS_GET_USER_ORDERS
+  onOrders: WS_GET_ORDERS
+};
+
+const wsActionsUser = {
+  wsInit: WS_CONNECTION_START_USER,
+  onOpen: WS_CONNECTION_SUCCESS_USER,
+  onClose: WS_CONNECTION_CLOSED_USER,
+  onError: WS_CONNECTION_ERROR_USER,
+  onOrders: WS_GET_ORDERS_USER
 };
 
 const composeEnhancers =
@@ -35,7 +48,11 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk,socketMiddleware(wsUrlAll,wsActions)));
+const enhancer = composeEnhancers(applyMiddleware(
+  thunk,
+  socketMiddlewareOrders(wsUrlAll,wsActionsAll),
+  socketMiddlewareUserOrders(wsUrlUser,wsActionsUser)
+  ));
 
 const store = createStore(rootReducer, enhancer);
 

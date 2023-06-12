@@ -4,9 +4,12 @@ import styles from '../components/Feed/Feed.module.css';
 import { FEED } from '../components/AppHeader/AppHeader';
 import FeedLenta from '../components/Feed/FeedLenta';
 import FeedInfo from '../components/Feed/FeedInfo';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { wsGetOrders, wsConnectionClosed, WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../services/actions/wsActions';
 
 function Feed({ highlightActive }) {
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     highlightActive(FEED);
@@ -19,14 +22,29 @@ function Feed({ highlightActive }) {
   const { ingredientsList,ingredientsRequest } = useSelector(getData);
 
   const getWs = (store) => ({
-    wsConnected: store.wsOrders.wsConnected,
+    wsConnectedAll: store.wsOrders.wsConnectedAll,
     orders: store.wsOrders.orders
   })
-  const {wsConnected,orders} = useSelector(getWs);
+  const {wsConnectedAll,orders} = useSelector(getWs);
+
+  React.useEffect(
+    () => {
+        if (wsConnectedAll) {
+          dispatch(wsGetOrders);
+        } else {
+          dispatch({ type: WS_CONNECTION_START });
+        }
+
+        return () => {
+          dispatch({ type: WS_CONNECTION_CLOSED });
+        }
+    },
+    []
+  );
 
   const content = React.useMemo(
     () => {
-      return (ingredientsRequest || JSON.stringify(ingredientsList) === '{}' || !wsConnected) ? (
+      return (ingredientsRequest || JSON.stringify(ingredientsList) === '{}' || !wsConnectedAll) ? (
         "Загрузка"
       ) : (
         <>
@@ -35,7 +53,7 @@ function Feed({ highlightActive }) {
         </>
       );
     },
-    [ingredientsRequest, ingredientsList,wsConnected,orders]
+    [ingredientsRequest, ingredientsList,wsConnectedAll,orders]
   );
 
   return (

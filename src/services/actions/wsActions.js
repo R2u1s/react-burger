@@ -3,7 +3,11 @@ export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED';
 export const WS_GET_ORDERS = 'WS_GET_ORDERS';
-export const WS_GET_USER_ORDERS = 'WS_GET_USER_ORDERS';
+export const WS_CONNECTION_START_USER = 'WS_CONNECTION_START_USER';
+export const WS_CONNECTION_SUCCESS_USER = 'WS_CONNECTION_SUCCESS_USER';
+export const WS_CONNECTION_ERROR_USER = 'WS_CONNECTION_ERROR_USER';
+export const WS_CONNECTION_CLOSED_USER = 'WS_CONNECTION_CLOSED_USER';
+export const WS_GET_ORDERS_USER = 'WS_GET_ORDERS_USER';
 
 export const wsConnectionSuccess = () => {
   return {
@@ -18,6 +22,7 @@ export const wsConnectionError = () => {
 };
 
 export const wsConnectionClosed = () => {
+  console.log('close actions');
   return {
     type: WS_CONNECTION_CLOSED
   };
@@ -30,9 +35,30 @@ export const wsGetOrders = orders => {
   };
 };
 
-export const wsGetUserOrders = orders => {
+/////////////////////////////////////////////////////////////////////////////
+
+export const wsConnectionSuccessUser = () => {
   return {
-    type: WS_GET_USER_ORDERS,
+    type: WS_CONNECTION_SUCCESS_USER
+  };
+};
+
+export const wsConnectionErrorUser = () => {
+  return {
+    type: WS_CONNECTION_ERROR_USER
+  };
+};
+
+export const wsConnectionClosedUser = () => {
+  return {
+    type: WS_CONNECTION_CLOSED_USER
+  };
+};
+
+export const wsGetOrdersUser = orders => {
+  return {
+    type: WS_GET_ORDERS_USER,
     payload: orders
   };
 };
+

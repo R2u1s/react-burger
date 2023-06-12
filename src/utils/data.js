@@ -313,3 +313,23 @@ export const serverAnswer = {
   "total": 28752,
   "totalToday": 138
 }
+
+export const statusRus = statusEng => {
+  switch (statusEng) {
+
+    case "done": {
+      return "Выполнен"
+    }
+
+    case "created": {
+      return "Создан"
+    }
+
+    case "pending": {
+      return "Готовится"
+    }
+
+    default:
+      return "Статус";
+  }
+}

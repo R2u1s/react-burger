@@ -1,16 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Feed.module.css';
-import { serverAnswer } from '../../utils/data';
 import FeedOrder from './FeedOrder';
-import { useSelector } from 'react-redux';
 
-function FeedOrdersList({ status,navigatePath }) {
-
-  const getWs = (store) => ({
-    orders: store.wsOrders.orders
-  })
-  const {orders} = useSelector(getWs);
+function FeedOrdersList({ status,navigatePath,orders }) {
 
   return (
     <ul className={styles['feed__orders-list']} >

@@ -1,6 +1,7 @@
 .orders {
   margin:0;
   width: 844px;
-  height: 916px;
+  height: calc(100vh - 180px);
+  max-height: 900px;
 }
 
