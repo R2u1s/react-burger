@@ -56,8 +56,9 @@ function OrderDetails({ orderRequest }) {
           <p style={{ textAlign: 'center' }}>Аутентификация...</p>
           : (
             user.name ?
-              (
-            
+              ((postOrderRequest) ?
+                <p style={{ textAlign: 'center' }}>Отправка заказа...</p>
+                : (
                   <div className={`${styles['order-details']} pt-20 pb-15`}>
                     <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>
                     <p className={`${styles['order-details__id-text']} text text_type_main-medium`}>идентификатор заказа</p>
@@ -66,7 +67,7 @@ function OrderDetails({ orderRequest }) {
                     <p className={`${styles['order-details__status']} text text_type_main-small`}>{orderDetails.status}</p>
                     <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
                   </div>
-                )
+                ))
               : <Navigate to={PATH_LOGIN} replace />
           )
       }
