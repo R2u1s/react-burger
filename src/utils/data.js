@@ -330,6 +330,6 @@ export const statusRus = statusEng => {
     }
 
     default:
-      return "Статус";
+      return "Ожидаем подтверждение заказа";
   }
 }

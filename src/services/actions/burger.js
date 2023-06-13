@@ -51,7 +51,6 @@ export const clearIngredientPreview = () => ({
 });
 
 export const postOrder = (ingredientsList,token) => {
-
   return function (dispatch) {
     dispatch({
       type: POST_ORDER_REQUEST
@@ -70,7 +69,7 @@ export const postOrder = (ingredientsList,token) => {
         if (res && res.success) {
           dispatch({
             type: POST_ORDER_SUCCESS,
-            orderId: res.order.number.toString(),
+            order: res.order,
             ingredientsList: ingredientsList
           });
         } else {

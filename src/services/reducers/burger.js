@@ -13,7 +13,7 @@ import {
   SORT_INGREDIENTLIST
 } from "../actions/burger";
 
-import { arrayToObject,moveIngredient } from "../../utils/utils";
+import { arrayToObject, moveIngredient } from "../../utils/utils";
 
 const initialState = {
   ingredientsList: {},
@@ -31,7 +31,7 @@ const initialState = {
   },
 
   orderDetails: {
-    id: "---",
+    id: "",
     status: "Ожидаем подтверждение заказа",
     todo: "Подождите...",
     totalPrice: 0
@@ -70,17 +70,23 @@ export const burgerReducer = (state = initialState, action) => {
       };
     }
     case POST_ORDER_SUCCESS: {
-      return {
-        ...state, 
-        orderDetails: {
-          ...state.orderDetails,
-          id: action.orderId,
-          status: 'Заказ отправлен',
-          todo: 'Дождитесь готовности на орбитальной станции',
-        },
-        postOrderFailed: false,
-        postOrderRequest: false
-      };
+      if (action.order.hasOwnProperty('_id')) {
+        return {
+          ...state,
+          orderDetails: {
+            ...state.orderDetails,
+            id: action.order.number,
+            status: action.order.status,
+            todo: 'Дождитесь готовности на орбитальной станции',
+          },
+          postOrderFailed: false,
+          postOrderRequest: false
+        }
+      } else {
+        return {
+          ...state,
+        }
+      }
     }
     case POST_ORDER_FAILED: {
       return {
@@ -95,7 +101,10 @@ export const burgerReducer = (state = initialState, action) => {
       };
     }
     case CLEAR_INGREDIENTS_LIST: {
-      return { ...state, selectedIngredients: initialState.selectedIngredients};
+      return { ...state, 
+        selectedIngredients: initialState.selectedIngredients,
+        orderDetails: initialState.orderDetails
+       };
     }
     case ADD_INGREDIENT: {
       //если хотим добавить булку, то меняем выбранную булку сверху и снизу
@@ -161,7 +170,7 @@ export const burgerReducer = (state = initialState, action) => {
         ...state,
         selectedIngredients: {
           ...state.selectedIngredients,
-          otherIngredients: moveIngredient(state.selectedIngredients.otherIngredients,action.dragIndex,action.hoverIndex)
+          otherIngredients: moveIngredient(state.selectedIngredients.otherIngredients, action.dragIndex, action.hoverIndex)
         }
       };
     }
