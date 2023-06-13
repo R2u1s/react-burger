@@ -167,7 +167,6 @@ export const burgerReducer = (state = initialState, action) => {
       };
     }
     default: {
-      console.log('default');
       return state;
     }
   }

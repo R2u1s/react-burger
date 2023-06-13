@@ -29,7 +29,6 @@ function BurgerConstructor() {
   const [orderRequest,setOrderRequest] = React.useState(false);
 
   const submitHandler = () => {
-    
     setOrderRequest(true);
     openModal();
   }
@@ -56,7 +55,7 @@ function BurgerConstructor() {
         </Button>
       </div>
        <Modal active={isModalOpen} setActive={openModal} setClose={closeModalHandler}>
-        <OrderDetails orderRequest={orderRequest}/>
+        <OrderDetails orderRequest={orderRequest} setOrderRequest={setOrderRequest}/>
       </Modal>
     </section>
   );

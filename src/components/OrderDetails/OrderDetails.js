@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom';
 import { clearIngredientsList, postOrder } from '../../services/actions/burger';
 import { PATH_LOGIN } from '../App/App';
 
-function OrderDetails({ orderRequest }) {
+function OrderDetails({ orderRequest, setOrderRequest }) {
   const dispatch = useDispatch();
 
   const getData = (store) => ({
@@ -34,16 +34,18 @@ function OrderDetails({ orderRequest }) {
 
   React.useEffect(
     () => {
-      if (orderRequest) {
-        if (user.accessToken) {
-          dispatch(getUserRequest(user.accessToken));
-        } else {
-          dispatch(refreshToken());
-        }
-      }
-      if (selectedIngredients.otherIngredients.length > 0) {
-        dispatch(postOrder(collectId(),user.accessToken));
+      if (orderRequest && user.accessToken && selectedIngredients.otherIngredients.length > 0) {
+        console.log('clear');
+        dispatch(postOrder(collectId(), user.accessToken));
         dispatch(clearIngredientsList());
+      } else {
+        if (orderRequest) {
+          if (user.accessToken) {
+            dispatch(getUserRequest(user.accessToken));
+          } else {
+            dispatch(refreshToken());
+          }
+        }
       }
     },
     [dispatch, user.accessToken, orderRequest]
@@ -72,7 +74,7 @@ function OrderDetails({ orderRequest }) {
           )
       }
     },
-    [user.authRequest, postOrderRequest,orderRequest]
+    [user.authRequest, postOrderRequest, orderRequest]
   );
 
   return (
