@@ -21,15 +21,6 @@ const FeedOrder = ({ status, order, navigatePath }) => {
   });
   const { ingredientsList } = useSelector(getData);
 
-/* const formatDate = () => {
-  const orderDate = new Date('2023-06-12T05:53:18.497Z');
-  const now = new Date();
-
-  return orderDate.toISOString().parse('YYYY-MM-DDTHH:mm:ssZ');
-}
-
-console.log(formatDate()); */
-
   return (
     <li name='order' id={order._id} className={styles['feed__order']} onClick={() => { onClickHandler(order._id) }}>
       <div className={styles['feed__id-time']}>

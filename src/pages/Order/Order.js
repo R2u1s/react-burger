@@ -1,16 +1,18 @@
 import React from 'react';
 import styles from './Order.module.css';
 import stylesFeed from '../../components/Feed/Feed.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { sum } from '../../utils/utils';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { uniqueItem } from '../../utils/utils';
 import { statusRus } from '../../utils/data';
+import { wsGetOrders, WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsActions';
 
 function Order() {
 
   const path = useParams();
+  const dispatch = useDispatch();
 
   const getData = (store) => ({
     ingredientsList: store.burger.ingredientsList,
@@ -26,10 +28,26 @@ function Order() {
 
   const { wsConnectedAll, orders } = useSelector(getWs);
 
+  React.useEffect(
+    () => {
+      if (JSON.stringify(ingredientsList) === '{}' || orders.orders.length === 0) {
+        if (wsConnectedAll) {
+          dispatch(wsGetOrders);
+        } else {
+          dispatch({ type: WS_CONNECTION_START });
+        }
+        return () => {
+          dispatch({ type: WS_CONNECTION_CLOSED });
+        }
+      }
+    },
+    []
+  );
+
   const content = React.useMemo(
     () => {
-      if (ingredientsRequest || JSON.stringify(ingredientsList) === '{}' || !wsConnectedAll || orders.orders.length === 0 ) {
-        return <p style={{margin:'0 auto',width:'min-content'}}>Загрузка...</p>
+      if (ingredientsRequest || JSON.stringify(ingredientsList) === '{}' || orders.orders.length === 0) {
+        return <p style={{ margin: '0 auto', width: 'min-content' }}>Загрузка...</p>
       } else {
         const order = orders.orders.find(item => item._id === path.id);
         const uniqueIngredients = uniqueItem(order.ingredients);
