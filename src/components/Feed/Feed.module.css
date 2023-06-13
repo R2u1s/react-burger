@@ -198,11 +198,13 @@
   margin: 0;
   padding: 0;
   max-height: 320px;
-  display: flex;
-  flex-flow: column;
   list-style-type: none;
-  overflow:auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 80px);
+  justify-content: start;
+  align-content: start;
   gap:calc(var(--offset-base-size)*2);
+  overflow:auto;
 }
 
 .feed__info-status-list::-webkit-scrollbar {
