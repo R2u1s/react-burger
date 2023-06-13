@@ -35,7 +35,6 @@ function OrderDetails({ orderRequest, setOrderRequest }) {
   React.useEffect(
     () => {
       if (orderRequest && user.accessToken && selectedIngredients.otherIngredients.length > 0) {
-        console.log('clear');
         dispatch(postOrder(collectId(), user.accessToken));
         dispatch(clearIngredientsList());
       } else {
@@ -54,34 +53,35 @@ function OrderDetails({ orderRequest, setOrderRequest }) {
   const content = React.useMemo(
     () => {
       if (orderRequest) {
-        return (user.authRequest || (!user.name && !user.authFailed)) ?
+        return (user.authRequest || !user.accessToken) ?
           <p style={{ textAlign: 'center' }}>Аутентификация...</p>
           : (
-            user.name ?
-              ((postOrderRequest) ?
-                <p style={{ textAlign: 'center' }}>Отправка заказа...</p>
-                : (
-                  <div className={`${styles['order-details']} pt-20 pb-15`}>
-                    <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>
-                    <p className={`${styles['order-details__id-text']} text text_type_main-medium`}>идентификатор заказа</p>
-                    <div className={styles['order-details__icon']}>
-                    </div>
-                    <p className={`${styles['order-details__status']} text text_type_main-small`}>{orderDetails.status}</p>
-                    <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
+            user.accessToken ?
+              (
+                <div className={`${styles['order-details']} pt-20 pb-15`}>
+                  {postOrderRequest ? <p style={{ textAlign: 'center' }}>Отправка заказа...</p> :
+                    <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>}
+                  <p className={`${styles['order-details__id-text']} text text_type_main-medium`}>идентификатор заказа</p>
+                  <div className={styles['order-details__icon']}>
                   </div>
-                ))
+                  <p className={`${styles['order-details__status']} text text_type_main-small`}>
+                    {orderDetails.status}
+                  </p>
+                  <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
+                </div>
+              )
               : <Navigate to={PATH_LOGIN} replace />
           )
-      }
+}
     },
-    [user.authRequest, postOrderRequest, orderRequest]
+[user.authRequest, postOrderRequest, user.accessToken, orderRequest]
   );
 
-  return (
-    <>
-      {content}
-    </>
-  );
+return (
+  <>
+    {content}
+  </>
+);
 }
 
 OrderDetails.propTypes = {
