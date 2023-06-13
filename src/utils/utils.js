@@ -102,3 +102,39 @@ export function uniqueItem(arr) {
 }
 
 export const getCurrentTimestamp = () => new Date().getTime() / 1000;
+
+export function convertDate(date) {
+  let orderDate = new Date(date);
+  const now = new Date();
+
+  let result ='';
+
+  function day() {
+    const difference = now.getUTCDate()-orderDate.getUTCDate();
+    if(difference===0) {
+      return 'Сегодня'
+    } else {
+      if (difference===1) {
+        return 'Вчера'
+      } else {
+        if (difference>1) {
+          return `${difference} дня назад`
+        } else {
+          return 'ошибка'
+        }
+      }
+    }
+  }
+
+  result = day();
+  const offset = () => {
+    const temp = orderDate.getTimezoneOffset()/(-60);
+    if (temp >= 0) {
+      return `+${temp}`;
+    } else {return `-${temp}`}
+  }
+  result = result + ', ' + orderDate.toLocaleTimeString().slice(0,5) + ' ' + 'i-GMT' + offset();
+
+
+  return (result);
+}

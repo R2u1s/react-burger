@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { sum } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { statusRus } from '../../utils/data';
-import date from 'date-and-time';
+import { convertDate } from '../../utils/utils';
 
 const FeedOrder = ({ status, order, navigatePath }) => {
 
@@ -21,14 +21,14 @@ const FeedOrder = ({ status, order, navigatePath }) => {
   });
   const { ingredientsList } = useSelector(getData);
 
-const formatDate = () => {
+/* const formatDate = () => {
   const orderDate = new Date('2023-06-12T05:53:18.497Z');
   const now = new Date();
 
   return orderDate.toISOString().parse('YYYY-MM-DDTHH:mm:ssZ');
 }
 
-console.log(formatDate());
+console.log(formatDate()); */
 
   return (
     <li name='order' id={order._id} className={styles['feed__order']} onClick={() => { onClickHandler(order._id) }}>
@@ -37,7 +37,7 @@ console.log(formatDate());
           {`#${order.number}`}
         </div>
         <p className="text text_type_main-default text_color_inactive">
-          {order.createdAt}
+          {convertDate(order.createdAt)}
         </p>
       </div>
       <div className={`text text_type_main-medium`}>
