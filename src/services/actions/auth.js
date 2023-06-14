@@ -1,4 +1,4 @@
-import { request, setCookie, getCookie } from "../../utils/utils";
+import { request, setCookie, getCookie, deleteCookie } from "../../utils/utils";
 
 //Восстановление пароля. Отправка email
 export const EMAIL_REQUEST = 'EMAIL_REQUEST';
@@ -94,6 +94,7 @@ export const login = (email,password) => {
       .then(res => {
         if (res && res.success) {
           if (res.accessToken) {
+            deleteCookie('token');
             setCookie('token', res.refreshToken);
           }
           dispatch({
@@ -170,6 +171,7 @@ export const logout = (token) => {
     })
       .then(res => {
         if (res && res.success) {
+          deleteCookie('token');
           dispatch({
             type: LOGOUT_SUCCESS,
           });
@@ -210,6 +212,7 @@ export const refreshToken = () => {
               type: TOKEN_SUCCESS,
               data: res
             });
+            deleteCookie('token');
             setCookie('token', res.refreshToken);
           } else {
             dispatch({

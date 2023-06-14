@@ -4,10 +4,12 @@ import styles from './OrderDetails.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserRequest, refreshToken } from '../../services/actions/auth';
 import { Navigate } from 'react-router-dom';
-import { postOrder } from '../../services/actions/burger';
+import { clearIngredientsList, postOrder } from '../../services/actions/burger';
 import { PATH_LOGIN } from '../App/App';
+import { statusRus } from '../../utils/data';
 
 function OrderDetails({ orderRequest }) {
+
   const dispatch = useDispatch();
 
   const getData = (store) => ({
@@ -22,7 +24,7 @@ function OrderDetails({ orderRequest }) {
   });
   const { user } = useSelector(getUser);
 
-  const { orderDetails, selectedIngredients, postOrderRequest, postOrderFailed } = useSelector(getData);
+  const { orderDetails, selectedIngredients, postOrderRequest } = useSelector(getData);
 
   function collectId() {
     let arrayOfId = [];
@@ -41,8 +43,8 @@ function OrderDetails({ orderRequest }) {
           dispatch(refreshToken());
         }
       }
-      if (selectedIngredients.otherIngredients.length > 0) {
-        dispatch(postOrder(collectId()));
+      if (orderRequest && user.accessToken && selectedIngredients.otherIngredients.length > 0) {
+        dispatch(postOrder(collectId(), user.accessToken));
       }
     },
     [dispatch, user.accessToken, orderRequest]
@@ -54,24 +56,27 @@ function OrderDetails({ orderRequest }) {
         return (user.authRequest || (!user.name && !user.authFailed)) ?
           <p style={{ textAlign: 'center' }}>Аутентификация...</p>
           : (
-            user.name ?
-              ((postOrderRequest) ?
-                <p style={{ textAlign: 'center' }}>Отправка заказа...</p>
-                : (
-                  <div className={`${styles['order-details']} pt-20 pb-15`}>
+            user.accessToken ?
+              (
+                <div className={`${styles['order-details']} pt-20 pb-15`}>
+                  {!postOrderRequest && <>
                     <p className={`${styles['order-details__id']} text text_type_digits-large`}>{orderDetails.id}</p>
                     <p className={`${styles['order-details__id-text']} text text_type_main-medium`}>идентификатор заказа</p>
                     <div className={styles['order-details__icon']}>
                     </div>
-                    <p className={`${styles['order-details__status']} text text_type_main-small`}>{orderDetails.status}</p>
-                    <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
-                  </div>
-                ))
+                  </>
+                  }
+                  <p className={`${styles['order-details__status']} text text_type_main-small`}>
+                    {statusRus(orderDetails.status)}
+                  </p>
+                  <p className={`${styles['order-details__todo-text']} text text_type_main-small text_color_inactive`}>{orderDetails.todo}</p>
+                </div>
+              )
               : <Navigate to={PATH_LOGIN} replace />
           )
       }
     },
-    [user.authRequest, postOrderRequest,orderRequest]
+    [user.authRequest, postOrderRequest, user.accessToken, orderRequest, orderDetails]
   );
 
   return (

@@ -50,8 +50,7 @@ export const clearIngredientPreview = () => ({
   type: CLEAR_INGREDIENT_PREVIEW,
 });
 
-export const postOrder = (ingredientsList) => {
-
+export const postOrder = (ingredientsList,token) => {
   return function (dispatch) {
     dispatch({
       type: POST_ORDER_REQUEST
@@ -59,6 +58,7 @@ export const postOrder = (ingredientsList) => {
     request("orders", {
       method: 'POST',
       headers: {
+        authorization: token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -69,7 +69,7 @@ export const postOrder = (ingredientsList) => {
         if (res && res.success) {
           dispatch({
             type: POST_ORDER_SUCCESS,
-            orderId: res.order.number.toString(),
+            order: res.order,
             ingredientsList: ingredientsList
           });
         } else {

@@ -243,3 +243,93 @@ export const initialData = [
     "__v": 0
   }
 ]
+
+export const serverAnswer = {
+  "success": true,
+  "orders": [
+    {
+      "ingredients": [
+        "643d69a5c3f7b9001cfa093d",
+        "643d69a5c3f7b9001cfa093d",
+        "643d69a5c3f7b9001cfa0945",
+        "643d69a5c3f7b9001cfa093e"
+      ],
+      "_id": "034535",
+      "status": "done",
+      "number": 1,
+      "name": "Burger 1",
+      "createdAt": "2021-06-23T20:11:01.403Z",
+      "updatedAt": "2021-06-23T20:11:01.406Z"
+    },
+    {
+      "ingredients": [
+        "643d69a5c3f7b9001cfa0941",
+        "643d69a5c3f7b9001cfa0943",
+        "643d69a5c3f7b9001cfa0945",
+        "643d69a5c3f7b9001cfa093e",
+        "643d69a5c3f7b9001cfa0942",
+        "643d69a5c3f7b9001cfa0941",
+        "643d69a5c3f7b9001cfa0943",
+        "643d69a5c3f7b9001cfa0945",
+        "643d69a5c3f7b9001cfa093e",
+        "643d69a5c3f7b9001cfa0942"
+      ],
+      "_id": "034536",
+      "status": "progress",
+      "number": 3,
+      "name": "Burger 2",
+      "createdAt": "2021-06-23T20:13:23.654Z",
+      "updatedAt": "2021-06-23T20:13:23.657Z"
+    },
+    {
+      "ingredients": [
+        "643d69a5c3f7b9001cfa093d",
+        "643d69a5c3f7b9001cfa093d",
+        "643d69a5c3f7b9001cfa0945",
+        "643d69a5c3f7b9001cfa093e"
+      ],
+      "_id": "034534",
+      "status": "done",
+      "number": 1,
+      "name": "Burger 1",
+      "createdAt": "2021-06-23T20:11:01.403Z",
+      "updatedAt": "2021-06-23T20:11:01.406Z"
+    },
+    {
+      "ingredients": [
+        "643d69a5c3f7b9001cfa093d",
+        "643d69a5c3f7b9001cfa093d",
+        "643d69a5c3f7b9001cfa0945",
+        "643d69a5c3f7b9001cfa093e"
+      ],
+      "_id": "034537",
+      "status": "progress",
+      "number": 1,
+      "name": "Burger 1",
+      "createdAt": "2021-06-23T20:11:01.403Z",
+      "updatedAt": "2021-06-23T20:11:01.406Z"
+    },
+  ],
+  "total": 28752,
+  "totalToday": 138
+}
+
+export const statusRus = statusEng => {
+  switch (statusEng) {
+
+    case "done": {
+      return "Выполнен"
+    }
+
+    case "created": {
+      return "Создан"
+    }
+
+    case "pending": {
+      return "Готовится"
+    }
+
+    default:
+      return "Ожидаем подтверждение заказа";
+  }
+}

@@ -44,7 +44,7 @@ function ProfileInputs() {
   const classNameToggle = isInputChange ? `${styles['profile-buttons']}` : `${styles['profile-buttons', 'profile-buttons__active']}`
 
   return (
-      <form className={`${styles['profile-inputs']}`} onSubmit={saveHandler}>
+      <form className={`${styles['profile-inputs']} mt-30`} onSubmit={saveHandler}>
         <Input
           type={'text'}
           placeholder={'Name'}

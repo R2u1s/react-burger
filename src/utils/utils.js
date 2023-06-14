@@ -64,7 +64,7 @@ export function setCookie(name, value, props) {
     }
   }
   document.cookie = updatedCookie;
-} 
+}
 
 export function getCookie(name) {
   const matches = document.cookie.match(
@@ -76,5 +76,65 @@ export function getCookie(name) {
 export function deleteCookie(name) {
   // Находим куку по ключу token, удаляем её значение, 
   // устанавливаем отрицательное время жизни, чтобы удалить сам ключ token
-setCookie(name, null, { expires: -1 });
+  setCookie(name, null, { expires: -1 });
+}
+
+export const sum = (arr) => {
+  return arr.reduce(function (previousValue, item) {
+    return previousValue + item;
+  });
+}
+
+export function uniqueItem(arr) {
+  return arr.reduce(function (prevVal, item) {
+    if (!prevVal[item]) {
+      // если ключа ещё нет в объекте, значит это первое повторение
+      prevVal[item] = 1;
+    } else {
+      // иначе увеличим количество повторений на 1
+      prevVal[item] += 1;
+    }
+  
+    // и вернём изменённый объект
+    return prevVal;
+  }, {}); // Начальное значение — пустой объект.
+  
+}
+
+export const getCurrentTimestamp = () => new Date().getTime() / 1000;
+
+export function convertDate(date) {
+  let orderDate = new Date(date);
+  const now = new Date();
+
+  let result ='';
+
+  function day() {
+    const difference = now.getUTCDate()-orderDate.getUTCDate();
+    if(difference===0) {
+      return 'Сегодня'
+    } else {
+      if (difference===1) {
+        return 'Вчера'
+      } else {
+        if (difference>1) {
+          return `${difference} дня назад`
+        } else {
+          return 'ошибка'
+        }
+      }
+    }
+  }
+
+  result = day();
+  const offset = () => {
+    const temp = orderDate.getTimezoneOffset()/(-60);
+    if (temp >= 0) {
+      return `+${temp}`;
+    } else {return `-${temp}`}
+  }
+  result = result + ', ' + orderDate.toLocaleTimeString().slice(0,5) + ' ' + 'i-GMT' + offset();
+
+
+  return (result);
 }

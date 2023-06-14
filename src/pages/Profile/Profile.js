@@ -9,6 +9,9 @@ import Orders from '../../components/Orders/Orders';
 import TabProfile from './TabProfile';
 import { useNavigate } from 'react-router-dom';
 import { PATH_PROFILE, PATH_PROFILE_ORDERS } from '../../components/App/App';
+import { WS_CONNECTION_CLOSED, wsGetOrdersUser } from '../../services/actions/wsActions';
+import { WS_CONNECTION_START_USER } from '../../services/actions/wsActions';
+import { wsConnectionClosed } from '../../services/actions/wsActions';
 
 function Profile({ highlightActive }) {
 
@@ -49,13 +52,13 @@ function Profile({ highlightActive }) {
 
   return (
     <section className={`${styles['profile']}`}>
-      {active === 'profile' ? <ProfileInputs /> : <Orders />}
-      <ul className={`${styles['profile-nav']}`}>
+      <ul className={`${styles['profile-nav']} mt-30`}>
         <TabProfile active={active === 'profile'} extraclass={'text text_type_main-medium'} text={'Профиль'} onClick={onClickProfile} />
         <TabProfile active={active === 'orders'} extraclass={'text text_type_main-medium'} text={'История заказов'} onClick={onClickOrders} />
         <TabProfile active={false} extraclass={'text text_type_main-medium'} text={'Выход'} onClick={logoutHandler} />
         <TabProfile active={false} extraclass={'text_type_main-default'} text={'В этом разделе вы можете изменить свои персональные данные'} />
       </ul>
+      {active === 'profile' ? <ProfileInputs /> : <Orders />}
     </section>
   );
 }

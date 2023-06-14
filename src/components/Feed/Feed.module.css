@@ -1,0 +1,240 @@
+@charset "UTF-8";
+
+.feed {
+  margin: 0 auto;
+  max-width: 1240px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  gap:calc(var(--offset-base-size)  * 15);
+  justify-content: center;
+}
+
+.feed__lenta {
+  margin: 0;
+  width: 608px;
+  height: 872px;
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+}
+
+.feed__orders-list {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  list-style-type: none;
+  overflow: auto;
+  gap: calc(var(--offset-base-size) * 4);
+}
+
+.feed__orders-list::-webkit-scrollbar {
+  width: 8px;
+  /* ширина scrollbar */
+}
+
+.feed__orders-list::-webkit-scrollbar-track {
+  background: transparent;
+  /* цвет дорожки */
+}
+
+.feed__orders-list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  /* цвет плашки */
+}
+
+.feed__orders-list::-webkit-scrollbar-track-piece:start {
+  background: #2F2F37;
+}
+
+.feed__orders-list::-webkit-scrollbar-track-piece:end {
+  background: #2F2F37;
+  margin-bottom: 52px;
+}
+
+.feed__order {
+  margin: 0;
+  padding: calc(var(--offset-base-size) * 6);
+  box-sizing: border-box;
+  width: calc(100% - 8px);;
+  background-color: #1C1C21;
+  border-radius: calc(var(--offset-base-size) * 10);
+  display:flex;
+  flex-flow: column;
+  gap:calc(var(--offset-base-size)*6);
+  cursor: pointer;
+}
+
+.feed__id-time {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.feed__status {
+  margin: 0;
+  margin-top: calc(var(--offset-base-size)*(-4));
+  padding: 0;
+}
+
+.feed__icons-total {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feed__icons {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: start;
+}
+
+.feed__icon-frame {
+  margin: 0;
+  margin-left: -16px;
+  align-items: center;
+  padding: 2px;
+  width: 64px;
+  height: 64px;
+  background-color: #1C1C21;
+  border-radius: 100px;
+  box-sizing: border-box;
+  background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+}
+
+.feed__icon {
+  position: relative;
+  margin: auto;
+  padding: 0;
+  width: 60px;
+  height: 60px;
+  background-color: #1C1C21;
+  border-radius: 100px;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 190%;
+}
+
+.feed__icon-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.6;
+  border-radius: 100px;
+  background-color:#1C1C21;
+}
+
+.feed__icon-qty {
+  line-height: 60px;
+  width: 100%;
+  height: 100%;
+  text-align:center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 100px;
+}
+
+.feed__icon-frame:first-child {
+  margin: 0;
+}
+
+.feed__total {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  gap: 9px;
+}
+
+.feed__info {
+  margin: 0;
+  width: 580px;
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+  gap:calc(var(--offset-base-size)*15);
+}
+
+.feed__info-status {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  gap: calc(var(--offset-base-size)*9);
+}
+
+.feed__info-column {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+}
+
+.feed__info-status-title {
+  padding: 0;
+  height: calc(var(--offset-base-size)*7.5);
+}
+
+.feed__info-status-list {
+  margin: 0;
+  padding: 0;
+  max-height: 320px;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 80px);
+  justify-content: start;
+  align-content: start;
+  gap:calc(var(--offset-base-size)*2);
+  overflow:auto;
+}
+
+.feed__info-status-list::-webkit-scrollbar {
+  width: 8px;
+  /* ширина scrollbar */
+}
+
+.feed__info-status-list::-webkit-scrollbar-track {
+  background: transparent;
+  /* цвет дорожки */
+}
+
+.feed__info-status-list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  /* цвет плашки */
+}
+
+.feed__info-status-list::-webkit-scrollbar-track-piece:start {
+  background: #2F2F37;
+}
+
+.feed__info-status-list::-webkit-scrollbar-track-piece:end {
+  background: #2F2F37;
+  margin-bottom: 52px;
+}
+
+.feed__info-digits-shadow {
+  margin: 0;
+  height: 120px;
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+/*# sourceMappingURL=Feed.module.css.map */

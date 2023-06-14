@@ -26,11 +26,6 @@ function BurgerIngredients() {
 
   const { ingredientsList } = useSelector(getData);
 
-  const getUser = (store) => ({
-    user: store.auth
-  });
-  const { user } = useSelector(getUser);
-
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const closeModalHandler = () => {
