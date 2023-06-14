@@ -7,7 +7,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { postOrder } from '../../services/actions/burger';
+import { clearIngredientsList, clearIngredientPreview } from '../../services/actions/burger';
 
 function BurgerConstructor() {
 
@@ -21,17 +21,21 @@ function BurgerConstructor() {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  function collectId() {
-    let arrayOfId = [];
-    arrayOfId.push(selectedIngredients.bun._id);
-    arrayOfId.push(selectedIngredients.bun._id);
-    selectedIngredients.otherIngredients.forEach(item => arrayOfId.push(item._id));
-    return arrayOfId;
+  const closeModalHandler = () => {
+    closeModal();
+    dispatch(clearIngredientPreview());
   }
 
+  const [orderRequest,setOrderRequest] = React.useState(false);
+
   const submitHandler = () => {
+    setOrderRequest(true);
     openModal();
-    dispatch(postOrder(collectId()));
+  }
+
+  function clearHandler() {
+    setOrderRequest(false);
+    dispatch(clearIngredientsList());
   }
 
   return (
@@ -55,8 +59,8 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
       </div>
-      <Modal active={isModalOpen} setActive={openModal} setClose={closeModal}>
-        <OrderDetails />
+       <Modal active={isModalOpen} setActive={openModal} setClose={closeModalHandler}>
+        <OrderDetails orderRequest={orderRequest}/>
       </Modal>
     </section>
   );

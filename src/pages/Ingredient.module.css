@@ -1,0 +1,5 @@
+.ingredient {
+  margin: 0 auto;
+  margin-top: calc(var(--offset-base-size)  * 20);
+  width: 720px;
+}

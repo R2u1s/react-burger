@@ -7,6 +7,7 @@ import {
   POST_ORDER_REQUEST,
   POST_ORDER_SUCCESS,
   POST_ORDER_FAILED,
+  CLEAR_INGREDIENTS_LIST,
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   SORT_INGREDIENTLIST
@@ -77,7 +78,6 @@ export const burgerReducer = (state = initialState, action) => {
           status: 'Заказ отправлен',
           todo: 'Дождитесь готовности на орбитальной станции',
         },
-        selectedIngredients: initialState.selectedIngredients,
         postOrderFailed: false,
         postOrderRequest: false
       };
@@ -93,6 +93,9 @@ export const burgerReducer = (state = initialState, action) => {
         postOrderFailed: true,
         postOrderRequest: false
       };
+    }
+    case CLEAR_INGREDIENTS_LIST: {
+      return { ...state, selectedIngredients: initialState.selectedIngredients};
     }
     case ADD_INGREDIENT: {
       //если хотим добавить булку, то меняем выбранную булку сверху и снизу

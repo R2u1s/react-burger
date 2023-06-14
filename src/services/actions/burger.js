@@ -9,6 +9,7 @@ export const CLEAR_INGREDIENT_PREVIEW = 'CLEAR_INGREDIENT_PREVIEW';
 export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_FAILED = 'POST_ORDER_FAILED';
+export const CLEAR_INGREDIENTS_LIST = 'CLEAR_INGREDIENTS_LIST';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const SORT_INGREDIENTLIST = 'SORT_INGREDIENTLIST';
@@ -85,6 +86,10 @@ export const postOrder = (ingredientsList) => {
       });
   };
 }
+
+export const clearIngredientsList = () => ({
+  type: CLEAR_INGREDIENTS_LIST,
+});
 
 export const addIngredient = (ingredient) => {
   const listId = uuidv4();

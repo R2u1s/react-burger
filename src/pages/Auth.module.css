@@ -1,0 +1,67 @@
+.auth-container {
+  margin: 0 auto;
+  margin-top: calc(var(--offset-base-size)  * 35);
+  max-width: 480px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template:
+  'title'
+  '.' calc(var(--offset-base-size)  * 6)
+  'inputs'
+  '.' calc(var(--offset-base-size)  * 6)
+  'button'
+  '.' calc(var(--offset-base-size)  * 20)
+  'extras'
+  / 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-inputs {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  display: flex;
+  flex-flow: column;
+  gap: calc(var(--offset-base-size)  * 6);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-extras {
+  grid-area: extras; 
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  display: flex;
+  flex-flow: column;
+  gap: calc(var(--offset-base-size)  * 4);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-extra-link {
+  text-decoration: none;
+  cursor: pointer; 
+  color:#4C4CFF;
+}
+
+.auth-extra-link:hover {
+  opacity: 0.5;
+  transition: var(--common-transition);
+}
+
+.auth-title {
+  grid-area: title;
+  text-align: center; 
+}
+
+.auth-inputs {
+  grid-area: inputs; 
+}
+
+.auth-button {
+  grid-area: button;
+  margin:0 auto; 
+}
+

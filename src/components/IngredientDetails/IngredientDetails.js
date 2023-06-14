@@ -2,14 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './IngredientDetails.module.css';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-function IngredientDetails(){
+function IngredientDetails() {
+
+  const path = useParams();
 
   const getData = (store) => ({
-    currentIngredient: store.burger.currentIngredient
-  })
+    currentIngredient: store.burger.currentIngredient,
+    ingredientsList: store.burger.ingredientsList
+  });
 
-  const { currentIngredient } = useSelector(getData);
+  let { currentIngredient,ingredientsList } = useSelector(getData);
+
+  //если в сторе нет ингредиента для просмотра в модальном окне - заменяем его, взяв id из адресной строки, не изменяем стор
+  if (!('_id' in currentIngredient) && path.id) {
+    currentIngredient = ingredientsList[path.id];
+  }
 
   return (
     <div className={styles['ingredient-details']}>
@@ -17,7 +26,7 @@ function IngredientDetails(){
         <p className={'text text_type_main-large'}>Детали ингредиента</p>
       </div>
       <div className={styles['ingredient-details__image']}>
-        <img src={currentIngredient.image}/>
+        <img src={currentIngredient.image} />
       </div>
       <p className={`${styles['ingredient-details__name']} text text_type_main-medium`}>{currentIngredient.name}</p>
       <ul className={styles['ingredient-details__values']}>
