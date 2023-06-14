@@ -7,6 +7,7 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
+import { PATH_FEED,PATH_PROFILE,PATH_MAIN } from '../App/App';
 
 export const CONSTRUCTOR = '';
 export const FEED = 'feed';
@@ -17,13 +18,13 @@ function AppHeader({ active }) {
   const navigate = useNavigate();
 
   function onClickConstructor() {
-    navigate('/');
+    navigate(PATH_MAIN);
   }
   function onClickFeed() {
-    navigate('/feed');
+    navigate(PATH_FEED);
   }
   function onClickProfile() {
-    navigate('/profile');
+    navigate(PATH_PROFILE);
   }
 
   return (

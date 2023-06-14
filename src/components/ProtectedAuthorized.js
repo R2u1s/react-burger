@@ -24,7 +24,7 @@ export const ProtectedAuthorized = ({ element }) => {
   return (user.authRequest) ?
     <p style={{ textAlign: 'center' }}>Загрузка...</p>
     : (
-      user.accessToken ? <Navigate to={'/'} replace /> : element
+      user.accessToken ? <Navigate to={PATH_MAIN} replace /> : element
     );
 }
 

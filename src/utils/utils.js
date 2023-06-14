@@ -1,3 +1,6 @@
+// путь для cookie
+import { PATH_MAIN } from "../components/App/App";
+
 // 1 раз объявляем базовый урл
 const BASE_URL = "https://norma.nomoreparties.space/api/";
 
@@ -43,8 +46,11 @@ export function moveIngredient(array, dragIndex, hoverIndex) {
   return array;
 }
 
-export function setCookie(name, value, props) {
-  props = props || {};
+export function setCookie(name, value, props={}) {
+  props = {
+    path: PATH_MAIN,  //задаем корневой адрес для cookies
+    ...props
+  };
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
     const d = new Date();

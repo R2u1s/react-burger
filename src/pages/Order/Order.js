@@ -10,7 +10,7 @@ import { statusRus } from '../../utils/data';
 import { wsGetOrders, WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/wsActions';
 import { convertDate } from '../../utils/utils';
 import { Navigate } from 'react-router-dom';
-import { PATH_LOGIN } from '../../components/App/App';
+import { PATH_LOGIN, PATH_PROFILE_ORDERS } from '../../components/App/App';
 
 function Order() {
 
@@ -102,7 +102,7 @@ function Order() {
             </section>
           }</>)
         } else {
-          return <Navigate to={PATH_LOGIN} replace />
+          return <Navigate to={PATH_PROFILE_ORDERS} replace />
         }
       }
     },
