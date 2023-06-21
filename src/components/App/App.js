@@ -16,17 +16,17 @@ import { saveLastUrl } from '../../services/actions/auth';
 import Feed from '../../pages/Feed';
 import Order from '../../pages/Order/Order';
 
-export const PATH_MAIN = "/";
-export const PATH_LOGIN = "/login";
-export const PATH_REGISTER = "//register";
-export const PATH_FORGOT_PASSWORD = "/forgot-password";
-export const PATH_RESET_PASSWORD = "/reset-password";
-export const PATH_PROFILE = "/profile";
-export const PATH_PROFILE_ORDERS = "/profile/orders";
-export const PATH_PROFILE_ORDERS_ID = "/profile/orders/:id";
-export const PATH_INGREDIENTS_ID = "/ingredients/:id";
-export const PATH_FEED = "/feed";
-export const PATH_FEED_ID = "/feed/:id";
+export const PATH_MAIN = "/react-burger/";
+export const PATH_LOGIN = "/react-burger/login";
+export const PATH_REGISTER = "/react-burger/register";
+export const PATH_FORGOT_PASSWORD = "/react-burger/forgot-password";
+export const PATH_RESET_PASSWORD = "/react-burger/reset-password";
+export const PATH_PROFILE = "/react-burger/profile";
+export const PATH_PROFILE_ORDERS = "/react-burger/profile/orders";
+export const PATH_PROFILE_ORDERS_ID = "/react-burger/profile/orders/:id";
+export const PATH_INGREDIENTS_ID = "/react-burger/ingredients/:id";
+export const PATH_FEED = "/react-burger/feed";
+export const PATH_FEED_ID = "/react-burger/feed/:id";
 
 function App() {
 
