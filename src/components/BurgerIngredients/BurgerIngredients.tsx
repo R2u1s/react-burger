@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './BurgerIngredients.module.css';
 import Tabs from '../Tabs/Tabs';
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
@@ -21,11 +21,10 @@ function BurgerIngredients() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getData = (store) => ({
+  const { ingredientsList,currentIngredient } = useSelector((store) => ({
     ingredientsList: store.burger.ingredientsList,
-  });
-
-  const { ingredientsList } = useSelector(getData);
+    currentIngredient: store.burger.currentIngredient,
+  }));
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -53,7 +52,7 @@ function BurgerIngredients() {
   //Стэйт реф - ссылка на группу ингредиентов в DOM 
   const [refState, setRefState] = React.useState<TIngredientsTabsRef>({});
 
-  const onClickTab = (tab:keyof typeof refState) => {
+  const onClickTab = (tab:string):void => {
 
     const element = refState[tab];
 
@@ -67,7 +66,7 @@ function BurgerIngredients() {
       });
     }
   }
-
+  
   React.useEffect(
     () => {
       const index = window.location.pathname.split('/').findIndex((item) => item === 'ingredients');
@@ -112,7 +111,7 @@ function BurgerIngredients() {
       </section>
       <Modal active={isModalOpen} setActive={openModal}
         setClose={closeModalHandler}>
-        <IngredientDetails />
+        <IngredientDetails ingredient={currentIngredient}/>
       </Modal>
     </>
   );

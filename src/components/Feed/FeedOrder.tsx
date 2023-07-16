@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './Feed.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { sum } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { statusRus } from '../../utils/data';
@@ -21,10 +20,9 @@ const FeedOrder: React.FC<{
     navigate(`${navigatePath}/${id}`);
   }
 
-  const getData = (store) => ({
+  const { ingredientsList } = useSelector((store) => ({
     ingredientsList: store.burger.ingredientsList,
-  });
-  const { ingredientsList } = useSelector(getData);
+  }));
 
   return (
     <li /* name='order' */ id={order._id} className={styles['feed__order']} onClick={() => { onClickHandler(order._id) }}>

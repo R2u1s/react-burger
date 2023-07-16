@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ConstructorElementsList.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { addIngredient } from '../../services/actions/burger';
 import ConstructorElementsListItem from '../ConstructorElementsListItem/ConstructorElementsListItem';
@@ -11,11 +11,10 @@ const ConstructorElementsList: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const getData = (store) => ({
-    selectedIngredients: store.burger.selectedIngredients
-  })
   //информация об ингредиентах (сейчас все ингредиенты подтянутые API образуют заказ)
-  const { selectedIngredients } = useSelector(getData);
+  const { selectedIngredients } = useSelector((store) => ({
+    selectedIngredients: store.burger.selectedIngredients
+  }));
 
   //отрисовка булки снизу сверху одной константой
   const bun = (
@@ -44,14 +43,12 @@ const ConstructorElementsList: React.FC = () => {
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
-    drop(ingredient) {
-      dispatch(addIngredient(ingredient));
+    drop:(item:TIngredient)=>{
+      dispatch(addIngredient(item));
     },
   });
 
-  const [, drop] = useDrop({
-    accept: "sort",
-  });
+  const [, drop] = useDrop({accept: "sort"});
 
   return (
     <ul className={`${styles['constructor-elements-list__list']}`} ref={dropTarget}>

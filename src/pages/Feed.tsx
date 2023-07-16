@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from '../components/Feed/Feed.module.css';
 import { FEED } from '../components/AppHeader/AppHeader';
 import FeedLenta from '../components/Feed/FeedLenta';
 import FeedInfo from '../components/Feed/FeedInfo';
-import { useSelector,useDispatch } from 'react-redux';
-import { wsGetOrders, wsConnectionClosed, WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../services/actions/wsActions';
+import { useSelector, useDispatch } from '../services/hooks';
+import { wsGetOrders, WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../services/actions/wsActions';
 
 const Feed: React.FC<{highlightActive: (value:string) => void}> = ({ highlightActive }) => {
 
@@ -15,17 +14,15 @@ const Feed: React.FC<{highlightActive: (value:string) => void}> = ({ highlightAc
     highlightActive(FEED);
   }, []);
 
-  const getData = (store) => ({
+  const { ingredientsList,ingredientsRequest } = useSelector((store) => ({
     ingredientsList: store.burger.ingredientsList,
     ingredientsRequest: store.burger.ingredientsRequest
-  });
-  const { ingredientsList,ingredientsRequest } = useSelector(getData);
+  }));
 
-  const getWs = (store) => ({
+  const {wsConnectedAll,orders} = useSelector((store) => ({
     wsConnectedAll: store.wsOrders.wsConnectedAll,
     orders: store.wsOrders.orders
-  })
-  const {wsConnectedAll,orders} = useSelector(getWs);
+  }));
 
   React.useEffect(
     () => {

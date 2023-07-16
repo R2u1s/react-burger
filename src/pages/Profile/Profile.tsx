@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './Profile.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { PROFILE } from '../../components/AppHeader/AppHeader';
 import ProfileInputs from './ProfileInputs';
 import { logout } from '../../services/actions/auth';
@@ -21,12 +20,10 @@ const Profile: React.FC<{highlightActive: (value:string) => void}> = ({ highligh
 
   const [active, setActive] = React.useState<string>('profile');
   /*  console.log(window.location.pathname); */
-
-  const getUser = (store) => ({
+  
+  const { user } = useSelector((store) => ({
     user: store.auth
-  });
-
-  const { user } = useSelector(getUser);
+  }));
 
   const onClickProfile = () => {
     navigate(PATH_PROFILE);

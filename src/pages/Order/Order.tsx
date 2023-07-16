@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Order.module.css';
 import stylesFeed from '../../components/Feed/Feed.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useParams } from 'react-router-dom';
 import { sum } from '../../utils/utils';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,25 +13,21 @@ import { Navigate } from 'react-router-dom';
 import { PATH_PROFILE_ORDERS } from '../../components/App/App';
 import { TOrder } from '../../types/types';
 
-const Order: React.FC = () => {
+const Order: React.FC<{highlightActive: (value:string) => void}> = ({ highlightActive }) => {
 
   const path = useParams<{id?:string}>();
 
   const dispatch = useDispatch();
 
-  const getData = (store) => ({
+  const { ingredientsList, ingredientsRequest } = useSelector((store) => ({
     ingredientsList: store.burger.ingredientsList,
     ingredientsRequest: store.burger.ingredientsRequest,
-  });
+  }));
 
-  const { ingredientsList, ingredientsRequest } = useSelector(getData);
-
-  const getWs = (store) => ({
+  const { wsConnectedAll, orders } = useSelector((store) => ({
     wsConnectedAll: store.wsOrders.wsConnectedAll,
     orders: store.wsOrders.orders
-  })
-
-  const { wsConnectedAll, orders } = useSelector(getWs);
+  }));
 
   React.useEffect(
     () => {

@@ -3,7 +3,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Auth.module.css';
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { forgotPassword, postEmail } from '../../services/actions/auth';
 import { PATH_LOGIN, PATH_RESET_PASSWORD } from '../../components/App/App';
 import { useForm } from '../../hooks/useForm';

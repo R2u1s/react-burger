@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Tabs.module.css';
 import { ingredientTypes } from '../BurgerIngredients/BurgerIngredients';
-import { TIngredientsTabs, TIngredientsTabsActive } from '../../types/types';
+import { TIngredientsTabsActive } from '../../types/types';
 
 const Tabs: React.FC<{
   scrollTab: TIngredientsTabsActive,

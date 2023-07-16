@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './BurgerIngredientsGroup.module.css';
 import BurgerIngredientsItem from '../BurgerIngredientsItem/BurgerIngredientsItem';
 import { useInView } from "react-intersection-observer";
@@ -21,7 +20,7 @@ const BurgerIngredientsGroup: React.FC<{
     threshold: 0.2
   }); 
 
-  React.useEffect(()=>{
+/*   React.useEffect(()=>{
     //изменение стэйта видимости групп
     setScrollTab({
       ...scrollTab,
@@ -33,7 +32,7 @@ const BurgerIngredientsGroup: React.FC<{
       [ingredient.type]:ref.current
     })
   },[inView]);
-  ////
+  //// */
 
   const setRefs = React.useCallback(
     (node:HTMLParagraphElement) => {

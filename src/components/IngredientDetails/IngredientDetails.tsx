@@ -1,19 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './IngredientDetails.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { useParams } from 'react-router-dom';
+import { TIngredient } from '../../types/types';
 
-const IngredientDetails: React.FC = () => {
+const IngredientDetails: React.FC<{ ingredient:TIngredient }> = () => {
 
   const path = useParams<string>();
 
-  const getData = (store) => ({
+  let { currentIngredient,ingredientsList } = useSelector((store) => ({
     currentIngredient: store.burger.currentIngredient,
     ingredientsList: store.burger.ingredientsList
-  });
-
-  let { currentIngredient,ingredientsList } = useSelector(getData);
+  }));
 
   //если в сторе нет ингредиента для просмотра в модальном окне - заменяем его, взяв id из адресной строки, не изменяем стор
   if (!('_id' in currentIngredient) && path.id) {

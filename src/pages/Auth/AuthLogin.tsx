@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { login } from '../../services/actions/auth';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -14,10 +14,9 @@ const INPUT_PASSWORD = 'password';
 
 const AuthLogin: React.FC = () => {
 
-  const getUser = (store) => ({
+  const { user } = useSelector((store) => ({
     user: store.auth
-  });
-  const { user } = useSelector(getUser);
+  }));
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

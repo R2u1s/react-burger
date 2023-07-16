@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './BurgerIngredientsItem.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { writeIngredientPreview } from '../../services/actions/burger';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
@@ -18,11 +18,9 @@ const BurgerIngredientsItem: React.FC<{
 
   const dispatch = useDispatch();
 
-  const getData = (store) => ({
+  const { selectedIngredients } = useSelector((store) => ({
     selectedIngredients: store.burger.selectedIngredients
-  })
-
-  const { selectedIngredients } = useSelector(getData);
+  }));
 
   const qty = item.type === "bun" ?
     selectedIngredients.bun._id === item._id ? 2 : 0

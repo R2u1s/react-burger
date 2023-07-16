@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Profile.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { changeUserInfo } from '../../services/actions/auth';
 import { useForm } from '../../hooks/useForm';
@@ -13,11 +13,9 @@ const ProfileInputs: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const getUser = (store) => ({
+  const { user } = useSelector((store) => ({
     user: store.auth
-  });
-
-  const { user } = useSelector(getUser);
+  }));
 
   const {values, handleChange, setValues} = useForm({
     [INPUT_NAME]: user.name,

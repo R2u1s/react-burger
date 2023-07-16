@@ -1,48 +1,135 @@
 import { request, setCookie, getCookie, deleteCookie } from "../../utils/utils";
 
 //Восстановление пароля. Отправка email
-export const EMAIL_REQUEST = 'EMAIL_REQUEST';
-export const EMAIL_SUCCESS = 'EMAIL_SUCCESS';
-export const EMAIL_FAILED = 'EMAIL_FAILED';
+export const EMAIL_REQUEST: 'EMAIL_REQUEST' = 'EMAIL_REQUEST';
+export const EMAIL_SUCCESS: 'EMAIL_SUCCESS' = 'EMAIL_SUCCESS';
+export const EMAIL_FAILED: 'EMAIL_FAILED' = 'EMAIL_FAILED';
 //Авторизация
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const LOGIN_REQUEST: 'LOGIN_REQUEST' = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS: 'LOGIN_SUCCESS' = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED: 'LOGIN_FAILED' = 'LOGIN_FAILED';
 //Регистрация
-export const REG_REQUEST = 'REG_REQUEST';
-export const REG_SUCCESS = 'REG_SUCCESS';
-export const REG_FAILED = 'REG_FAILED';
+export const REG_REQUEST: 'REG_REQUEST' = 'REG_REQUEST';
+export const REG_SUCCESS: 'REG_SUCCESS' = 'REG_SUCCESS';
+export const REG_FAILED: 'REG_FAILED' = 'REG_FAILED';
 //Выход
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAILED = 'LOGOUT_FAILED';
+export const LOGOUT_REQUEST: 'LOGOUT_REQUEST' = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS: 'LOGOUT_SUCCESS' = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILED: 'LOGOUT_FAILED' = 'LOGOUT_FAILED';
 //Обновление токена
-export const TOKEN_REQUEST = 'TOKEN_REQUEST';
-export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
-export const TOKEN_FAILED = 'TOKEN_FAILED';
+export const TOKEN_REQUEST: 'TOKEN_REQUEST' = 'TOKEN_REQUEST';
+export const TOKEN_SUCCESS: 'TOKEN_SUCCESS' = 'TOKEN_SUCCESS';
+export const TOKEN_FAILED: 'TOKEN_FAILED' = 'TOKEN_FAILED';
 //Получение информации о пользователе
-export const GET_USER_REQUEST = 'GET_USER_REQUEST';
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
-export const GET_USER_FAILED = 'GET_USER_FAILED';
+export const GET_USER_REQUEST: 'GET_USER_REQUEST' = 'GET_USER_REQUEST';
+export const GET_USER_SUCCESS: 'GET_USER_SUCCESS' = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED: 'GET_USER_FAILED' = 'GET_USER_FAILED';
 //Изменение информации о пользователе
-export const CHANGE_USER_REQUEST = 'CHANGE_USER_REQUEST';
-export const CHANGE_USER_SUCCESS = 'CHANGE_USER_SUCCESS';
-export const CHANGE_USER_FAILED = 'CHANGE_USER_FAILED';
+export const CHANGE_USER_REQUEST: 'CHANGE_USER_REQUEST' = 'CHANGE_USER_REQUEST';
+export const CHANGE_USER_SUCCESS: 'CHANGE_USER_SUCCESS' = 'CHANGE_USER_SUCCESS';
+export const CHANGE_USER_FAILED: 'CHANGE_USER_FAILED' = 'CHANGE_USER_FAILED';
 //Запись последнего адреса URL
-export const SAVE_LAST_URL = 'SAVE_LAST_URL';
+export const SAVE_LAST_URL: 'SAVE_LAST_URL' = 'SAVE_LAST_URL';
 //Запрос восстановления пароля
-export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+export const FORGOT_PASSWORD: 'FORGOT_PASSWORD' = 'FORGOT_PASSWORD';
 //Восстановление пароля
-export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
-export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
-export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
+export const RESET_PASSWORD_REQUEST: 'RESET_PASSWORD_REQUEST' = 'RESET_PASSWORD_REQUEST';
+export const RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS' = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAILED: 'RESET_PASSWORD_FAILED' = 'RESET_PASSWORD_FAILED';
 //Изменение информации пользователя
-export const CHANGE_USERINFO_REQUEST = 'CHANGE_USERINFO_REQUEST';
-export const CHANGE_USERINFO_SUCCESS = 'CHANGE_USERINFO_SUCCESS';
-export const CHANGE_USERINFO_FAILED = 'CHANGE_USERINFO_FAILED';
+export const CHANGE_USERINFO_REQUEST: 'CHANGE_USERINFO_REQUEST' = 'CHANGE_USERINFO_REQUEST';
+export const CHANGE_USERINFO_SUCCESS: 'CHANGE_USERINFO_SUCCESS' = 'CHANGE_USERINFO_SUCCESS';
+export const CHANGE_USERINFO_FAILED: 'CHANGE_USERINFO_FAILED' = 'CHANGE_USERINFO_FAILED';
 
-export const postEmail = (email) => {
-  return function (dispatch) {
+export type TAuthActions =
+  | ISaveLastUrlAction
+  | IForgotPasswordAction
+  | IEmailRequestAction
+  | IEmailSuccessAction
+  | IEmailErrorAction
+  | ILoginRequestAction
+  | ILoginSuccessAction
+  | ILoginErrorAction
+  | IRegRequestAction
+  | IRegSuccessAction
+  | IRegErrorAction
+  | ILogoutRequestAction
+  | ILogoutSuccessAction
+  | ILogoutErrorAction
+  | ITokenRequestAction
+  | ITokenSuccessAction
+  | ITokenErrorAction
+  | IGetUserRequestAction
+  | IGetUserSuccessAction
+  | IGetUserErrorAction
+  | IChangeUserRequestAction
+  | IChangeUserSuccessAction
+  | IChangeUserErrorAction
+  | IChangeUserInfoRequestAction
+  | IChangeUserInfoSuccessAction
+  | IChangeUserInfoErrorAction
+  | IResetPasswordRequestAction
+  | IResetPasswordSuccessAction
+  | IResetPasswordErrorAction
+
+export interface ISaveLastUrlAction {
+  readonly type: typeof SAVE_LAST_URL,
+  readonly data: string
+}
+export interface IForgotPasswordAction {readonly type: typeof FORGOT_PASSWORD}
+export interface IEmailRequestAction {readonly type: typeof EMAIL_REQUEST}
+export interface IEmailSuccessAction {readonly type: typeof EMAIL_SUCCESS}
+export interface IEmailErrorAction {readonly type: typeof EMAIL_FAILED}
+export interface ILoginRequestAction {readonly type: typeof LOGIN_REQUEST}
+export interface ILoginSuccessAction {readonly type: typeof LOGIN_SUCCESS, readonly data:{
+  user:{
+    email:string,
+    name:string
+  },
+  accessToken:string,
+  refreshToken:string
+}}
+export interface ILoginErrorAction {readonly type: typeof LOGIN_FAILED}
+export interface IRegRequestAction {readonly type: typeof REG_REQUEST}
+export interface IRegSuccessAction {readonly type: typeof REG_SUCCESS, readonly data:{
+  accessToken:string,
+  refreshToken:string
+}}
+export interface IRegErrorAction {readonly type: typeof REG_FAILED}
+export interface ILogoutRequestAction {readonly type: typeof LOGOUT_REQUEST}
+export interface ILogoutSuccessAction {readonly type: typeof LOGOUT_SUCCESS}
+export interface ILogoutErrorAction {readonly type: typeof LOGOUT_FAILED}
+export interface ITokenRequestAction {readonly type: typeof TOKEN_REQUEST}
+export interface ITokenSuccessAction {readonly type: typeof TOKEN_SUCCESS, readonly data:{
+  accessToken:string,
+  refreshToken:string
+}}
+export interface ITokenErrorAction {readonly type: typeof TOKEN_FAILED}
+export interface IGetUserRequestAction {readonly type: typeof GET_USER_REQUEST}
+export interface IGetUserSuccessAction {readonly type: typeof GET_USER_SUCCESS, readonly data:{
+  user:{
+    email:string,
+    name:string
+  }
+}}
+export interface IGetUserErrorAction {readonly type: typeof GET_USER_FAILED}
+export interface IChangeUserRequestAction {readonly type: typeof CHANGE_USER_REQUEST}
+export interface IChangeUserSuccessAction {readonly type: typeof CHANGE_USER_SUCCESS}
+export interface IChangeUserErrorAction {readonly type: typeof CHANGE_USER_FAILED}
+export interface IChangeUserInfoRequestAction {readonly type: typeof CHANGE_USERINFO_REQUEST}
+export interface IChangeUserInfoSuccessAction {readonly type: typeof CHANGE_USERINFO_SUCCESS, readonly data:{
+  user:{
+    email:string,
+    name:string
+  }
+}}
+export interface IChangeUserInfoErrorAction {readonly type: typeof CHANGE_USERINFO_FAILED}
+export interface IResetPasswordRequestAction {readonly type: typeof RESET_PASSWORD_REQUEST}
+export interface IResetPasswordSuccessAction {readonly type: typeof RESET_PASSWORD_SUCCESS}
+export interface IResetPasswordErrorAction {readonly type: typeof RESET_PASSWORD_FAILED}
+
+export const postEmail = (email:string) => {
+  return function (dispatch:any) {
     dispatch({
       type: EMAIL_REQUEST
     });
@@ -76,8 +163,8 @@ export const postEmail = (email) => {
 }
 
 //Авторизация
-export const login = (email,password) => {
-  return function (dispatch) {
+export const login = (email:string,password:string) => {
+  return function (dispatch:any) {
     dispatch({
       type: LOGIN_REQUEST
     });
@@ -117,8 +204,8 @@ export const login = (email,password) => {
 }
 
 //Регистрация
-export const registration = (name,email,password) => {
-  return function (dispatch) {
+export const registration = (name:string,email:string,password:string) => {
+  return function (dispatch:any) {
     dispatch({
       type: TOKEN_REQUEST
     });
@@ -155,8 +242,8 @@ export const registration = (name,email,password) => {
 }
 
 //Выход
-export const logout = (token) => {
-  return function (dispatch) {
+export const logout = (token:string) => {
+  return function (dispatch:any) {
     dispatch({
       type: LOGOUT_REQUEST
     });
@@ -192,7 +279,7 @@ export const logout = (token) => {
 
 //Обновление токена
 export const refreshToken = () => {
-  return async function (dispatch) {
+  return async function (dispatch:any) {
     dispatch({
       type: TOKEN_REQUEST
     });
@@ -231,8 +318,8 @@ export const refreshToken = () => {
 }
 
 //Получение информации о пользователе
-export const getUserRequest = (token) => {
-  return function (dispatch) {
+export const getUserRequest = (token:string) => {
+  return function (dispatch:any) {
     dispatch({
       type: GET_USER_REQUEST
     });
@@ -267,19 +354,19 @@ export const getUserRequest = (token) => {
 }
 
 //Запись последнего адреса страницы
-export const saveLastUrl = (path) => ({
+export const saveLastUrl = (path: string): ISaveLastUrlAction => ({
   type: SAVE_LAST_URL,
   data: path
 })
 
 //Запрос восстановления пароля
-export const forgotPassword = () => ({
+export const forgotPassword = (): IForgotPasswordAction => ({
   type: FORGOT_PASSWORD,
 })
 
 //Авторизация
-export const resetPassword = (password,code) => {
-  return function (dispatch) {
+export const resetPassword = (password:string,code:string) => {
+  return function (dispatch:any) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
     });
@@ -315,9 +402,9 @@ export const resetPassword = (password,code) => {
 }
 
 //Изменение информации пользователя
-export const changeUserInfo = (name,email,valuePassword, token) => {
+export const changeUserInfo = (name:string,email:string,valuePassword:string, token:string) => {
   const password = valuePassword === '******' ? null : valuePassword;
-  return function (dispatch) {
+  return function (dispatch:any) {
     dispatch({
       type: CHANGE_USERINFO_REQUEST
     });

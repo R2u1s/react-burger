@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { chosenIngredientObjectType } from '../../utils/data';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { removeIngredient } from '../../services/actions/burger';
 import { useDrag, useDrop } from 'react-dnd/dist/hooks';
 import { sortIngredient } from '../../services/actions/burger';
@@ -16,11 +16,9 @@ const ConstructorElementsListItem: React.FC<{
 }> = ({ ingredient, index }) => {
   const dispatch = useDispatch();
 
-  const getData = (store) => ({
+  const { ingredientsList } = useSelector((store) => ({
     ingredientsList: store.burger.selectedIngredients.otherIngredients
-  })
-
-  const { ingredientsList } = useSelector(getData);
+  }));
 
   const ref = React.useRef<HTMLParagraphElement>(null);
 

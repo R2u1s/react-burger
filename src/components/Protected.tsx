@@ -1,7 +1,6 @@
 import { Navigate, useHref } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../services/hooks';
 import { getUserRequest, refreshToken, saveLastUrl } from '../services/actions/auth';
 import { PATH_LOGIN } from './App/App';
 
@@ -9,10 +8,9 @@ export const Protected: React.FC<{element:React.ReactNode}> = ({ element }) => {
     const dispatch = useDispatch();
     const his = useHref('/');
 
-    const getUser = (store) => ({
+    const { user } = useSelector((store) => ({
       user: store.auth
-    });
-    const { user } = useSelector(getUser);
+    }));
 
     useEffect(
       () => {
@@ -30,7 +28,7 @@ export const Protected: React.FC<{element:React.ReactNode}> = ({ element }) => {
 
     const content = useMemo(
       () => {
-        return (user.authRequest || (!user.name & !user.authFailed)) ?
+        return (user.authRequest || (!user.name && !user.authFailed)) ?
           <p style={{ textAlign: 'center' }}>Загрузка...</p> :
           (user.accessToken ?
             element :

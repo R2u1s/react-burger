@@ -6,18 +6,16 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { clearIngredientsList } from '../../services/actions/burger';
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
-
-  const getData = (store) => ({
+  
+  const { selectedIngredients } = useSelector((store) => ({
     selectedIngredients: store.burger.selectedIngredients,
-  })
-
-  const { selectedIngredients } = useSelector(getData);
+  }));
 
   const { isModalOpen, openModal, closeModal } = useModal();
 

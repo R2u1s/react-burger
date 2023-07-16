@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './Main.module.css';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { CONSTRUCTOR } from '../AppHeader/AppHeader';
 
 const Main: React.FC<{highlightActive: (value:string) => void}> = ({ highlightActive }) => {
@@ -14,12 +13,10 @@ const Main: React.FC<{highlightActive: (value:string) => void}> = ({ highlightAc
     highlightActive(CONSTRUCTOR);
   }, []);
 
-  const getData = (store) => ({
+  const { ingredientsList, ingredientsRequest } = useSelector((store) => ({
     ingredientsList: store.burger.ingredientsList,
     ingredientsRequest: store.burger.ingredientsRequest,
-  })
-
-  const { ingredientsList, ingredientsRequest } = useSelector(getData);
+  }));
 
   const content = React.useMemo(
     () => {

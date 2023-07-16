@@ -24,10 +24,25 @@ import {
   RESET_PASSWORD_FAILED,
   CHANGE_USERINFO_REQUEST,
   CHANGE_USERINFO_SUCCESS,
-  CHANGE_USERINFO_FAILED
+  CHANGE_USERINFO_FAILED,
+  TAuthActions
 } from "../actions/auth";
 
-const initialState = {
+type TAuthState = {
+  email: string | null,
+  password: string,
+  name: string | null,
+  accessToken: string,
+  refreshToken: string,
+
+  authRequest: boolean,
+  authFailed: boolean,
+
+  lastURL: string,
+  forgotPassword: boolean
+};
+
+const initialState: TAuthState = {
   email: null,
   password: '******',
   name: null,
@@ -41,7 +56,7 @@ const initialState = {
   forgotPassword: false
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action:TAuthActions):TAuthState => {
   switch (action.type) {
 
     //Восстановление пароля

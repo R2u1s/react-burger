@@ -1,3 +1,4 @@
+import { TOrder } from '../../types/types';
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
@@ -6,8 +7,16 @@ import {
   WS_CONNECTION_SUCCESS_USER,
   WS_CONNECTION_ERROR_USER,
   WS_CONNECTION_CLOSED_USER,
-  WS_GET_ORDERS_USER
+  WS_GET_ORDERS_USER,
+  TWsActions
 } from '../actions/wsActions';
+
+export type TWsState = {
+  wsConnectedAll: boolean,
+  wsConnectedUser: boolean,
+  orders: { orders: Array<TOrder> },
+  userOrders: { orders: Array<TOrder> }
+};
 
 const initialState = {
   wsConnectedAll: false,
@@ -16,7 +25,7 @@ const initialState = {
   userOrders: { orders: [] }
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action:TWsActions):TWsState => {
 
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:

@@ -9,7 +9,7 @@ import AuthForgotPassword from '../../pages/Auth/AuthForgotPassword';
 import AuthResetPassword from '../../pages/Auth/AuthResetPassword';
 import { Protected } from '../Protected';
 import { ProtectedAuthorized } from '../ProtectedAuthorized';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import Ingredient from '../../pages/Ingredient/Ingredient';
 import Profile from '../../pages/Profile/Profile';
 import { getIngredients } from '../../services/actions/burger';
@@ -49,11 +49,9 @@ const App: FC = () => {
 
   const dispatch = useDispatch();
 
-  const getUser = (store) => ({
+  const { user } = useSelector((store) => ({
     user: store.auth
-  });
-
-  const { user } = useSelector(getUser);
+  }));
 
   React.useEffect(
     () => {

@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './OrderDetails.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { getUserRequest, refreshToken } from '../../services/actions/auth';
 import { Navigate } from 'react-router-dom';
 import { postOrder } from '../../services/actions/burger';
@@ -13,19 +12,16 @@ const OrderDetails: React.FC<{ orderRequest:boolean }> = ({ orderRequest }) => {
 
   const dispatch = useDispatch();
 
-  const getData = (store) => ({
+  const { user } = useSelector((store) => ({
+    user: store.auth
+  }));
+
+  const { orderDetails, selectedIngredients, postOrderRequest } = useSelector((store) => ({
     orderDetails: store.burger.orderDetails,
     selectedIngredients: store.burger.selectedIngredients,
     postOrderRequest: store.burger.postOrderRequest,
     postOrderFailed: store.burger.postOrderFailed
-  })
-
-  const getUser = (store) => ({
-    user: store.auth
-  });
-  const { user } = useSelector(getUser);
-
-  const { orderDetails, selectedIngredients, postOrderRequest } = useSelector(getData);
+  }));
 
   function collectId():Array<string> {
     let arrayOfId = [];

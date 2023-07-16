@@ -2,18 +2,17 @@ import React from 'react';
 import styles from './Orders.module.css';
 import FeedOrdersList from '../Feed/FeedOrdersList';
 import { PATH_PROFILE_ORDERS } from '../App/App';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { wsGetOrdersUser, WS_CONNECTION_START_USER, WS_CONNECTION_CLOSED_USER } from '../../services/actions/wsActions';
 
 const Orders: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const getWs = (store) => ({
+  const { wsConnectedUser,orders } = useSelector((store) => ({
     wsConnectedUser: store.wsOrders.wsConnectedUser,
     orders: store.wsOrders.userOrders,
-  })
-  const { wsConnectedUser,orders } = useSelector(getWs);
+  }));
 
   const ordersReversed = {
     ...orders,

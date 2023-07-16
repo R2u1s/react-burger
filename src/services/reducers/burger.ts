@@ -10,12 +10,40 @@ import {
   CLEAR_INGREDIENTS_LIST,
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
-  SORT_INGREDIENTLIST
+  SORT_INGREDIENTLIST,
+  TBurgerActions
 } from "../actions/burger";
 
 import { arrayToObject, moveIngredient } from "../../utils/utils";
+import { TIngredient, TIngredientPreview } from "../../types/types";
 
-const initialState = {
+type TBurgerState = {
+  ingredientsList: {},
+  currentIngredient: {},
+
+  selectedIngredients: {
+    bun: TIngredient | TIngredientPreview,
+    otherIngredients: Array<TIngredient>,
+    otherIngredientsQty: {
+      [id:string]:number
+    },
+    totalPrice: number
+  },
+
+  orderDetails: {
+    id: string,
+    status: string,
+    todo: string,
+    totalPrice: number
+  },
+
+  ingredientsRequest: boolean,
+  ingredientsFailed: boolean,
+  postOrderRequest: boolean,
+  postOrderFailed: boolean,
+};
+
+const initialState:TBurgerState = {
   ingredientsList: {},
   currentIngredient: {},
 
@@ -43,7 +71,7 @@ const initialState = {
   postOrderFailed: false,
 };
 
-export const burgerReducer = (state = initialState, action) => {
+export const burgerReducer = (state = initialState, action:TBurgerActions):TBurgerState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

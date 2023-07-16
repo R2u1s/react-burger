@@ -3,7 +3,7 @@ import styles from './Profile.module.css';
 
 const TabProfile: React.FC<{
   active: boolean,
-  onClick: () => {},
+  onClick: () => void,
   extraclass: string,
   text: string
 }> = ({ active, onClick, extraclass, text }) => {

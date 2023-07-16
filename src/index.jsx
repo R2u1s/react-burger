@@ -11,38 +11,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { socketMiddlewareOrders } from './services/middleware/socketMiddlewareOrders';
 import { socketMiddlewareUserOrders } from './services/middleware/socketMiddlewareUserOrders';
 
-import {
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_ERROR,
-  WS_CONNECTION_START,
-  WS_CONNECTION_SUCCESS,
-  WS_GET_ORDERS,
-  WS_CONNECTION_CLOSED_USER,
-  WS_CONNECTION_ERROR_USER,
-  WS_CONNECTION_START_USER,
-  WS_CONNECTION_SUCCESS_USER,
-  WS_GET_ORDERS_USER
-} from './services/actions/wsActions';
-
-const wsUrlAll = 'wss://norma.nomoreparties.space/orders/all';
-const wsUrlUser = 'wss://norma.nomoreparties.space/orders';
-
-const wsActionsAll = {
-  wsInit: WS_CONNECTION_START,
-  onOpen: WS_CONNECTION_SUCCESS,
-  onClose: WS_CONNECTION_CLOSED,
-  onError: WS_CONNECTION_ERROR,
-  onOrders: WS_GET_ORDERS
-};
-
-const wsActionsUser = {
-  wsInit: WS_CONNECTION_START_USER,
-  onOpen: WS_CONNECTION_SUCCESS_USER,
-  onClose: WS_CONNECTION_CLOSED_USER,
-  onError: WS_CONNECTION_ERROR_USER,
-  onOrders: WS_GET_ORDERS_USER
-};
-
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -50,11 +18,11 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(
   thunk,
-  socketMiddlewareOrders(wsUrlAll,wsActionsAll),
-  socketMiddlewareUserOrders(wsUrlUser,wsActionsUser)
-  ));
+  socketMiddlewareOrders(),
+  socketMiddlewareUserOrders()
+));
 
-const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, enhancer);
 
 const root = createRoot(document.getElementById('root'));
 root.render(

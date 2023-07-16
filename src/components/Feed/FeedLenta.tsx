@@ -2,15 +2,14 @@ import React from 'react';
 import styles from './Feed.module.css';
 import FeedOrdersList from './FeedOrdersList';
 import { PATH_FEED } from '../App/App';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 const FeedLenta: React.FC = () => {
 
-  const getWs = (store) => ({
+  const {wsConnectedAll,orders} = useSelector((store) => ({
     wsConnectedAll: store.wsOrders.wsConnectedAll,
     orders: store.wsOrders.orders
-  })
-  const {wsConnectedAll,orders} = useSelector(getWs);
+  }));
 
   return (
     <section className={styles['feed__lenta']}>

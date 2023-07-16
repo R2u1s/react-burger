@@ -1,15 +1,14 @@
 import React from 'react';
 import styles from './Feed.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { TOrder } from '../../types/types';
 
 const FeedInfo: React.FC = () => {
 
-  const getWs = (store) => ({
+  const {orders} = useSelector((store) => ({
     wsConnected: store.wsOrders.wsConnected,
     orders:store.wsOrders.orders
-  })
-  const {orders} = useSelector(getWs);
+  }));
 
   return (
     <>
