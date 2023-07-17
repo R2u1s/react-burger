@@ -1,4 +1,4 @@
-import { AppDispatch, TIngredient, TOrder, TOrderConstructor } from "../../types/types";
+import { AppDispatch, TIngredient, TOrder, TOrderConstructor, TResIngredients, TResOrder } from "../../types/types";
 import { request } from "../../utils/utils";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -25,7 +25,7 @@ export interface IPostOrderRequestAction { readonly type: typeof POST_ORDER_REQU
 export interface IPostOrderSuccessAction {
   readonly type: typeof POST_ORDER_SUCCESS,
   readonly order: TOrderConstructor,
-  readonly ingredientsList: Array<TIngredient>
+  readonly ingredientsList: Array<string>
 }
 export interface IPostOrderFailedAction { readonly type: typeof POST_ORDER_FAILED }
 export interface IWriteIngredientPreviewAction {
@@ -67,7 +67,7 @@ export const getIngredients = () => {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
-    request('ingredients')
+    request<TResIngredients>('ingredients')
       .then(res => {
         if (res && res.success) {
           dispatch({
@@ -103,7 +103,7 @@ export const postOrder = (ingredientsList: Array<string>, token: string) => {
     dispatch({
       type: POST_ORDER_REQUEST
     });
-    request("orders", {
+    request<TResOrder>("orders", {
       method: 'POST',
       headers: {
         authorization: token,

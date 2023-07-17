@@ -1,4 +1,4 @@
-import { TOrder } from '../../types/types';
+import { TOrder, TOrderList } from '../../types/types';
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
@@ -11,21 +11,29 @@ import {
   TWsActions
 } from '../actions/wsActions';
 
-export type TWsState = {
+type TWsState = {
   wsConnectedAll: boolean,
   wsConnectedUser: boolean,
-  orders: { orders: Array<TOrder> },
-  userOrders: { orders: Array<TOrder> }
+  orders: TOrderList,
+  userOrders: TOrderList
 };
 
-const initialState = {
+const initialState: TWsState = {
   wsConnectedAll: false,
   wsConnectedUser: false,
-  orders: { orders: [] },
-  userOrders: { orders: [] }
+  orders: {
+    orders: [],
+    total: 0,
+    totalToday: 0
+  },
+  userOrders: {
+    orders: [],
+    total: 0,
+    totalToday: 0
+  }
 };
 
-export const wsReducer = (state = initialState, action:TWsActions):TWsState => {
+export const wsReducer = (state = initialState, action: TWsActions): TWsState => {
 
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:

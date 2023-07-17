@@ -18,8 +18,10 @@ import { arrayToObject, moveIngredient } from "../../utils/utils";
 import { TIngredient, TIngredientPreview } from "../../types/types";
 
 type TBurgerState = {
-  ingredientsList: {},
-  currentIngredient: {},
+  ingredientsList: {
+    [id:string]:TIngredient
+  },
+  currentIngredient: TIngredient | undefined,
 
   selectedIngredients: {
     bun: TIngredient | TIngredientPreview,
@@ -45,13 +47,14 @@ type TBurgerState = {
 
 const initialState:TBurgerState = {
   ingredientsList: {},
-  currentIngredient: {},
+  currentIngredient: undefined,
 
   selectedIngredients: {
     bun: {
       name: "Булка не выбрана",
       price: 0,
-      image: require('../../images/burger.png')
+      image: require('../../images/burger.png'),
+      _id:'id'
     },
     otherIngredients: [],
     otherIngredientsQty: {},
@@ -89,7 +92,7 @@ export const burgerReducer = (state = initialState, action:TBurgerActions):TBurg
       return { ...state, currentIngredient: action.currentIngredient };
     }
     case CLEAR_INGREDIENT_PREVIEW: {
-      return { ...state, currentIngredient: {} };
+      return { ...state, currentIngredient: undefined };
     }
     case POST_ORDER_REQUEST: {
       return {

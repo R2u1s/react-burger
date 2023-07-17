@@ -36,9 +36,9 @@ function BurgerIngredients() {
 
   const filteredData = React.useMemo(
     () => {
-      const buns = (Object.values(ingredientsList) as (typeof ingredientsList)[]).filter((item) => item.type === 'bun');
-      const sauces = (Object.values(ingredientsList) as (typeof ingredientsList)[]).filter((item) => item.type === 'sauce');
-      const mains = (Object.values(ingredientsList) as (typeof ingredientsList)[]).filter((item) => item.type === 'main');
+      const buns = Object.values(ingredientsList).filter((item) => item.type === 'bun');
+      const sauces = Object.values(ingredientsList).filter((item) => item.type === 'sauce');
+      const mains = Object.values(ingredientsList).filter((item) => item.type === 'main');
       return { buns, sauces, mains }
     },
     []

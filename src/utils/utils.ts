@@ -1,6 +1,7 @@
 // путь для cookie
+import { Type } from "typescript";
 import { PATH_MAIN } from "../components/App/App";
-import { TIngredient,TIngredientList,TRes } from "../types/types";
+import { TIngredient,TIngredientList,TResSuccess } from "../types/types";
 
 // 1 раз объявляем базовый урл
 const BASE_URL = "https://norma.nomoreparties.space/api/";
@@ -16,7 +17,7 @@ const checkResponse = (res: Response) => {
 };
 
 // создаем функцию проверки на `success`
-const checkSuccess = (res: TRes) => {
+const checkSuccess = <T>(res:TResSuccess & T) => {
   if (res && res.success) {
     return res;
   }
@@ -26,11 +27,11 @@ const checkSuccess = (res: TRes) => {
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-export const request = (endpoint:string,options?:{}) => {
+export const request = <T>(endpoint:string,options?:{}) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
   return fetch(`${BASE_URL}${endpoint}`,options)
     .then(checkResponse)
-    .then(checkSuccess);
+    .then(checkSuccess<T>);
 };
 
 export function arrayToObject(array:TIngredient[]):TIngredientList {

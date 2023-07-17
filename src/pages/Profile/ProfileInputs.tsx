@@ -23,7 +23,7 @@ const ProfileInputs: React.FC = () => {
     [INPUT_PASSWORD]: user.password
   });
 
-  const [isInputChange, setIsInputChange] = React.useState(false);
+  const [isInputChange, setIsInputChange] = React.useState<boolean>(false);
 
   const cancelHandler = () => {
     setIsInputChange(false);

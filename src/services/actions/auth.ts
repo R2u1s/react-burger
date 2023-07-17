@@ -1,5 +1,6 @@
-import { AppDispatch } from "../../types/types";
+import { AppDispatch, TResUserInfo, TResRefresh, TResReg } from "../../types/types";
 import { request, setCookie, getCookie, deleteCookie } from "../../utils/utils";
+import { TResLogin } from "../../types/types";
 
 //Восстановление пароля. Отправка email
 export const EMAIL_REQUEST: 'EMAIL_REQUEST' = 'EMAIL_REQUEST';
@@ -169,7 +170,7 @@ export const login = (email:string,password:string) => {
     dispatch({
       type: LOGIN_REQUEST
     });
-    request("auth/login", {
+    request<TResLogin>("auth/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -210,7 +211,7 @@ export const registration = (name:string,email:string,password:string) => {
     dispatch({
       type: TOKEN_REQUEST
     });
-    request("auth/register", {
+    request<TResReg>("auth/register", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -285,7 +286,7 @@ export const refreshToken = () => {
       type: TOKEN_REQUEST
     });
     try {
-      return await request("auth/token", {
+      return await request<TResRefresh>("auth/token", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -324,7 +325,7 @@ export const getUserRequest = (token:string) => {
     dispatch({
       type: GET_USER_REQUEST
     });
-    request("auth/user", {
+    request<TResUserInfo>("auth/user", {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
@@ -409,7 +410,7 @@ export const changeUserInfo = (name:string,email:string,valuePassword:string, to
     dispatch({
       type: CHANGE_USERINFO_REQUEST
     });
-    request("auth/user", {
+    request<TResUserInfo>("auth/user", {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

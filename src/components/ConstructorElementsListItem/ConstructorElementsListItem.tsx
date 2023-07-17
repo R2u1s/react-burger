@@ -24,7 +24,7 @@ const ConstructorElementsListItem: React.FC<{
 
   const [, drop] = useDrop({
     accept: 'sort',
-    hover(ingredient, monitor) {
+    hover(ingredient:TIngredient, monitor) {
       const dragIndex = ingredientsList.indexOf(ingredient);
       const hoverIndex = index;
       dispatch(sortIngredient(dragIndex, hoverIndex));

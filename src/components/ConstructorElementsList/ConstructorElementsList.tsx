@@ -52,7 +52,7 @@ const ConstructorElementsList: React.FC = () => {
 
   return (
     <ul className={`${styles['constructor-elements-list__list']}`} ref={dropTarget}>
-      {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={selectedIngredients.bun.listId} id={selectedIngredients.bun._id} >
+      {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={Math.random()} id={Math.random().toString()} >
         {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'top')}
       </li>}
 
@@ -68,7 +68,7 @@ const ConstructorElementsList: React.FC = () => {
         : <p className="text text_type_main-default" style={{ textAlign: "center" }}>Нет добавленных ингредиентов</p>
       }
 
-      {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={selectedIngredients.bun._id} id={selectedIngredients.bun._id}>
+      {<li className={`${styles['constructor-elements-list__item']} pl-4`} key={Math.random()} id={Math.random().toString()}>
         {bun(selectedIngredients.bun.name, selectedIngredients.bun.price, selectedIngredients.bun.image, 'bottom')}
       </li>}
 

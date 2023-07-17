@@ -11,10 +11,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { socketMiddlewareOrders } from './services/middleware/socketMiddlewareOrders';
 import { socketMiddlewareUserOrders } from './services/middleware/socketMiddlewareUserOrders';
 
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(applyMiddleware(
   thunk,
@@ -24,7 +27,7 @@ const enhancer = composeEnhancers(applyMiddleware(
 
 export const store = createStore(rootReducer, enhancer);
 
-const root = createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <Provider store={store}>

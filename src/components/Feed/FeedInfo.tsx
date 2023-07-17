@@ -6,8 +6,8 @@ import { TOrder } from '../../types/types';
 const FeedInfo: React.FC = () => {
 
   const {orders} = useSelector((store) => ({
-    wsConnected: store.wsOrders.wsConnected,
-    orders:store.wsOrders.orders
+    wsConnected: store.wsOrders.wsConnectedAll,
+    orders: store.wsOrders.orders
   }));
 
   return (

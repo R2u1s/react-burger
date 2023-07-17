@@ -1,4 +1,4 @@
-import { TOrder } from "../../types/types";
+import { TOrder, TOrderList } from "../../types/types";
 
 export const WS_CONNECTION_START:'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS:'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
@@ -25,7 +25,7 @@ export interface IWsConnectionClosedAction {
 
 export interface IWsGetOrders {
   readonly type: typeof WS_GET_ORDERS,
-  readonly payload: { orders: Array<TOrder> }
+  readonly payload: TOrderList
 }
 
 export interface IWsConnectionSuccessUserAction {
@@ -42,7 +42,7 @@ export interface IWsConnectionClosedUserAction {
 
 export interface IWsGetOrdersUser {
   readonly type: typeof WS_GET_ORDERS_USER,
-  readonly payload: { orders: Array<TOrder> }
+  readonly payload: TOrderList
 }
 
 export type TWsActions =
@@ -67,7 +67,7 @@ export const wsConnectionClosed = ():IWsConnectionClosedAction => ({
   type: WS_CONNECTION_CLOSED
 });
 
-export const wsGetOrders = (orders:{ orders: Array<TOrder> }):IWsGetOrders => ({
+export const wsGetOrders = (orders:TOrderList):IWsGetOrders => ({
   type: WS_GET_ORDERS,
   payload: orders
 });
@@ -86,7 +86,7 @@ export const wsConnectionClosedUser = ():IWsConnectionClosedUserAction => ({
   type: WS_CONNECTION_CLOSED_USER
 });
 
-export const wsGetOrdersUser = (orders:{ orders: Array<TOrder> }):IWsGetOrdersUser => ({
+export const wsGetOrdersUser = (orders:TOrderList):IWsGetOrdersUser => ({
   type: WS_GET_ORDERS_USER,
   payload: orders
 });

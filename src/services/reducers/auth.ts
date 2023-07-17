@@ -29,9 +29,9 @@ import {
 } from "../actions/auth";
 
 type TAuthState = {
-  email: string | null,
+  email: string,
   password: string,
-  name: string | null,
+  name: string,
   accessToken: string,
   refreshToken: string,
 
@@ -43,9 +43,9 @@ type TAuthState = {
 };
 
 const initialState: TAuthState = {
-  email: null,
+  email: '',
   password: '******',
-  name: null,
+  name: '',
   accessToken: '',
   refreshToken: '',
 
