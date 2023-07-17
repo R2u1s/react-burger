@@ -29,6 +29,10 @@ export type TIngredient = {
   listId?: string
 }
 
+export type TIngredientList = {
+  [id:string]:TIngredient
+}
+
 export type TIngredientPreview = {
   name: string,
   image: string,
@@ -36,12 +40,10 @@ export type TIngredientPreview = {
 }
 
 export type TIngredientsTabs = {
-  bun: string,
-  sauce: string,
-  main: string
+  [name:string]: string
 }
 
-export type TIngredientsTabsRef = { [tab:string]: HTMLParagraphElement };
+export type TIngredientsTabsRef = { [tab in keyof TIngredientsTabs]?: HTMLParagraphElement };
 export type TIngredientsTabsActive = { [scrollTab in keyof TIngredientsTabs]?: boolean };
 
 export type TIngredientsGroup = {
@@ -81,3 +83,12 @@ export type AppThunk<TReturn = void> = ActionCreator<
 
 // Типизация метода dispatch для проверки на валидность отправляемого экшена
 export type AppDispatch = typeof store.dispatch; 
+
+export type TRes = {
+  success: boolean,
+  data: any,
+  accessToken: string,
+  refreshToken:string,
+  user:{},
+  order:TOrderConstructor
+}

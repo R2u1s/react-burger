@@ -314,7 +314,7 @@ export const serverAnswer = {
   "totalToday": 138
 }
 
-export const statusRus = statusEng => {
+export const statusRus = (statusEng:string) => {
   switch (statusEng) {
 
     case "done": {

@@ -1,11 +1,13 @@
 // путь для cookie
 import { PATH_MAIN } from "../components/App/App";
+import { TIngredient,TIngredientList,TRes } from "../types/types";
 
 // 1 раз объявляем базовый урл
 const BASE_URL = "https://norma.nomoreparties.space/api/";
 
 // создаем функцию проверки ответа на `ok`
-const checkResponse = (res) => {
+
+const checkResponse = (res: Response) => {
   if (res.ok) {
     return res.json();
   }
@@ -14,7 +16,7 @@ const checkResponse = (res) => {
 };
 
 // создаем функцию проверки на `success`
-const checkSuccess = (res) => {
+const checkSuccess = (res: TRes) => {
   if (res && res.success) {
     return res;
   }
@@ -24,29 +26,33 @@ const checkSuccess = (res) => {
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-export const request = (endpoint, options) => {
+export const request = (endpoint:string,options?:{}) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
-  return fetch(`${BASE_URL}${endpoint}`, options)
+  return fetch(`${BASE_URL}${endpoint}`,options)
     .then(checkResponse)
     .then(checkSuccess);
 };
 
-export function arrayToObject(array) {
-  let object = {};
-  array.forEach((item) => {
+export function arrayToObject(array:TIngredient[]):TIngredientList {
+  let object:TIngredientList={};
+  array.forEach((item:TIngredient) => {
     object[item._id] = item;
   });
   return object;
 }
 
-export function moveIngredient(array, dragIndex, hoverIndex) {
+export function moveIngredient(array:TIngredient[], dragIndex:number, hoverIndex:number) {
   const dragCard = array[dragIndex];
   array.splice(dragIndex, 1);
   array.splice(hoverIndex, 0, dragCard)
   return array;
 }
 
-export function setCookie(name, value, props={}) {
+
+
+export function setCookie(name:string, value:string | number | boolean, props:{
+  [name:string]: Date | string | boolean | -1
+}={}) {
   props = {
     path: PATH_MAIN,  //задаем корневой адрес для cookies
     ...props
@@ -57,8 +63,8 @@ export function setCookie(name, value, props={}) {
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
+  if (exp) {
+    props.expires = exp;
   }
   value = encodeURIComponent(value);
   let updatedCookie = name + '=' + value;
@@ -72,28 +78,30 @@ export function setCookie(name, value, props={}) {
   document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name:string) {
   const matches = document.cookie.match(
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function deleteCookie(name) {
+export function deleteCookie(name:string) {
   // Находим куку по ключу token, удаляем её значение, 
   // устанавливаем отрицательное время жизни, чтобы удалить сам ключ token
-  setCookie(name, null, { expires: -1 });
+  setCookie(name, 0, { expires: -1 });
 }
 
-export const sum = (arr) => {
+export const sum = (arr:number[]) => {
   return arr.reduce(function (previousValue, item) {
     return previousValue + item;
   });
 }
 
-export function uniqueItem(arr) {
-  return arr.reduce(function (prevVal, item) {
-    if (!prevVal[item]) {
+export function uniqueItem(arr:string[]) {
+  return arr.reduce(function (prevVal:{
+    [id:string]:number
+  }, item) {
+    if (!prevVal.hasOwnProperty(item)) {
       // если ключа ещё нет в объекте, значит это первое повторение
       prevVal[item] = 1;
     } else {
@@ -109,7 +117,7 @@ export function uniqueItem(arr) {
 
 export const getCurrentTimestamp = () => new Date().getTime() / 1000;
 
-export function convertDate(date) {
+export function convertDate(date:string) {
   let orderDate = new Date(date);
   const now = new Date();
 

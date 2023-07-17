@@ -7,7 +7,7 @@ import { TIngredientsTabsActive } from '../../types/types';
 const Tabs: React.FC<{
   scrollTab: TIngredientsTabsActive,
   onClickTab: (value: string) => void}> = ({ scrollTab, onClickTab }) => {
-  const [current, setCurrent] = React.useState<typeof ingredientTypes.bun>(ingredientTypes.bun);
+  const [current, setCurrent] = React.useState<keyof typeof ingredientTypes>(ingredientTypes.bun);
 
   //Активируем нужный таб(при скролле) - первый видимый в списке
   React.useEffect(() => {

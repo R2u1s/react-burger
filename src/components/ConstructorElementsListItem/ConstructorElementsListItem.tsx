@@ -40,7 +40,7 @@ const ConstructorElementsListItem: React.FC<{
 
   return (
     <div ref={ref}>
-      <li className={styles['constructor-elements-list__item']} key={Math.random()} id={ingredient._id} >
+      <li className={styles['constructor-elements-list__item']} key={Math.random()} id={ingredient.listId} >
         <DragIcon type={'primary'} />
         <ConstructorElement
           text={ingredient.name}

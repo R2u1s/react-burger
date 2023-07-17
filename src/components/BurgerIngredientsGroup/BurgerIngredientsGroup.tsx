@@ -17,10 +17,10 @@ const BurgerIngredientsGroup: React.FC<{
   const ref = React.useRef<HTMLParagraphElement>();
 
   const { ref: inViewRef, inView } = useInView({
-    threshold: 0.2
+    threshold: 0.3
   }); 
 
-/*   React.useEffect(()=>{
+  React.useEffect(()=>{
     //изменение стэйта видимости групп
     setScrollTab({
       ...scrollTab,
@@ -32,7 +32,7 @@ const BurgerIngredientsGroup: React.FC<{
       [ingredient.type]:ref.current
     })
   },[inView]);
-  //// */
+  ////
 
   const setRefs = React.useCallback(
     (node:HTMLParagraphElement) => {

@@ -1,3 +1,4 @@
+import { AppDispatch } from "../../types/types";
 import { request, setCookie, getCookie, deleteCookie } from "../../utils/utils";
 
 //Восстановление пароля. Отправка email
@@ -129,7 +130,7 @@ export interface IResetPasswordSuccessAction {readonly type: typeof RESET_PASSWO
 export interface IResetPasswordErrorAction {readonly type: typeof RESET_PASSWORD_FAILED}
 
 export const postEmail = (email:string) => {
-  return function (dispatch:any) {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: EMAIL_REQUEST
     });
@@ -164,7 +165,7 @@ export const postEmail = (email:string) => {
 
 //Авторизация
 export const login = (email:string,password:string) => {
-  return function (dispatch:any) {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: LOGIN_REQUEST
     });
@@ -205,7 +206,7 @@ export const login = (email:string,password:string) => {
 
 //Регистрация
 export const registration = (name:string,email:string,password:string) => {
-  return function (dispatch:any) {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: TOKEN_REQUEST
     });
@@ -243,7 +244,7 @@ export const registration = (name:string,email:string,password:string) => {
 
 //Выход
 export const logout = (token:string) => {
-  return function (dispatch:any) {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST
     });
@@ -279,7 +280,7 @@ export const logout = (token:string) => {
 
 //Обновление токена
 export const refreshToken = () => {
-  return async function (dispatch:any) {
+  return async function (dispatch:AppDispatch) {
     dispatch({
       type: TOKEN_REQUEST
     });
@@ -319,7 +320,7 @@ export const refreshToken = () => {
 
 //Получение информации о пользователе
 export const getUserRequest = (token:string) => {
-  return function (dispatch:any) {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
     });
@@ -366,7 +367,7 @@ export const forgotPassword = (): IForgotPasswordAction => ({
 
 //Авторизация
 export const resetPassword = (password:string,code:string) => {
-  return function (dispatch:any) {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST
     });
@@ -404,7 +405,7 @@ export const resetPassword = (password:string,code:string) => {
 //Изменение информации пользователя
 export const changeUserInfo = (name:string,email:string,valuePassword:string, token:string) => {
   const password = valuePassword === '******' ? null : valuePassword;
-  return function (dispatch:any) {
+  return function (dispatch:AppDispatch) {
     dispatch({
       type: CHANGE_USERINFO_REQUEST
     });
