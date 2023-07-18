@@ -69,6 +69,6 @@
   text-align: center;
 }
 
-.profile-buttons__active {
+.profile-buttons__hidden {
   display: none;
 }
